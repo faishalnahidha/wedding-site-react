@@ -50,10 +50,13 @@ class ContentSection extends Component {
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
                             <Typography variant="body2" color="textSecondary" gutterBottom>
+                                Assalamu&apos;alaikum Wr. Wb.
+                            </Typography>
+                            <Typography variant="body2" color="textSecondary" gutterBottom>
                                 Bismillahirrahmannirahim
                             </Typography>
                             <Typography variant="body2" color="textSecondary">
-                                Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud menyelenggarakan pernikahan putra-putri kami
+                                Dengan memohon rahmat Allah SWT, kami mengundang Anda untuk hadir pada resepsi pernikahan kami
                             </Typography>
                         </Grid>
                         <Grid item xs={12}>

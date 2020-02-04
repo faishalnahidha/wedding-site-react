@@ -32,7 +32,7 @@ const rsvpOptions = [
     },
     {
         value: 'Maybe',
-        text: 'Ok, kalau sempat saya akan datang',
+        text: 'Ok, kalau sempat saya akan hadir',
 
     },
     {
@@ -84,8 +84,8 @@ class InputFormSection extends Component {
                 <Container maxWidth="xs">
                     <Grid container spacing={1} justify="flex-start" alignItems="flex-start">
                         <Grid item xs={12}>
-                            <Typography variant="body2">
-                                Kami sangat berbahagia jika kamu bersedia menghadiri pernikahan kami
+                            <Typography variant="body2" gutterBottom>
+                                Kami sangat berbahagia jika Anda bersedia menghadiri acara resepsi pernikahan kami
                             </Typography>
                         </Grid>
                         <Grid item xs={12}>
