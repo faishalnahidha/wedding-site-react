@@ -9,7 +9,11 @@ import CMSPage from './CMSPage.jsx';
 export default withTracker(() => {
     Meteor.subscribe('recipients');
 
+    const recipientsHandle = Meteor.subscribe('recipients');
+    const loading = !recipientsHandle.ready();
+
     return {
         recipients: Recipients.find({}, { sort: { createdAt: -1 } }).fetch(),
+        loading
     }
 })(CMSPage);

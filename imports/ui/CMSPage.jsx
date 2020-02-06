@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from "meteor/meteor";
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
-// import { Guests } from '../api/guests.js';
-
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
@@ -18,34 +16,100 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import Divider from '@material-ui/core/Divider';
 import Snackbar from '@material-ui/core/Snackbar';
-// import IconButton from '@material-ui/core/IconButton';
-// import CloseIcon from '@material-ui/icons/Close';
+import IconButton from '@material-ui/core/IconButton';
+import Link from '@material-ui/core/Link';
+import useScrollTrigger from '@material-ui/core/useScrollTrigger';
+import Fab from '@material-ui/core/Fab';
+import Zoom from '@material-ui/core/Zoom';
+import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+
+import Footer from './Footer.jsx'
 
 const styles = {
     root: {
-        padding: '0 0 56px',
-        flexGrow: 1,
-        backgroundColor: '#fafafa'
+        backgroundColor: "#fff"
     },
     title: {
         flexGrow: 1
-    },
-    container: {
-        paddingTop: 32
-    },
-    paper: {
-        paddingBottom: 24
     },
     inputForm: {
         margin: "12px 0"
     },
     table: {
-        padding: "0 16px"
-    }
+        padding: "0"
+    },
+    topSection: {
+        width: "100%",
+        padding: "32px 0",
+        backgroundColor: "#4568dc"
+    },
+    bottomSection: {
+        padding: "24px 16px 40px"
+    },
+    fab: {
+        position: 'fixed',
+        bottom: 16,
+        right: 16,
+    },
 };
+
+const darkTheme = createMuiTheme({
+    palette: {
+        type: 'dark',
+        primary: {
+            light: "#7f95ff",
+            main: "#4568dc",
+            dark: "#003ea9",
+            contrastText: "#fff"
+        },
+        secondary: {
+            light: "#fff6ff",
+            main: "#f6c3e5",
+            dark: "#c392b3",
+            contrastText: "#212529"
+        },
+    },
+    typography: {
+        fontFamily: "Nunito Sans, Arial",
+    }
+});
+
+function ElevationScroll(props) {
+    const { children, window } = props;
+    // Note that you normally won't need to set the window ref as useScrollTrigger
+    // will default to window.
+    // This is only being set here because the demo is in an iframe.
+    const trigger = useScrollTrigger({
+        disableHysteresis: true,
+        threshold: 0,
+        target: window ? window() : undefined,
+    });
+
+    return React.cloneElement(children, {
+        elevation: trigger ? 4 : 0,
+    });
+}
+
+function ScrollTop(props) {
+    // eslint-disable-next-line react/prop-types
+    const { children, window } = props;
+    // Note that you normally won't need to set the window ref as useScrollTrigger
+    // will default to window.
+    // This is only being set here because the demo is in an iframe.
+    const trigger = useScrollTrigger({
+        target: window ? window() : undefined,
+        disableHysteresis: true,
+        threshold: 200,
+    });
+
+    return (
+        <Zoom in={trigger}>
+            {children}
+        </Zoom>
+    );
+}
 
 class CMSPage extends Component {
     constructor(props) {
@@ -54,11 +118,15 @@ class CMSPage extends Component {
         this.state = {
             recipientId: '',
             recipientIdName: '',
-            openSnackbar: false
+            openSnackbar: false,
+            copied: false
         };
+
+        this.top = React.createRef();
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.scrollToTop = this.scrollToTop.bind(this);
     }
 
     handleChange(event) {
@@ -81,21 +149,39 @@ class CMSPage extends Component {
         });
     }
 
-    handleClose() {
-        this.setState({ openSnackbar: false });
+    scrollToTop() {
+        if (this.top.current) {
+            this.top.current.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            })
+        }
     }
 
     renderRecipients() {
         const { recipients } = this.props;
+
         return recipients.map((recipient) => (
             <TableRow key={recipient._id}>
                 <TableCell>
                     {recipient.name}
                 </TableCell>
                 <TableCell>
-                    mutikizzanwedding.com/{recipient._id}
+                    <Link href={"https://mutikizzanwedding.com/" + recipient._id} target="_blank">
+                        mutikizzanwedding.com/{recipient._id}
+                    </Link>
                 </TableCell>
-            </TableRow>
+                <TableCell padding="none">
+                    <CopyToClipboard
+                        text={"https://mutikizzanwedding.com/" + recipient._id}
+                        onCopy={() => this.setState({ copied: true })}
+                    >
+                        <IconButton size="small">
+                            <FileCopyOutlinedIcon fontSize="small" />
+                        </IconButton>
+                    </CopyToClipboard>
+                </TableCell>
+            </TableRow >
 
         ))
     }
@@ -104,20 +190,22 @@ class CMSPage extends Component {
         const { classes } = this.props;
 
         return (
-            <div className={classes.root}>
-                <AppBar position="static">
-                    <Toolbar>
-                        <Typography variant="h6" align="center" className={classes.title}>
-                            Wedding Invitation CMS
+            <div ref={this.top} className={classes.root}>
+                <ElevationScroll {...this.props}>
+                    <AppBar position="sticky" color="primary">
+                        <Toolbar>
+                            <Typography variant="h6" align="center" className={classes.title}>
+                                Wedding Invitation CMS
                         </Typography>
-                    </Toolbar>
-                </AppBar>
-                <Container maxWidth="sm" className={classes.container}>
+                        </Toolbar>
+                    </AppBar>
+                </ElevationScroll>
+                <div className={classes.topSection}>
 
-                    <Grid container spacing={3} justify="flex-start" alignItems="flex-start">
-                        <Grid item xs={12}>
-                            {/* #################### Form Group #################### */}
-                            <form onSubmit={this.handleSubmit}>
+                    <Container maxWidth="sm">
+                        {/* #################### Form Group #################### */}
+                        <form onSubmit={this.handleSubmit}>
+                            <ThemeProvider theme={darkTheme}>
                                 <TextField
                                     id="recipientName"
                                     type="text"
@@ -127,6 +215,7 @@ class CMSPage extends Component {
                                     placeholder="contoh: Chizuru Mizuhara"
                                     variant="filled"
                                     fullWidth required
+                                    color="secondary"
                                     className={classes.inputForm} />
                                 <TextField
                                     id="recipientId"
@@ -138,46 +227,48 @@ class CMSPage extends Component {
                                     helperText="Tidak boleh ada spasi"
                                     variant="filled"
                                     fullWidth required
-                                    className={classes.inputForm} />
-                                <Button
-                                    type="submit"
-                                    value="Submit"
-                                    variant="contained"
                                     color="secondary"
-                                    className={classes.inputForm}>
-                                    Tambah Undangan
+                                    className={classes.inputForm} />
+                            </ThemeProvider>
+                            <Button
+                                type="submit"
+                                value="Submit"
+                                variant="contained"
+                                color="secondary"
+                                className={classes.inputForm}>
+                                Tambah Undangan
                                 </Button>
-                            </form>
-                        </Grid>
-                        <Grid item xs={12}><Divider /></Grid>
+                        </form>
+                    </Container>
 
-                        <Grid item xs={12}>
-                            {/* #################### Table #################### */}
-                            <Paper className={classes.paper}>
-                                <Toolbar>
-                                    <Typography variant="h6" className={classes.title}>
-                                        Daftar Undangan
-                                    </Typography>
-                                </Toolbar>
-                                <TableContainer className={classes.table}>
-                                    <Table aria-label="simple table">
-                                        <TableHead className={classes.tableHead}>
-                                            <TableRow>
-                                                <TableCell><strong>Nama</strong></TableCell>
-                                                <TableCell><strong>Link Undangan</strong></TableCell>
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                            {this.renderRecipients()}
-                                        </TableBody>
-                                    </Table>
-                                </TableContainer>
-                            </Paper>
-                        </Grid>
-                    </Grid>
+                </div>
+                <Container maxWidth="sm" className={classes.bottomSection}>
+                    {/* #################### Table #################### */}
+                    <Toolbar>
+                        <Typography variant="h6" className={classes.title}>
+                            Daftar Undangan
+                            </Typography>
+                    </Toolbar>
+                    <TableContainer className={classes.table}>
+                        <Table aria-label="simple table">
+                            <TableHead className={classes.tableHead}>
+                                <TableRow>
+                                    <TableCell><strong>Nama</strong></TableCell>
+                                    <TableCell><strong>Link Undangan</strong></TableCell>
+                                    <TableCell></TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {this.renderRecipients()}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
                 </Container>
+                <Footer />
+
                 {/* #################### Snackbar #################### */}
                 <Snackbar
+                    key="add-success"
                     anchorOrigin={{
                         vertical: 'bottom',
                         horizontal: 'center',
@@ -187,6 +278,24 @@ class CMSPage extends Component {
                     onClose={() => this.setState({ openSnackbar: false })}
                     message="Undangan berhasil ditambahkan!"
                 />
+                <Snackbar
+                    key="copied"
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'center',
+                    }}
+                    open={this.state.copied}
+                    autoHideDuration={1000}
+                    onClose={() => this.setState({ copied: false })}
+                    message="Berhasil disalin"
+                />
+
+                {/* #################### FAB Back to top #################### */}
+                <ScrollTop {...this.props}>
+                    <Fab color="default" size="small" onClick={this.scrollToTop} className={classes.fab}>
+                        <KeyboardArrowUpIcon />
+                    </Fab>
+                </ScrollTop>
             </div>
         )
     }
@@ -194,7 +303,8 @@ class CMSPage extends Component {
 
 CMSPage.propTypes = {
     classes: PropTypes.object.isRequired,
-    recipients: PropTypes.array.isRequired
+    recipients: PropTypes.array,
+    loading: PropTypes.bool
 };
 
 export default withStyles(styles)(CMSPage);

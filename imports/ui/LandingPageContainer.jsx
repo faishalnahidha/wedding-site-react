@@ -8,6 +8,7 @@ import LandingPage from './LandingPage.jsx';
 export default withTracker(({ match }) => {
     const id = match.params.id;
 
+    /* ------- handle access from root dns --------- */
     if (id === undefined) {
         const recipient = {
             _id: "0",
