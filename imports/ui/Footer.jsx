@@ -27,7 +27,7 @@ function Footer(props) {
     return (
         <Box className={classes.root}>
             <Typography variant="inherit" color="textSecondary">
-                Made with <FavoriteIcon className={classes.icon} /> in Jakarta
+                Made with <FavoriteIcon className={classes.icon} /> from Jakarta
             </Typography>
         </Box>
     );
