@@ -20,12 +20,10 @@ import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import Link from '@material-ui/core/Link';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
-import Fab from '@material-ui/core/Fab';
-import Zoom from '@material-ui/core/Zoom';
 import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
 import Footer from './Footer.jsx'
+import BackToTopButton from './components/BackToTopButton.jsx';
 
 const styles = {
     root: {
@@ -77,38 +75,15 @@ const darkTheme = createMuiTheme({
 });
 
 function ElevationScroll(props) {
-    const { children, window } = props;
-    // Note that you normally won't need to set the window ref as useScrollTrigger
-    // will default to window.
-    // This is only being set here because the demo is in an iframe.
+    const { children } = props;
     const trigger = useScrollTrigger({
         disableHysteresis: true,
         threshold: 0,
-        target: window ? window() : undefined,
     });
 
     return React.cloneElement(children, {
         elevation: trigger ? 4 : 0,
     });
-}
-
-function ScrollTop(props) {
-    // eslint-disable-next-line react/prop-types
-    const { children, window } = props;
-    // Note that you normally won't need to set the window ref as useScrollTrigger
-    // will default to window.
-    // This is only being set here because the demo is in an iframe.
-    const trigger = useScrollTrigger({
-        target: window ? window() : undefined,
-        disableHysteresis: true,
-        threshold: 200,
-    });
-
-    return (
-        <Zoom in={trigger}>
-            {children}
-        </Zoom>
-    );
 }
 
 class CMSPage extends Component {
@@ -266,6 +241,8 @@ class CMSPage extends Component {
                 </Container>
                 <Footer />
 
+                <BackToTopButton />
+
                 {/* #################### Snackbar #################### */}
                 <Snackbar
                     key="add-success"
@@ -289,13 +266,6 @@ class CMSPage extends Component {
                     onClose={() => this.setState({ copied: false })}
                     message="Berhasil disalin"
                 />
-
-                {/* #################### FAB Back to top #################### */}
-                <ScrollTop {...this.props}>
-                    <Fab color="default" size="small" onClick={this.scrollToTop} className={classes.fab}>
-                        <KeyboardArrowUpIcon />
-                    </Fab>
-                </ScrollTop>
             </div>
         )
     }

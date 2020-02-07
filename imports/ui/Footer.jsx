@@ -10,7 +10,6 @@ const styles = {
     root: {
         backgroundColor: '#fafafa',
         padding: '12px 0',
-        fontSize: 12,
         textAlign: 'center'
     },
     icon: {
@@ -26,7 +25,7 @@ function Footer(props) {
     const { classes } = props;
     return (
         <Box className={classes.root}>
-            <Typography variant="inherit" color="textSecondary">
+            <Typography variant="caption" color="textSecondary">
                 Made with <FavoriteIcon className={classes.icon} /> from Jakarta
             </Typography>
         </Box>

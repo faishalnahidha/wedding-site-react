@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import LinearProgress from '@material-ui/core/LinearProgress';
-// import Button from '@material-ui/core/Button';
 
 import IntroSection from './landing-page-section/IntroSection.jsx';
 import ContentSection from './landing-page-section/ContentSection.jsx';
 import LocationSection from './landing-page-section/LocationSection.jsx';
 import InputFormSection from './landing-page-section/InputFormSection.jsx';
 import Footer from './Footer.jsx';
+
+import BackToTopButton from './components/BackToTopButton.jsx'
 
 class LandingPage extends Component {
     constructor(props) {
@@ -73,6 +74,7 @@ class LandingPage extends Component {
                 </div>
                 {this.renderInputFormSection(recipient)}
                 <Footer />
+                <BackToTopButton />
             </React.Fragment>
         )
     }

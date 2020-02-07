@@ -13,6 +13,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Divider from '@material-ui/core/Divider';
 import Link from '@material-ui/core/Link';
 
+
 const styles = {
     root: {
         padding: '48px 0 0',
@@ -98,7 +99,7 @@ class ContentSection extends Component {
                                     <Typography variant="body2" gutterBottom>pukul 15:30 WIB</Typography>
                                     <Typography variant="body2">
                                         di kediaman mempelai wanita<br />Balong RT 05/RW 01, Kemasan, Sawit, Boyolali.&nbsp;
-                                        <Link href="https://goo.gl/maps/Ny4q4k6V1iiDDqDJ8" target="_blank" color="primary">
+                                        <Link href="https://goo.gl/maps/3o75MMPkSrLVQedp9" target="_blank" color="primary">
                                             Lihat peta
                                         </Link>
                                     </Typography>
