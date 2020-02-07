@@ -19,7 +19,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import Link from '@material-ui/core/Link';
-import Tooltip from '@material-ui/core/Tooltip';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 import WhatsAppIcon from '@material-ui/icons/WhatsApp';
@@ -140,7 +139,6 @@ class CMSPage extends Component {
                         text={"https://mutikizzanwedding.com/" + recipient._id}
                         onCopy={() => this.setState({ copied: true })}
                     >
-<<<<<<< HEAD
                         <IconButton size="medium">
                             <FileCopyOutlinedIcon fontSize="small" />
                         </IconButton>
@@ -154,45 +152,6 @@ class CMSPage extends Component {
                     >
                         <WhatsAppIcon fontSize="small" />
                     </IconButton>
-=======
-                        <Tooltip title="Salin link">
-                            <IconButton size="small">
-                                <FileCopyOutlinedIcon fontSize="small" />
-                            </IconButton>
-                        </Tooltip>
-                    </CopyToClipboard>
-                </TableCell>
-                <TableCell padding="none">
-                    <Tooltip title="Bagikan ke Whatsapp, hanya bisa di ponsel">
-                        <IconButton
-                            size="small"
-                            href="whatsapp://send"
-                            data-text="Assalamu'alaikum Wr.Wb
-                            Bismillahirrahmanirrahim
-                            
-                            Dengan segala hormat, kami mengundang rekan-rekan untuk hadir pada acara pernikahan kami
-                            
-                            *Mutik Hidayati & Faishal Izzan Nahidha*
-                            
-                            Akad Nikah : Sabtu, 22 Februari 2020
-                            Waktu : 15.30 WIB
-                            Tempat : Balong RT 05/ RW 01, Kemasan, Sawit, Boyolali
-                            
-                            Resepsi : Minggu, 23 Februari 2020
-                            Waktu : 09.00 WIB
-                            Tempat : Gedung Kapujanggan, Pengging RT 15/ RW 03, Bendan, Banyudono, Boyolali
-                            
-                            Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila rekan-rekan berkenan hadir untuk memberikan doa restu kepada kami. 
-                            
-                            Wassalamu'alaikum Wr.Wb
-                            "
-                            data-href={"https://mutikizzanwedding.com/" + recipient._id}
-                            data-action="share/whatsapp/share"
-                        >
-                            <WhatsAppIcon fontSize="small" />
-                        </IconButton>
-                    </Tooltip>
->>>>>>> master
                 </TableCell>
             </TableRow >
 
