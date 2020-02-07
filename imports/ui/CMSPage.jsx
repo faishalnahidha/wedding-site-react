@@ -19,7 +19,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import Link from '@material-ui/core/Link';
-import Tooltip from '@material-ui/core/Tooltip';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 import WhatsAppIcon from '@material-ui/icons/WhatsApp';
@@ -40,6 +39,9 @@ const styles = {
     table: {
         padding: "0"
     },
+    tableToolbar: {
+        padding: "0 16px"
+    },
     topSection: {
         width: "100%",
         padding: "32px 0",
@@ -47,11 +49,6 @@ const styles = {
     },
     bottomSection: {
         padding: "24px 16px 40px"
-    },
-    fab: {
-        position: 'fixed',
-        bottom: 16,
-        right: 16,
     },
 };
 
@@ -99,11 +96,8 @@ class CMSPage extends Component {
             copied: false
         };
 
-        this.top = React.createRef();
-
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.scrollToTop = this.scrollToTop.bind(this);
     }
 
     handleChange(event) {
@@ -124,15 +118,8 @@ class CMSPage extends Component {
             recipientName: '',
             openSnackbar: true
         });
-    }
 
-    scrollToTop() {
-        if (this.top.current) {
-            this.top.current.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-            })
-        }
+        console.log('recipient: ' + recipientName);
     }
 
     renderRecipients() {
@@ -153,43 +140,19 @@ class CMSPage extends Component {
                         text={"https://mutikizzanwedding.com/" + recipient._id}
                         onCopy={() => this.setState({ copied: true })}
                     >
-                        <Tooltip title="Salin link">
-                            <IconButton size="small">
-                                <FileCopyOutlinedIcon fontSize="small" />
-                            </IconButton>
-                        </Tooltip>
+                        <IconButton size="medium">
+                            <FileCopyOutlinedIcon fontSize="small" />
+                        </IconButton>
                     </CopyToClipboard>
                 </TableCell>
                 <TableCell padding="none">
-                    <Tooltip title="Bagikan ke Whatsapp, hanya bisa di ponsel">
-                        <IconButton
-                            size="small"
-                            href="whatsapp://send"
-                            data-text="Assalamu'alaikum Wr.Wb
-                            Bismillahirrahmanirrahim
-                            
-                            Dengan segala hormat, kami mengundang rekan-rekan untuk hadir pada acara pernikahan kami
-                            
-                            *Mutik Hidayati & Faishal Izzan Nahidha*
-                            
-                            Akad Nikah : Sabtu, 22 Februari 2020
-                            Waktu : 15.30 WIB
-                            Tempat : Balong RT 05/ RW 01, Kemasan, Sawit, Boyolali
-                            
-                            Resepsi : Minggu, 23 Februari 2020
-                            Waktu : 09.00 WIB
-                            Tempat : Gedung Kapujanggan, Pengging RT 15/ RW 03, Bendan, Banyudono, Boyolali
-                            
-                            Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila rekan-rekan berkenan hadir untuk memberikan doa restu kepada kami. 
-                            
-                            Wassalamu'alaikum Wr.Wb
-                            "
-                            data-href={"https://mutikizzanwedding.com/" + recipient._id}
-                            data-action="share/whatsapp/share"
-                        >
-                            <WhatsAppIcon fontSize="small" />
-                        </IconButton>
-                    </Tooltip>
+                    <IconButton
+                        size="medium"
+                        href={"https://api.whatsapp.com/send?text=Assalamu%27alaikum%20Wr.%20Wb.%0A%0AKami%20mengundang%20Bapak%2FIbuSaudara%2Fi%20untuk%20hadir%20pada%20acara%20pernikahan%20kami%0A%0A%2A%2AMutik%20Hidayati%20%26%20Faishal%20Izzan%20Nahidha%2A%2A%0A%0A%2AAkad%20Nikah%20%3A%20Sabtu%2C%2022%20Februari%202020%2A%0AWaktu%20%3A%2015.30%20WIB%0ATempat%20%3A%20Balong%20RT05%2FRW01%2C%20Kemasan%2C%20Sawit%2C%20Boyolali%0A%0A%2AResepsi%20%3A%20Minggu%2C%2023%20Februari%202020%2A%0AWaktu%20%3A%2009.00%20WIB%0ATempat%20%3A%20Gedung%20Kapujanggan%20Pengging%2C%20Bendan%2C%20Banyudono%2C%20Boyolali%0A%0AMerupakan%20kebahagiaan%20bagi%20kami%20bila%20Bapak%2FIbu%2FSaudara%2Fi%20berkenan%20hadir%20untuk%20memberikan%20doa%20restu%0A%0AWassalamu%27alaikum%20Wr.%20Wb.%0A-----------------------------%0Ahttps%3A%2F%2Fmutikizzanwedding.com%2F" + recipient._id}
+                        target="_blank"
+                    >
+                        <WhatsAppIcon fontSize="small" />
+                    </IconButton>
                 </TableCell>
             </TableRow >
 
@@ -250,11 +213,10 @@ class CMSPage extends Component {
                                 </Button>
                         </form>
                     </Container>
-
                 </div>
                 <Container maxWidth="sm" className={classes.bottomSection}>
                     {/* #################### Table #################### */}
-                    <Toolbar>
+                    <Toolbar className={classes.tableToolbar}>
                         <Typography variant="h6" className={classes.title}>
                             Daftar Undangan
                             </Typography>
