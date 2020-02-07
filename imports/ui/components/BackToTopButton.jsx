@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import Fab from '@material-ui/core/Fab';
 import Zoom from '@material-ui/core/Zoom';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import KeyboardArrowUpRoundedIcon from '@material-ui/icons/KeyboardArrowUpRounded';
 
 const useStyles = makeStyles({
     root: {
@@ -49,7 +49,7 @@ export default function BackToTopButton() {
     return (
         <ScrollTop {...this.props}>
             <Fab color="default" size="small">
-                <KeyboardArrowUpIcon />
+                <KeyboardArrowUpRoundedIcon />
             </Fab>
         </ScrollTop>
     )

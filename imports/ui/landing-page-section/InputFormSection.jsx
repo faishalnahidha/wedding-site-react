@@ -27,6 +27,9 @@ const styles = {
 
 const rsvpOptions = [
     {
+        value: ""
+    },
+    {
         value: 'Yes',
         text: 'Gasskeun! Saya siap meluncur ke TKP!',
     },
@@ -46,7 +49,7 @@ class InputFormSection extends Component {
         super(props);
 
         this.state = {
-            rsvpInput: 'Yes',
+            rsvpInput: '',
             messageInput: '',
             openSnackbar: false
         };
@@ -85,7 +88,7 @@ class InputFormSection extends Component {
                     <Grid container spacing={1} justify="flex-start" alignItems="flex-start">
                         <Grid item xs={12}>
                             <Typography variant="body2" gutterBottom>
-                                Kami sangat berbahagia jika Anda bersedia menghadiri acara resepsi pernikahan kami
+                                Kami sangat berbahagia jika Saudara/i bersedia menghadiri acara resepsi pernikahan kami
                             </Typography>
                         </Grid>
                         <Grid item xs={12}>

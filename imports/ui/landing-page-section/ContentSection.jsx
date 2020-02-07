@@ -5,7 +5,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-//import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -33,8 +32,9 @@ const styles = {
     },
     cardHeader: {
         fontSize: 16,
+        fontFamily: "Nunito Sans, Arial",
         backgroundColor: '#fafafa'
-    }
+    },
 };
 
 class ContentSection extends Component {
@@ -57,7 +57,7 @@ class ContentSection extends Component {
                                 Bismillahirrahmannirahim
                             </Typography>
                             <Typography variant="body2" color="textSecondary">
-                                Dengan memohon rahmat Allah SWT, kami mengundang Anda untuk hadir pada resepsi pernikahan kami
+                                Dengan memohon rahmat Allah SWT, kami mengundang Saudara/i untuk hadir pada acara resepsi pernikahan kami
                             </Typography>
                         </Grid>
                         <Grid item xs={12}>
@@ -99,7 +99,7 @@ class ContentSection extends Component {
                                     <Typography variant="body2" gutterBottom>pukul 15:30 WIB</Typography>
                                     <Typography variant="body2">
                                         di kediaman mempelai wanita<br />Balong RT 05/RW 01, Kemasan, Sawit, Boyolali.&nbsp;
-                                        <Link href="https://goo.gl/maps/3o75MMPkSrLVQedp9" target="_blank" color="primary">
+                                        <Link href="https://goo.gl/maps/8Zh7u1zrAmAthoGF9" target="_blank" color="primary">
                                             Lihat peta
                                         </Link>
                                     </Typography>
@@ -114,7 +114,7 @@ class ContentSection extends Component {
                                     <Typography variant="h6">
                                         <strong>Minggu, 23 Februari 2020</strong>
                                     </Typography>
-                                    <Typography variant="body2" gutterBottom>pukul 9:00 WIB</Typography>
+                                    <Typography variant="body2" gutterBottom>pukul 09:00 WIB</Typography>
                                     <Typography variant="body2">
                                         di Gedung Kapujanggan Pengging <br />RT 15/RW 03 Bendan, Banyudono, Boyolali
                                     </Typography>
