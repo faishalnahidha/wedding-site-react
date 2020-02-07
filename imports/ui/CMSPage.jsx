@@ -91,7 +91,7 @@ class CMSPage extends Component {
 
         this.state = {
             recipientId: '',
-            recipientIdName: '',
+            recipientName: '',
             openSnackbar: false,
             copied: false
         };
@@ -108,10 +108,10 @@ class CMSPage extends Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        const recipientId = this.state.recipientId.trim().toLowerCase();
-        const recipientName = this.state.recipientName.trim();
+        const recId = this.state.recipientId.trim().toLowerCase();
+        const recName = this.state.recipientName.trim();
 
-        Meteor.call('recipients.insert', recipientId, recipientName);
+        Meteor.call('recipients.insert', recId, recName);
 
         this.setState({
             recipientId: '',
@@ -119,7 +119,6 @@ class CMSPage extends Component {
             openSnackbar: true
         });
 
-        console.log('recipient: ' + recipientName);
     }
 
     renderRecipients() {
@@ -182,7 +181,7 @@ class CMSPage extends Component {
                                 <TextField
                                     id="recipientName"
                                     type="text"
-                                    value={this.state.guestName}
+                                    value={this.state.recipientName}
                                     onChange={this.handleChange}
                                     label="Nama Penerima"
                                     placeholder="contoh: Chizuru Mizuhara"
@@ -193,7 +192,7 @@ class CMSPage extends Component {
                                 <TextField
                                     id="recipientId"
                                     type="text"
-                                    value={this.state.guestId}
+                                    value={this.state.recipientId}
                                     onChange={this.handleChange}
                                     label="ID Undangan"
                                     placeholder="contoh: chizuru-mizuhara"
