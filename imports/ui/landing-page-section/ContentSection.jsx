@@ -12,7 +12,6 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Divider from '@material-ui/core/Divider';
 import Link from '@material-ui/core/Link';
 
-
 const styles = {
     root: {
         padding: '48px 0 0',
@@ -23,7 +22,7 @@ const styles = {
         textAlign: "center"
     },
     icon: {
-        width: '40px%'
+        width: 40
     },
     card: {
         borderRadius: 8,

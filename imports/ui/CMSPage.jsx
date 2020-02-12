@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from "meteor/meteor";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { ReactTitle } from 'react-meta-tags';
 
 import { withStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -22,6 +23,7 @@ import Link from '@material-ui/core/Link';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 import WhatsAppIcon from '@material-ui/icons/WhatsApp';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import Footer from './Footer.jsx'
 import BackToTopButton from './components/BackToTopButton.jsx';
@@ -147,7 +149,7 @@ class CMSPage extends Component {
                 <TableCell padding="none">
                     <IconButton
                         size="medium"
-                        href={"https://api.whatsapp.com/send?text=Assalamu%27alaikum%20Wr.%20Wb.%0A%0AKami%20mengundang%20Bapak%2FIbuSaudara%2Fi%20untuk%20hadir%20pada%20acara%20pernikahan%20kami%0A%0A%2A%2AMutik%20Hidayati%20%26%20Faishal%20Izzan%20Nahidha%2A%2A%0A%0A%2AAkad%20Nikah%20%3A%20Sabtu%2C%2022%20Februari%202020%2A%0AWaktu%20%3A%2015.30%20WIB%0ATempat%20%3A%20Balong%20RT05%2FRW01%2C%20Kemasan%2C%20Sawit%2C%20Boyolali%0A%0A%2AResepsi%20%3A%20Minggu%2C%2023%20Februari%202020%2A%0AWaktu%20%3A%2009.00%20WIB%0ATempat%20%3A%20Gedung%20Kapujanggan%20Pengging%2C%20Bendan%2C%20Banyudono%2C%20Boyolali%0A%0AMerupakan%20kebahagiaan%20bagi%20kami%20bila%20Bapak%2FIbu%2FSaudara%2Fi%20berkenan%20hadir%20untuk%20memberikan%20doa%20restu%0A%0AWassalamu%27alaikum%20Wr.%20Wb.%0A-----------------------------%0Ahttps%3A%2F%2Fmutikizzanwedding.com%2F" + recipient._id}
+                        href={"https://api.whatsapp.com/send?text=Assalamu%27alaikum%20Wr.%20Wb.%0A%0AKami%20mengundang%20Bapak%2FIbu%2FSaudara%2Fi%20untuk%20hadir%20pada%20acara%20pernikahan%20kami%0A%0A%2A%2AMutik%20Hidayati%20%26%20Faishal%20Izzan%20Nahidha%2A%2A%0A%0A%2AAkad%20Nikah%20%3A%20Sabtu%2C%2022%20Februari%202020%2A%0AWaktu%20%3A%2015.30%20WIB%0ATempat%20%3A%20Balong%20RT05%2FRW01%2C%20Kemasan%2C%20Sawit%2C%20Boyolali%0A%0A%2AResepsi%20%3A%20Minggu%2C%2023%20Februari%202020%2A%0AWaktu%20%3A%2009.00%20WIB%0ATempat%20%3A%20Gedung%20Kapujanggan%20Pengging%2C%20Bendan%2C%20Banyudono%2C%20Boyolali%0A%0AMerupakan%20kebahagiaan%20bagi%20kami%20bila%20Bapak%2FIbu%2FSaudara%2Fi%20berkenan%20hadir%20untuk%20memberikan%20doa%20restu%0A%0AWassalamu%27alaikum%20Wr.%20Wb.%0A-----------------------------%0Ahttps%3A%2F%2Fmutikizzanwedding.com%2F" + recipient._id}
                         target="_blank"
                     >
                         <WhatsAppIcon fontSize="small" />
@@ -159,10 +161,15 @@ class CMSPage extends Component {
     }
 
     render() {
-        const { classes } = this.props;
+        const { classes, loading } = this.props;
+
+        if (loading) {
+            return <LinearProgress />
+        }
 
         return (
-            <div ref={this.top} className={classes.root}>
+            <div ref={this.top} className={classes.root} id="CMSPage">
+                <ReactTitle title="Wedding Invitation CMS" />
                 <ElevationScroll {...this.props}>
                     <AppBar position="sticky" color="primary">
                         <Toolbar>

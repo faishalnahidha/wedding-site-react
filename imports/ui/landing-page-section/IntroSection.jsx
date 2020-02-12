@@ -50,11 +50,11 @@ class IntroSection extends Component {
             <div className={classes.root}>
                 <Container maxWidth="xs" className={classes.container}>
                     <Grid container spacing={3} direction="row" justify="center" alignItems="center">
-                        <Grid item xs={5}>
+                        <Grid item xs={4}>
                             <img src="/img/logo-white.svg" alt="Mutik Izzan Wedding Logo" className={classes.logoWhite} />
                         </Grid>
-                        <Grid item xs={12}>
-                            <img src="/img/illustration-intro.svg" className={classes.mainIllustration} alt="Mutik Izzan Wedding Illustration" />
+                        <Grid item xs={10}>
+                            <img src="/img/illustration-intro.png" className={classes.mainIllustration} alt="Mutik Izzan Wedding Illustration" />
                         </Grid>
                         <Grid item xs={12}>
                             <Box className={classes.recipientColumn} marginBottom={2}>
