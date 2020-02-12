@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import MetaTags from 'react-meta-tags';
 
 import LinearProgress from '@material-ui/core/LinearProgress';
 
@@ -63,24 +62,6 @@ class LandingPage extends Component {
 
         return (
             <React.Fragment>
-                <MetaTags>
-                    <title>Mutik & Izzan Wedding | 23 Feb 2020</title>
-                    <meta
-                        name="description"
-                        content="Gedung Kapujanggan Pengging RT15/RW03, Bendan, Banyudono, Boyolali"
-                    />
-                    <meta property="og:url" content="https://mutikizzanwedding.com/" />
-                    <meta property="og:type" content="website" />
-                    <meta property="og:title" content="Mutik & Izzan Wedding | 23 Feb 2020" />
-                    <meta
-                        property="og:description"
-                        content="Gedung Kapujanggan Pengging RT15/RW03, Bendan, Banyudono, Boyolali"
-                    />
-                    <meta
-                        property="og:image"
-                        content="https://mutikizzanwedding.com/img/meta-image.png"
-                    />
-                </MetaTags>
                 <IntroSection
                     recipientName={recipient.name}
                     scrollToContentSection={this.scrollToContentSection}
