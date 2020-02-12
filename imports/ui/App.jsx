@@ -7,7 +7,7 @@ import { myTheme } from './theme'; //import file custom theming
 
 import LandingPageContainer from './LandingPageContainer.jsx';
 import CMSPageContainer from './CMSPageContainer.jsx';
-import ErrorPage from './ErrorPage.jsx';
+// import ErrorPage from './ErrorPage.jsx';
 
 const App = () => (
     <React.Fragment>
@@ -17,7 +17,7 @@ const App = () => (
                     <Route exact path="/" component={LandingPageContainer} />
                     <Route exact path="/cms" component={CMSPageContainer} />
                     <Route path="/:id" component={LandingPageContainer} />
-                    <Route component={ErrorPage} />
+                    {/* <Route component={ErrorPage} /> */}
                 </Switch>
             </ThemeProvider>
         </CssBaseline>

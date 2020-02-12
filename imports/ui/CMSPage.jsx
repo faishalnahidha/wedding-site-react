@@ -169,7 +169,7 @@ class CMSPage extends Component {
 
         return (
             <div ref={this.top} className={classes.root} id="CMSPage">
-                <ReactTitle title="Wedding Invitation CMS" />
+                <ReactTitle title="CMS Wedding Invitation " />
                 <ElevationScroll {...this.props}>
                     <AppBar position="sticky" color="primary">
                         <Toolbar>
