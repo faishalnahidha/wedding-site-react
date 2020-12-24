@@ -7,7 +7,6 @@ import { myTheme } from './theme'; //import file custom theming
 
 import LandingPageContainer from './LandingPageContainer.jsx';
 import CMSPageContainer from './CMSPageContainer.jsx';
-import AddPeopleFormDialog from './components/AddPeopleFormDialog.jsx';
 // import ErrorPage from './ErrorPage.jsx';
 
 const App = () => (
@@ -17,7 +16,6 @@ const App = () => (
                 <Switch>
                     <Route exact path="/" component={LandingPageContainer} />
                     <Route exact path="/cms" component={CMSPageContainer} />
-                    <Route exact path="/dialog" component={AddPeopleFormDialog} />
                     <Route path="/:id" component={LandingPageContainer} />
                     {/* <Route component={ErrorPage} /> */}
                 </Switch>

@@ -8,7 +8,6 @@ import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-//import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 const styles = {
@@ -20,7 +19,7 @@ const styles = {
     }
 };
 
-class AddPeopleFormDialog extends Component {
+class AddInvitationFormDialog extends Component {
 
     constructor(props) {
         super(props);
@@ -28,28 +27,30 @@ class AddPeopleFormDialog extends Component {
         this.state = {
             recipientId: '',
             recipientName: '',
-            open: false,
-            setOpen: false,
-            openSnackbar: false
+            openSnackbar: false,
+            isRecipientIdEmpty: false,
+            isRecipientNameEmpty: false,
         };
 
-        this.handleClickOpen = this.handleClickOpen.bind(this);
-        this.handleClose = this.handleClose.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleIdChange = this.handleIdChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleClickOpen() {
-        this.setState({ open: true })
-    }
-
-    handleClose() {
-        this.setState({ open: false })
     }
 
     handleChange(event) {
         const { value, id } = event.target;
-        this.setState({ [id]: value, })
+        this.setState({ [id]: value })
+    }
+
+    handleNameChange(event) {
+        const { value } = event.target;
+        this.setState({ recipientName: value, isRecipientNameEmpty: false })
+    }
+
+    handleIdChange(event) {
+        const { value } = event.target;
+        this.setState({ recipientId: value, isRecipientIdEmpty: false })
     }
 
     handleSubmit(event) {
@@ -58,36 +59,37 @@ class AddPeopleFormDialog extends Component {
         const recId = this.state.recipientId.trim().toLowerCase();
         const recName = this.state.recipientName.trim();
 
-        Meteor.call('recipients.insert', recId, recName);
+        if (recName === '') {
+            this.setState({ isRecipientNameEmpty: true })
+        }
 
-        this.setState({
-            recipientId: '',
-            recipientName: '',
-            openSnackbar: true
-        });
+        if (recId === '') {
+            this.setState({ isRecipientIdEmpty: true })
+        }
 
-        this.handleClose();
+        if (recId !== '' && recName !== '') {
+            Meteor.call('recipients.insert', recId, recName);
+
+            this.setState({
+                recipientId: '',
+                recipientName: '',
+                openSnackbar: true
+            });
+
+            this.props.handleSnackbarAdd();
+            this.props.handleClose();
+        }
+
     }
 
-    // handleClickOpen = () => {
-    //     setOpen(true);
-    // };
-
-    // handleClose = () => {
-    //     setOpen(false);
-    // };
-
     render() {
-        const { classes } = this.props;
+        const { classes, handleClose } = this.props;
 
         return (
             <div>
-                <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
-                    Tambah Undangan
-                </Button>
                 <Dialog
-                    open={this.state.open}
-                    onClose={this.handleClose}
+                    open={true}
+                    onClose={handleClose}
                     aria-labelledby="form-dialog-title"
                     fullWidth
                 >
@@ -97,41 +99,43 @@ class AddPeopleFormDialog extends Component {
                             id="recipientName"
                             type="text"
                             value={this.state.recipientName}
-                            onChange={this.handleChange}
+                            onChange={this.handleNameChange}
                             label="Nama Penerima"
                             placeholder="contoh: Lisa Mayer"
                             variant="outlined"
                             fullWidth required autoFocus
                             color="primary"
                             className={classes.inputForm}
+                            error={this.state.isRecipientNameEmpty}
+                            helperText={this.state.isRecipientNameEmpty ? 'Wajib diisi!' : ''}
                         />
                         <TextField
                             id="recipientId"
                             type="text"
                             value={this.state.recipientId}
-                            onChange={this.handleChange}
+                            onChange={this.handleIdChange}
                             label="ID Undangan"
                             placeholder="contoh: lisa-mayer"
-                            helperText="Tidak boleh ada spasi"
                             variant="outlined"
                             fullWidth required
                             color="primary"
+                            error={this.state.isRecipientIdEmpty}
+                            helperText={this.state.isRecipientIdEmpty ? 'Wajib diisi!' : 'Tidak boleh ada spasi'}
                         />
-                        {/* <Button
-                            type="submit"
-                            value="Submit"`
-                            variant="contained"
-                            color="secondary"
-                        //className={classes.inputForm}
-                        >
-                            Tambah Undangan
-                        </Button> */}
                     </DialogContent>
                     <DialogActions className={classes.dialogAction}>
-                        <Button onClick={this.handleClose} color="primary">
+                        <Button
+                            onClick={handleClose}
+                            color="primary"
+                        >
                             Batal
                     </Button>
-                        <Button onClick={this.handleSubmit} color="primary" variant="contained" disableElevation>
+                        <Button
+                            onClick={this.handleSubmit}
+                            color="primary"
+                            variant="contained"
+                            disableElevation
+                        >
                             Tambah
                     </Button>
                     </DialogActions>
@@ -141,8 +145,10 @@ class AddPeopleFormDialog extends Component {
     }
 }
 
-AddPeopleFormDialog.propTypes = {
+AddInvitationFormDialog.propTypes = {
     classes: PropTypes.object.isRequired,
+    handleClose: PropTypes.func,
+    handleSnackbarAdd: PropTypes.func
 };
 
-export default withStyles(styles)(AddPeopleFormDialog);
+export default withStyles(styles)(AddInvitationFormDialog);

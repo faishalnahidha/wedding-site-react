@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Meteor } from "meteor/meteor";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { ReactTitle } from 'react-meta-tags';
 
@@ -8,9 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -24,6 +21,8 @@ import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Fab from '@material-ui/core/Fab';
 
+import MuiAlert from '@material-ui/lab/Alert';
+
 import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
@@ -31,16 +30,14 @@ import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
 
 import Footer from './Footer.jsx'
 import BackToTopButton from './components/BackToTopButton.jsx';
+import AddInvitationFormDialog from './components/AddInvitationFormDialog.jsx';
 
-const styles = {
+const styles = theme => ({
     root: {
-        backgroundColor: "#fff"
+        backgroundColor: "#ffffff"
     },
     title: {
         flexGrow: 1
-    },
-    inputForm: {
-        margin: "12px 0"
     },
     table: {
         padding: "0"
@@ -61,13 +58,21 @@ const styles = {
     },
     fabAdd: {
         position: "fixed",
-        bottom: 16,
-        right: 16
+        bottom: theme.spacing(2),
+        right: theme.spacing(2)
+    },
+    fabBackToTop: {
+        bottom: theme.spacing(10)
     },
     toolbar: {
         padding: "0 4px 0 52px"
-    }
-};
+    },
+    snackbar: {
+        [theme.breakpoints.down('xs')]: {
+            bottom: 80,
+        },
+    },
+});
 
 function ElevationScroll(props) {
     const { children } = props;
@@ -81,6 +86,10 @@ function ElevationScroll(props) {
     });
 }
 
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 class CMSPage extends Component {
     constructor(props) {
         super(props);
@@ -88,12 +97,15 @@ class CMSPage extends Component {
         this.state = {
             recipientId: '',
             recipientName: '',
-            openSnackbar: false,
-            copied: false
+            openSnackbarAddSuccess: false,
+            openSnackbarCopied: false,
+            openAddDialog: false
         };
 
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleOpenAddInvitationDialog = this.handleOpenAddInvitationDialog.bind(this);
+        this.handleCloseAddInvitationDialog = this.handleCloseAddInvitationDialog.bind(this);
+        this.handleOpenSnackbarAddSuccess = this.handleOpenSnackbarAddSuccess.bind(this);
     }
 
     handleChange(event) {
@@ -101,20 +113,27 @@ class CMSPage extends Component {
         this.setState({ [id]: value, })
     }
 
-    handleSubmit(event) {
-        event.preventDefault();
+    handleOpenAddInvitationDialog() {
+        this.setState({ openAddDialog: true })
+    }
 
-        const recId = this.state.recipientId.trim().toLowerCase();
-        const recName = this.state.recipientName.trim();
+    handleCloseAddInvitationDialog() {
+        this.setState({ openAddDialog: false })
+    }
 
-        Meteor.call('recipients.insert', recId, recName);
+    handleOpenSnackbarAddSuccess() {
+        this.setState({ openSnackbarAddSuccess: true })
+    }
 
-        this.setState({
-            recipientId: '',
-            recipientName: '',
-            openSnackbar: true
-        });
+    openAddInvitationDialog() {
+        if (!this.state.openAddDialog) return null;
 
+        return (
+            <AddInvitationFormDialog
+                handleClose={this.handleCloseAddInvitationDialog}
+                handleSnackbarAdd={this.handleOpenSnackbarAddSuccess}
+            />
+        )
     }
 
     renderRecipients() {
@@ -133,7 +152,7 @@ class CMSPage extends Component {
                 <TableCell padding="none">
                     <CopyToClipboard
                         text={"https://mutikizzanwedding.com/" + recipient._id}
-                        onCopy={() => this.setState({ copied: true })}
+                        onCopy={() => this.setState({ openSnackbarCopied: true })}
                     >
                         <IconButton size="medium">
                             <FileCopyOutlinedIcon fontSize="small" />
@@ -141,6 +160,7 @@ class CMSPage extends Component {
                     </CopyToClipboard>
                 </TableCell>
                 <TableCell padding="none">
+                    {/* DON'T FORGET TO CHANGE HREF TEXT FOR DIFFERENT PROJECTS! */}
                     <IconButton
                         size="medium"
                         href={"https://api.whatsapp.com/send?text=Assalamu%27alaikum%20Wr.%20Wb.%0A%0AKami%20mengundang%20Bapak%2FIbu%2FSaudara%2Fi%20untuk%20hadir%20pada%20acara%20pernikahan%20kami%0A%0A%2A%2AMutik%20Hidayati%20%26%20Faishal%20Izzan%20Nahidha%2A%2A%0A%0A%2AAkad%20Nikah%20%3A%20Sabtu%2C%2022%20Februari%202020%2A%0AWaktu%20%3A%2015.30%20WIB%0ATempat%20%3A%20Balong%20RT05%2FRW01%2C%20Kemasan%2C%20Sawit%2C%20Boyolali%0A%0A%2AResepsi%20%3A%20Minggu%2C%2023%20Februari%202020%2A%0AWaktu%20%3A%2009.00%20WIB%0ATempat%20%3A%20Gedung%20Kapujanggan%20Pengging%2C%20Bendan%2C%20Banyudono%2C%20Boyolali%0A%0AMerupakan%20kebahagiaan%20bagi%20kami%20bila%20Bapak%2FIbu%2FSaudara%2Fi%20berkenan%20hadir%20untuk%20memberikan%20doa%20restu%0A%0AWassalamu%27alaikum%20Wr.%20Wb.%0A-----------------------------%0Ahttps%3A%2F%2Fmutikizzanwedding.com%2F" + recipient._id}
@@ -182,7 +202,7 @@ class CMSPage extends Component {
                     <Toolbar className={classes.tableToolbar}>
                         <Typography variant="h6" className={classes.title}>
                             Daftar Undangan
-                            </Typography>
+                        </Typography>
                     </Toolbar>
                     <TableContainer className={classes.table}>
                         <Table aria-label="simple table">
@@ -203,11 +223,17 @@ class CMSPage extends Component {
                 <Footer />
 
                 {/* #################### FAB #################### */}
-                <BackToTopButton />
-                <Fab variant="extended" color="secondary" className={classes.fabAdd}>
+                <BackToTopButton className={classes.fabBackToTop} />
+                <Fab
+                    onClick={this.handleOpenAddInvitationDialog}
+                    variant="extended"
+                    color="secondary"
+                    className={classes.fabAdd}
+                >
                     <AddOutlinedIcon className={classes.extendedIcon} />
                     Tambah Undangan
                 </Fab>
+                { this.openAddInvitationDialog()}
 
                 {/* #################### Snackbar #################### */}
                 <Snackbar
@@ -216,21 +242,26 @@ class CMSPage extends Component {
                         vertical: 'bottom',
                         horizontal: 'center',
                     }}
-                    open={this.state.openSnackbar}
+                    className={classes.snackbar}
+                    open={this.state.openSnackbarAddSuccess}
                     autoHideDuration={3000}
-                    onClose={() => this.setState({ openSnackbar: false })}
-                    message="Undangan berhasil ditambahkan!"
-                />
+                    onClose={() => this.setState({ openSnackbarAddSuccess: false })}
+                >
+                    <Alert onClose={() => this.setState({ openSnackbarAddSuccess: false })} severity="success">
+                        Undangan berhasil ditambahkan!
+                    </Alert>
+                </Snackbar>
                 <Snackbar
                     key="copied"
                     anchorOrigin={{
                         vertical: 'bottom',
                         horizontal: 'center',
                     }}
-                    open={this.state.copied}
+                    className={classes.snackbar}
+                    open={this.state.openSnackbarCopied}
                     autoHideDuration={1000}
-                    onClose={() => this.setState({ copied: false })}
-                    message="Link disalin"
+                    onClose={() => this.setState({ openSnackbarCopied: false })}
+                    message="Link berhasil disalin"
                 />
             </div>
         )
