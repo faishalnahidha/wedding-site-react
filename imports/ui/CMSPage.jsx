@@ -21,9 +21,12 @@ import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import Link from '@material-ui/core/Link';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Fab from '@material-ui/core/Fab';
+
 import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 import WhatsAppIcon from '@material-ui/icons/WhatsApp';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 
 import Footer from './Footer.jsx'
 import BackToTopButton from './components/BackToTopButton.jsx';
@@ -51,6 +54,14 @@ const styles = {
     },
     bottomSection: {
         padding: "24px 16px 40px"
+    },
+    extendedIcon: {
+        marginRight: "8px",
+    },
+    fabAdd: {
+        position: "fixed",
+        bottom: 16,
+        right: 16
     },
 };
 
@@ -245,7 +256,12 @@ class CMSPage extends Component {
                 </Container>
                 <Footer />
 
+                {/* #################### FAB #################### */}
                 <BackToTopButton />
+                <Fab variant="extended" color="primary" className={classes.fabAdd}>
+                    <AddOutlinedIcon className={classes.extendedIcon} />
+                    Tambah Undangan
+                </Fab>
 
                 {/* #################### Snackbar #################### */}
                 <Snackbar
