@@ -4,7 +4,7 @@ import { Meteor } from "meteor/meteor";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { ReactTitle } from 'react-meta-tags';
 
-import { withStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -27,6 +27,7 @@ import Fab from '@material-ui/core/Fab';
 import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
+import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
 
 import Footer from './Footer.jsx'
 import BackToTopButton from './components/BackToTopButton.jsx';
@@ -53,7 +54,7 @@ const styles = {
         backgroundColor: "#4568dc"
     },
     bottomSection: {
-        padding: "24px 16px 40px"
+        padding: "16px 8px 40px"
     },
     extendedIcon: {
         marginRight: "8px",
@@ -63,28 +64,10 @@ const styles = {
         bottom: 16,
         right: 16
     },
-};
-
-const darkTheme = createMuiTheme({
-    palette: {
-        type: 'dark',
-        primary: {
-            light: "#7f95ff",
-            main: "#4568dc",
-            dark: "#003ea9",
-            contrastText: "#fff"
-        },
-        secondary: {
-            light: "#fff6ff",
-            main: "#f6c3e5",
-            dark: "#c392b3",
-            contrastText: "#212529"
-        },
-    },
-    typography: {
-        fontFamily: "Nunito Sans, Arial",
+    toolbar: {
+        padding: "0 4px 0 52px"
     }
-});
+};
 
 function ElevationScroll(props) {
     const { children } = props;
@@ -180,57 +163,20 @@ class CMSPage extends Component {
 
         return (
             <div ref={this.top} className={classes.root} id="CMSPage">
-                <ReactTitle title="CMS Wedding Invitation " />
+                <ReactTitle title="Ulem Invitation Management System" />
                 <ElevationScroll {...this.props}>
                     <AppBar position="sticky" color="primary">
-                        <Toolbar>
+                        <Toolbar className={classes.toolbar}>
                             <Typography variant="h6" align="center" className={classes.title}>
-                                Wedding Invitation CMS
-                        </Typography>
+                                Ulem IMS
+                            </Typography>
+                            <IconButton size="medium" color="inherit">
+                                <MoreVertOutlinedIcon fontSize="default" />
+                            </IconButton>
                         </Toolbar>
                     </AppBar>
                 </ElevationScroll>
-                <div className={classes.topSection}>
 
-                    <Container maxWidth="sm">
-                        {/* #################### Form Group #################### */}
-                        <form onSubmit={this.handleSubmit}>
-                            <ThemeProvider theme={darkTheme}>
-                                <TextField
-                                    id="recipientName"
-                                    type="text"
-                                    value={this.state.recipientName}
-                                    onChange={this.handleChange}
-                                    label="Nama Penerima"
-                                    placeholder="contoh: Chizuru Mizuhara"
-                                    variant="filled"
-                                    fullWidth required
-                                    color="secondary"
-                                    className={classes.inputForm} />
-                                <TextField
-                                    id="recipientId"
-                                    type="text"
-                                    value={this.state.recipientId}
-                                    onChange={this.handleChange}
-                                    label="ID Undangan"
-                                    placeholder="contoh: chizuru-mizuhara"
-                                    helperText="Tidak boleh ada spasi"
-                                    variant="filled"
-                                    fullWidth required
-                                    color="secondary"
-                                    className={classes.inputForm} />
-                            </ThemeProvider>
-                            <Button
-                                type="submit"
-                                value="Submit"
-                                variant="contained"
-                                color="secondary"
-                                className={classes.inputForm}>
-                                Tambah Undangan
-                                </Button>
-                        </form>
-                    </Container>
-                </div>
                 <Container maxWidth="sm" className={classes.bottomSection}>
                     {/* #################### Table #################### */}
                     <Toolbar className={classes.tableToolbar}>
@@ -258,7 +204,7 @@ class CMSPage extends Component {
 
                 {/* #################### FAB #################### */}
                 <BackToTopButton />
-                <Fab variant="extended" color="primary" className={classes.fabAdd}>
+                <Fab variant="extended" color="secondary" className={classes.fabAdd}>
                     <AddOutlinedIcon className={classes.extendedIcon} />
                     Tambah Undangan
                 </Fab>
