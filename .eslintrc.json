@@ -1,15 +1,26 @@
 {
   "parserOptions": {
-    "ecmaVersion": 6,
+    "ecmaVersion": 2017,
     "sourceType": "module",
     "ecmaFeatures": {
-      "jsx": true
+      "arrowFunctions": true,
+      "jsx": true,
+      "spread": true,
+      "destructuring": true
     }
   },
-  "plugins": ["meteor", "react-hooks"],
-  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "plugins": ["meteor", "react-hooks", "prettier"],
+  "extends": ["airbnb", "prettier", "plugin:react/recommended"],
+  "parser": "babel-eslint",
   "rules": {
     "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
-    "react-hooks/exhaustive-deps": "warn" // Checks effect dependencies
+    "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
+    "linebreak-style": ["error", "windows"],
+    "prettier/prettier": ["error"]
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
   }
 }

@@ -1,6 +1,10 @@
-import { Meteor } from "meteor/meteor";
-import { Recipients } from "../imports/api/recipients.js";
+import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
+import { Recipients } from '../imports/api/recipients.js';
 //import "../imports/api/guests.js";
+
+const SEED_USERNAME = 'meteorite';
+const SEED_PASSWORD = 'password';
 
 Meteor.startup(() => {
   // If the Links collection is empty, add some data.
@@ -17,11 +21,18 @@ Meteor.startup(() => {
   //   insertLink("Discussions", "https://forums.meteor.com");
   // }
 
+  if (!Accounts.findUserByUsername(SEED_USERNAME)) {
+    Accounts.createUser({
+      username: SEED_USERNAME,
+      password: SEED_PASSWORD,
+    });
+  }
+
   if (Recipients.find().count() === 0) {
     const chizuruMizuhara = {
-      _id: "chizuru-mizuhara",
-      name: "Chizuru Mizuhara",
-      createdAt: new Date()
+      _id: 'chizuru-mizuhara',
+      name: 'Chizuru Mizuhara',
+      createdAt: new Date(),
     };
 
     Recipients.insert(chizuruMizuhara);

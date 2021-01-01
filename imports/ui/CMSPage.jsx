@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Meteor } from 'meteor/meteor';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { ReactTitle } from 'react-meta-tags';
 
@@ -20,6 +21,8 @@ import Link from '@material-ui/core/Link';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Fab from '@material-ui/core/Fab';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import MuiAlert from '@material-ui/lab/Alert';
 
@@ -28,250 +31,297 @@ import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
 
-import Footer from './Footer.jsx'
+import Footer from './Footer.jsx';
 import BackToTopButton from './components/BackToTopButton.jsx';
 import AddInvitationFormDialog from './components/AddInvitationFormDialog.jsx';
+import LoginPage from './LoginPage.jsx';
 
-const styles = theme => ({
-    root: {
-        backgroundColor: "#ffffff"
+const styles = (theme) => ({
+  root: {
+    backgroundColor: '#ffffff',
+  },
+  title: {
+    flexGrow: 1,
+  },
+  table: {
+    padding: '0',
+  },
+  tableToolbar: {
+    padding: '0 16px',
+  },
+  topSection: {
+    width: '100%',
+    padding: '32px 0',
+    backgroundColor: '#4568dc',
+  },
+  bottomSection: {
+    padding: '16px 8px 40px',
+  },
+  extendedIcon: {
+    marginRight: '8px',
+  },
+  fabAdd: {
+    position: 'fixed',
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
+  },
+  fabBackToTop: {
+    bottom: theme.spacing(10),
+  },
+  toolbar: {
+    padding: '0 4px 0 52px',
+  },
+  snackbar: {
+    [theme.breakpoints.down('xs')]: {
+      bottom: 80,
     },
-    title: {
-        flexGrow: 1
-    },
-    table: {
-        padding: "0"
-    },
-    tableToolbar: {
-        padding: "0 16px"
-    },
-    topSection: {
-        width: "100%",
-        padding: "32px 0",
-        backgroundColor: "#4568dc"
-    },
-    bottomSection: {
-        padding: "16px 8px 40px"
-    },
-    extendedIcon: {
-        marginRight: "8px",
-    },
-    fabAdd: {
-        position: "fixed",
-        bottom: theme.spacing(2),
-        right: theme.spacing(2)
-    },
-    fabBackToTop: {
-        bottom: theme.spacing(10)
-    },
-    toolbar: {
-        padding: "0 4px 0 52px"
-    },
-    snackbar: {
-        [theme.breakpoints.down('xs')]: {
-            bottom: 80,
-        },
-    },
+  },
 });
 
 function ElevationScroll(props) {
-    const { children } = props;
-    const trigger = useScrollTrigger({
-        disableHysteresis: true,
-        threshold: 0,
-    });
+  const { children } = props;
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 0,
+  });
 
-    return React.cloneElement(children, {
-        elevation: trigger ? 4 : 0,
-    });
+  return React.cloneElement(children, {
+    elevation: trigger ? 4 : 0,
+  });
 }
 
 function Alert(props) {
-    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 class CMSPage extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            recipientId: '',
-            recipientName: '',
-            openSnackbarAddSuccess: false,
-            openSnackbarCopied: false,
-            openAddDialog: false
-        };
+    this.state = {
+      recipientId: '',
+      recipientName: '',
+      openSnackbarAddSuccess: false,
+      openSnackbarCopied: false,
+      openAddDialog: false,
+      anchorEl: null,
+      setAnchorEl: null,
+    };
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleOpenAddInvitationDialog = this.handleOpenAddInvitationDialog.bind(this);
-        this.handleCloseAddInvitationDialog = this.handleCloseAddInvitationDialog.bind(this);
-        this.handleOpenSnackbarAddSuccess = this.handleOpenSnackbarAddSuccess.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleOpenAddInvitationDialog = this.handleOpenAddInvitationDialog.bind(this);
+    this.handleCloseAddInvitationDialog = this.handleCloseAddInvitationDialog.bind(this);
+    this.handleOpenSnackbarAddSuccess = this.handleOpenSnackbarAddSuccess.bind(this);
+  }
+
+  handleChange(event) {
+    const { value, id } = event.target;
+    this.setState({ [id]: value });
+  }
+
+  handleOpenAddInvitationDialog() {
+    this.setState({ openAddDialog: true });
+  }
+
+  handleCloseAddInvitationDialog() {
+    this.setState({ openAddDialog: false });
+  }
+
+  handleOpenSnackbarAddSuccess() {
+    this.setState({ openSnackbarAddSuccess: true });
+  }
+
+  openAddInvitationDialog() {
+    if (!this.state.openAddDialog) {
+      return null;
     }
 
-    handleChange(event) {
-        const { value, id } = event.target;
-        this.setState({ [id]: value, })
+    return (
+      <AddInvitationFormDialog
+        handleClose={this.handleCloseAddInvitationDialog}
+        handleSnackbarAdd={this.handleOpenSnackbarAddSuccess}
+      />
+    );
+  }
+
+  handleMenuClick = (event) => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleMenuClose = () => {
+    this.setState({ anchorEl: null });
+  };
+
+  handleLogout = () => {
+    this.handleMenuClose();
+    Meteor.logout();
+  };
+
+  renderRecipients() {
+    const { recipients } = this.props;
+
+    return recipients.map((recipient) => (
+      <TableRow key={recipient._id}>
+        <TableCell>{recipient.name}</TableCell>
+        <TableCell>
+          <Link href={'https://mutikizzanwedding.com/' + recipient._id} target="_blank">
+            mutikizzanwedding.com/{recipient._id}
+          </Link>
+        </TableCell>
+        <TableCell padding="none">
+          <CopyToClipboard
+            text={'https://mutikizzanwedding.com/' + recipient._id}
+            onCopy={() => this.setState({ openSnackbarCopied: true })}
+          >
+            <IconButton size="medium">
+              <FileCopyOutlinedIcon fontSize="small" />
+            </IconButton>
+          </CopyToClipboard>
+        </TableCell>
+        <TableCell padding="none">
+          {/* DON'T FORGET TO CHANGE HREF TEXT FOR DIFFERENT PROJECTS! */}
+          <IconButton
+            size="medium"
+            href={
+              'https://api.whatsapp.com/send?text=Assalamu%27alaikum%20Wr.%20Wb.%0A%0AKami%20mengundang%20Bapak%2FIbu%2FSaudara%2Fi%20untuk%20hadir%20pada%20acara%20pernikahan%20kami%0A%0A%2A%2AMutik%20Hidayati%20%26%20Faishal%20Izzan%20Nahidha%2A%2A%0A%0A%2AAkad%20Nikah%20%3A%20Sabtu%2C%2022%20Februari%202020%2A%0AWaktu%20%3A%2015.30%20WIB%0ATempat%20%3A%20Balong%20RT05%2FRW01%2C%20Kemasan%2C%20Sawit%2C%20Boyolali%0A%0A%2AResepsi%20%3A%20Minggu%2C%2023%20Februari%202020%2A%0AWaktu%20%3A%2009.00%20WIB%0ATempat%20%3A%20Gedung%20Kapujanggan%20Pengging%2C%20Bendan%2C%20Banyudono%2C%20Boyolali%0A%0AMerupakan%20kebahagiaan%20bagi%20kami%20bila%20Bapak%2FIbu%2FSaudara%2Fi%20berkenan%20hadir%20untuk%20memberikan%20doa%20restu%0A%0AWassalamu%27alaikum%20Wr.%20Wb.%0A-----------------------------%0Ahttps%3A%2F%2Fmutikizzanwedding.com%2F' +
+              recipient._id
+            }
+            target="_blank"
+          >
+            <WhatsAppIcon fontSize="small" />
+          </IconButton>
+        </TableCell>
+      </TableRow>
+    ));
+  }
+
+  render() {
+    const { classes, loading, user } = this.props;
+
+    if (loading) {
+      return <LinearProgress />;
     }
 
-    handleOpenAddInvitationDialog() {
-        this.setState({ openAddDialog: true })
-    }
-
-    handleCloseAddInvitationDialog() {
-        this.setState({ openAddDialog: false })
-    }
-
-    handleOpenSnackbarAddSuccess() {
-        this.setState({ openSnackbarAddSuccess: true })
-    }
-
-    openAddInvitationDialog() {
-        if (!this.state.openAddDialog) return null;
-
-        return (
-            <AddInvitationFormDialog
-                handleClose={this.handleCloseAddInvitationDialog}
-                handleSnackbarAdd={this.handleOpenSnackbarAddSuccess}
-            />
-        )
-    }
-
-    renderRecipients() {
-        const { recipients } = this.props;
-
-        return recipients.map((recipient) => (
-            <TableRow key={recipient._id}>
-                <TableCell>
-                    {recipient.name}
-                </TableCell>
-                <TableCell>
-                    <Link href={"https://mutikizzanwedding.com/" + recipient._id} target="_blank">
-                        mutikizzanwedding.com/{recipient._id}
-                    </Link>
-                </TableCell>
-                <TableCell padding="none">
-                    <CopyToClipboard
-                        text={"https://mutikizzanwedding.com/" + recipient._id}
-                        onCopy={() => this.setState({ openSnackbarCopied: true })}
-                    >
-                        <IconButton size="medium">
-                            <FileCopyOutlinedIcon fontSize="small" />
-                        </IconButton>
-                    </CopyToClipboard>
-                </TableCell>
-                <TableCell padding="none">
-                    {/* DON'T FORGET TO CHANGE HREF TEXT FOR DIFFERENT PROJECTS! */}
-                    <IconButton
-                        size="medium"
-                        href={"https://api.whatsapp.com/send?text=Assalamu%27alaikum%20Wr.%20Wb.%0A%0AKami%20mengundang%20Bapak%2FIbu%2FSaudara%2Fi%20untuk%20hadir%20pada%20acara%20pernikahan%20kami%0A%0A%2A%2AMutik%20Hidayati%20%26%20Faishal%20Izzan%20Nahidha%2A%2A%0A%0A%2AAkad%20Nikah%20%3A%20Sabtu%2C%2022%20Februari%202020%2A%0AWaktu%20%3A%2015.30%20WIB%0ATempat%20%3A%20Balong%20RT05%2FRW01%2C%20Kemasan%2C%20Sawit%2C%20Boyolali%0A%0A%2AResepsi%20%3A%20Minggu%2C%2023%20Februari%202020%2A%0AWaktu%20%3A%2009.00%20WIB%0ATempat%20%3A%20Gedung%20Kapujanggan%20Pengging%2C%20Bendan%2C%20Banyudono%2C%20Boyolali%0A%0AMerupakan%20kebahagiaan%20bagi%20kami%20bila%20Bapak%2FIbu%2FSaudara%2Fi%20berkenan%20hadir%20untuk%20memberikan%20doa%20restu%0A%0AWassalamu%27alaikum%20Wr.%20Wb.%0A-----------------------------%0Ahttps%3A%2F%2Fmutikizzanwedding.com%2F" + recipient._id}
-                        target="_blank"
-                    >
-                        <WhatsAppIcon fontSize="small" />
-                    </IconButton>
-                </TableCell>
-            </TableRow >
-
-        ))
-    }
-
-    render() {
-        const { classes, loading } = this.props;
-
-        if (loading) {
-            return <LinearProgress />
-        }
-
-        return (
+    return (
+      <div className="main">
+        {user !== null ? (
+          <React.Fragment>
             <div ref={this.top} className={classes.root} id="CMSPage">
-                <ReactTitle title="Ulem Invitation Management System" />
-                <ElevationScroll {...this.props}>
-                    <AppBar position="sticky" color="primary">
-                        <Toolbar className={classes.toolbar}>
-                            <Typography variant="h6" align="center" className={classes.title}>
-                                Ulem IMS
-                            </Typography>
-                            <IconButton size="medium" color="inherit">
-                                <MoreVertOutlinedIcon fontSize="default" />
-                            </IconButton>
-                        </Toolbar>
-                    </AppBar>
-                </ElevationScroll>
+              <ReactTitle title="Ulem Invitation Management System" />
+              <ElevationScroll {...this.props}>
+                <AppBar position="sticky" color="primary">
+                  <Toolbar className={classes.toolbar}>
+                    <Typography variant="h6" align="center" className={classes.title}>
+                      Ulem IMS
+                    </Typography>
+                    <IconButton
+                      aria-controls="menu"
+                      aria-haspopup="true"
+                      onClick={this.handleMenuClick}
+                      size="medium"
+                      color="inherit"
+                    >
+                      <MoreVertOutlinedIcon fontSize="default" />
+                    </IconButton>
+                    <Menu
+                      id="simple-menu"
+                      anchorEl={this.state.anchorEl}
+                      keepMounted
+                      open={Boolean(this.state.anchorEl)}
+                      onClose={this.handleMenuClose}
+                    >
+                      <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
+                    </Menu>
+                  </Toolbar>
+                </AppBar>
+              </ElevationScroll>
 
-                <Container maxWidth="sm" className={classes.bottomSection}>
-                    {/* #################### Table #################### */}
-                    <Toolbar className={classes.tableToolbar}>
-                        <Typography variant="h6" className={classes.title}>
-                            Daftar Undangan
-                        </Typography>
-                    </Toolbar>
-                    <TableContainer className={classes.table}>
-                        <Table aria-label="simple table">
-                            <TableHead className={classes.tableHead}>
-                                <TableRow>
-                                    <TableCell><strong>Nama</strong></TableCell>
-                                    <TableCell><strong>Link Undangan</strong></TableCell>
-                                    <TableCell></TableCell>
-                                    <TableCell></TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {this.renderRecipients()}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </Container>
-                <Footer />
+              <Container maxWidth="sm" className={classes.bottomSection}>
+                {/* #################### Table #################### */}
+                <Toolbar className={classes.tableToolbar}>
+                  <Typography variant="h6" className={classes.title}>
+                    Daftar Undangan
+                  </Typography>
+                </Toolbar>
+                <TableContainer className={classes.table}>
+                  <Table aria-label="simple table">
+                    <TableHead className={classes.tableHead}>
+                      <TableRow>
+                        <TableCell>
+                          <strong>Nama</strong>
+                        </TableCell>
+                        <TableCell>
+                          <strong>Link Undangan</strong>
+                        </TableCell>
+                        <TableCell></TableCell>
+                        <TableCell></TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>{this.renderRecipients()}</TableBody>
+                  </Table>
+                </TableContainer>
+              </Container>
+              <Footer />
 
-                {/* #################### FAB #################### */}
-                <BackToTopButton className={classes.fabBackToTop} />
-                <Fab
-                    onClick={this.handleOpenAddInvitationDialog}
-                    variant="extended"
-                    color="secondary"
-                    className={classes.fabAdd}
+              {/* #################### FAB #################### */}
+              <BackToTopButton className={classes.fabBackToTop} />
+              <Fab
+                onClick={this.handleOpenAddInvitationDialog}
+                variant="extended"
+                color="secondary"
+                className={classes.fabAdd}
+              >
+                <AddOutlinedIcon className={classes.extendedIcon} />
+                Tambah Undangan
+              </Fab>
+              {this.openAddInvitationDialog()}
+
+              {/* #################### Snackbar #################### */}
+              <Snackbar
+                key="add-success"
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'center',
+                }}
+                className={classes.snackbar}
+                open={this.state.openSnackbarAddSuccess}
+                autoHideDuration={3000}
+                onClose={() => this.setState({ openSnackbarAddSuccess: false })}
+              >
+                <Alert
+                  onClose={() => this.setState({ openSnackbarAddSuccess: false })}
+                  severity="success"
                 >
-                    <AddOutlinedIcon className={classes.extendedIcon} />
-                    Tambah Undangan
-                </Fab>
-                { this.openAddInvitationDialog()}
-
-                {/* #################### Snackbar #################### */}
-                <Snackbar
-                    key="add-success"
-                    anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'center',
-                    }}
-                    className={classes.snackbar}
-                    open={this.state.openSnackbarAddSuccess}
-                    autoHideDuration={3000}
-                    onClose={() => this.setState({ openSnackbarAddSuccess: false })}
-                >
-                    <Alert onClose={() => this.setState({ openSnackbarAddSuccess: false })} severity="success">
-                        Undangan berhasil ditambahkan!
-                    </Alert>
-                </Snackbar>
-                <Snackbar
-                    key="copied"
-                    anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'center',
-                    }}
-                    className={classes.snackbar}
-                    open={this.state.openSnackbarCopied}
-                    autoHideDuration={1000}
-                    onClose={() => this.setState({ openSnackbarCopied: false })}
-                    message="Link berhasil disalin"
-                />
+                  Undangan berhasil ditambahkan!
+                </Alert>
+              </Snackbar>
+              <Snackbar
+                key="copied"
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'center',
+                }}
+                className={classes.snackbar}
+                open={this.state.openSnackbarCopied}
+                autoHideDuration={1000}
+                onClose={() => this.setState({ openSnackbarCopied: false })}
+                message="Link berhasil disalin"
+              />
             </div>
-        )
-    }
+          </React.Fragment>
+        ) : (
+          <LoginPage />
+        )}
+      </div>
+    );
+  }
 }
 
 CMSPage.propTypes = {
-    classes: PropTypes.object.isRequired,
-    recipients: PropTypes.array,
-    loading: PropTypes.bool
+  classes: PropTypes.object.isRequired,
+  user: PropTypes.object,
+  recipients: PropTypes.array,
+  loading: PropTypes.bool,
 };
 
 export default withStyles(styles)(CMSPage);
