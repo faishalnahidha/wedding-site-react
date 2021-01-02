@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
-import { Recipients } from '../imports/api/recipients.js';
-//import "../imports/api/guests.js";
+import { Recipients } from '../imports/api/recipients';
+// import "../imports/api/guests.js";
 
 const SEED_USERNAME = 'meteorite';
 const SEED_PASSWORD = 'password';

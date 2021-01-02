@@ -1,26 +1,59 @@
 {
-  "parserOptions": {
-    "ecmaVersion": 2017,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "arrowFunctions": true,
-      "jsx": true,
-      "spread": true,
-      "destructuring": true
-    }
-  },
-  "plugins": ["meteor", "react-hooks", "prettier"],
-  "extends": ["airbnb", "prettier", "plugin:react/recommended"],
-  "parser": "babel-eslint",
-  "rules": {
-    "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
-    "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
-    "linebreak-style": ["error", "windows"],
-    "prettier/prettier": ["error"]
-  },
   "env": {
-    "es6": true,
     "browser": true,
-    "node": true
+    "es2021": true,
+    "meteor": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "airbnb",
+    "prettier",
+    "prettier/react",
+    "plugin:meteor/recommended",
+    "@meteorjs/eslint-config-meteor"
+  ],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module",
+    "allowImportExportEverywhere": true
+  },
+  "plugins": ["react", "prettier", "meteor", "react-hooks"],
+  "settings": {
+    "import/resolver": "meteor"
+  },
+  "rules": {
+    "linebreak-style": ["error", "windows"],
+    "no-unused-vars": [
+      "error",
+      {
+        "ignore": ["meteor"]
+      }
+    ],
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/state-in-constructor": "off",
+    "indent": ["error", 2],
+    "quotes": [
+      "error",
+      "single",
+      // To allow Template Literals inside Component props.
+      // ex. <Component width={`50%`}/>
+      //
+      { "allowTemplateLiterals": true }
+    ],
+    "import/no-absolute-path": ["off"], // To allow absolute path imports in Meteor
+    // "import/extensions": ["off", "never"], // To resolve https://github.com/clayne11/eslint-import-resolver-meteor/issues/17
+    "no-underscore-dangle": ["off"], // To allow `_id` access when retrieving Mongo documents
+    "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
+    "react-hooks/exhaustive-deps": "warn" // Checks effect dependencies
   }
 }

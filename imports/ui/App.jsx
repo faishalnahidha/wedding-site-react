@@ -7,11 +7,10 @@ import { myTheme } from './theme'; // import file custom theming
 
 import LandingPageContainer from './LandingPageContainer.jsx';
 import CMSPageContainer from './CMSPageContainer.jsx';
-import LoginPage from './LoginPage.jsx';
 // import ErrorPage from './ErrorPage.jsx';
 
 const App = () => (
-  <React.Fragment>
+  <>
     <CssBaseline>
       <ThemeProvider theme={myTheme}>
         <Switch>
@@ -22,7 +21,7 @@ const App = () => (
         </Switch>
       </ThemeProvider>
     </CssBaseline>
-  </React.Fragment>
+  </>
 );
 
 export default App;
