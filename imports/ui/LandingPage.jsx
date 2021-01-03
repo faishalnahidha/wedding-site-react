@@ -7,10 +7,9 @@ import IntroSection from './landing-page-section/IntroSection.jsx';
 import ContentSection from './landing-page-section/ContentSection.jsx';
 import LocationSection from './landing-page-section/LocationSection.jsx';
 import InputFormSection from './landing-page-section/InputFormSection.jsx';
-import Footer from './Footer.jsx';
 import ErrorPage from './ErrorPage.jsx';
-
 import BackToTopButton from './components/BackToTopButton.jsx';
+import Footer from './components/Footer.jsx';
 
 class LandingPage extends Component {
   constructor(props) {
@@ -23,30 +22,30 @@ class LandingPage extends Component {
     this.scrollToLocationSection = this.scrollToLocationSection.bind(this);
   }
 
-  scrollToContentSection() {
+  scrollToContentSection = () => {
     if (this.contentSection.current) {
       this.contentSection.current.scrollIntoView({
         behavior: 'smooth',
         block: 'nearest',
       });
     }
-  }
+  };
 
-  scrollToLocationSection() {
+  scrollToLocationSection = () => {
     if (this.locationSection.current) {
       this.locationSection.current.scrollIntoView({
         behavior: 'smooth',
         block: 'nearest',
       });
     }
-  }
+  };
 
-  renderInputFormSection(recipient) {
+  renderInputFormSection = (recipient) => {
     if (recipient._id != 0) {
       return <InputFormSection recipient={recipient} />;
     }
     return <div style={{ backgroundColor: '#fff', width: '100%', height: '32px' }} />;
-  }
+  };
 
   render() {
     const { loading, recipient, recipientExists } = this.props;
@@ -67,7 +66,6 @@ class LandingPage extends Component {
           scrollToLocationSection={this.scrollToLocationSection}
         />
         <div ref={this.contentSection}>
-          {' '}
           {/* put Component inside div to make ref worked */}
           <ContentSection />
         </div>

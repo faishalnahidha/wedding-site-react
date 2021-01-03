@@ -37,22 +37,22 @@ class AddInvitationFormDialog extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(event) {
+  handleChange = (event) => {
     const { value, id } = event.target;
     this.setState({ [id]: value });
-  }
+  };
 
-  handleNameChange(event) {
+  handleNameChange = (event) => {
     const { value } = event.target;
     this.setState({ recipientName: value, isRecipientNameEmpty: false });
-  }
+  };
 
-  handleIdChange(event) {
+  handleIdChange = (event) => {
     const { value } = event.target;
     this.setState({ recipientId: value, isRecipientIdEmpty: false });
-  }
+  };
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
 
     const recId = this.state.recipientId.trim().toLowerCase();
@@ -78,7 +78,7 @@ class AddInvitationFormDialog extends Component {
       this.props.handleSnackbarAdd();
       this.props.handleClose();
     }
-  }
+  };
 
   render() {
     const { classes, handleClose } = this.props;

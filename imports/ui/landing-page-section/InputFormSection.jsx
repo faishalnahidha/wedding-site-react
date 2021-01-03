@@ -57,19 +57,18 @@ class InputFormSection extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(event) {
+  handleChange = (event) => {
     const { value, id } = event.target;
     this.setState({ [id]: value });
-  }
+  };
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
 
     const { rsvpInput, messageInput } = this.state;
 
     const id = this.props.recipient._id;
     const rsvp = rsvpInput;
-    // eslint-disable-next-line no-undefined
     const message = messageInput !== undefined ? messageInput : '';
 
     Meteor.call('recipients.updateRsvp', id, rsvp, message);
@@ -77,7 +76,7 @@ class InputFormSection extends Component {
     this.setState({
       openSnackbar: true,
     });
-  }
+  };
 
   render() {
     const { classes } = this.props;

@@ -31,7 +31,7 @@ import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
 
-import Footer from './Footer.jsx';
+import Footer from './components/Footer.jsx';
 import BackToTopButton from './components/BackToTopButton.jsx';
 import AddInvitationFormDialog from './components/AddInvitationFormDialog.jsx';
 import LoginPage from './LoginPage.jsx';
@@ -114,24 +114,24 @@ class CMSPage extends Component {
     this.handleOpenSnackbarAddSuccess = this.handleOpenSnackbarAddSuccess.bind(this);
   }
 
-  handleChange(event) {
+  handleChange = (event) => {
     const { value, id } = event.target;
     this.setState({ [id]: value });
-  }
+  };
 
-  handleOpenAddInvitationDialog() {
+  handleOpenAddInvitationDialog = () => {
     this.setState({ openAddDialog: true });
-  }
+  };
 
-  handleCloseAddInvitationDialog() {
+  handleCloseAddInvitationDialog = () => {
     this.setState({ openAddDialog: false });
-  }
+  };
 
-  handleOpenSnackbarAddSuccess() {
+  handleOpenSnackbarAddSuccess = () => {
     this.setState({ openSnackbarAddSuccess: true });
-  }
+  };
 
-  openAddInvitationDialog() {
+  openAddInvitationDialog = () => {
     if (!this.state.openAddDialog) {
       return null;
     }
@@ -142,7 +142,7 @@ class CMSPage extends Component {
         handleSnackbarAdd={this.handleOpenSnackbarAddSuccess}
       />
     );
-  }
+  };
 
   handleMenuClick = (event) => {
     this.setState({ anchorEl: event.currentTarget });

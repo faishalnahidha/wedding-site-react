@@ -9,8 +9,7 @@
     "airbnb",
     "prettier",
     "prettier/react",
-    "plugin:meteor/recommended",
-    "@meteorjs/eslint-config-meteor"
+    "plugin:meteor/recommended"
   ],
   "parser": "babel-eslint",
   "parserOptions": {
@@ -40,7 +39,6 @@
       }
     ],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "react/state-in-constructor": "off",
     "indent": ["error", 2],
     "quotes": [
       "error",
@@ -51,7 +49,6 @@
       { "allowTemplateLiterals": true }
     ],
     "import/no-absolute-path": ["off"], // To allow absolute path imports in Meteor
-    // "import/extensions": ["off", "never"], // To resolve https://github.com/clayne11/eslint-import-resolver-meteor/issues/17
     "no-underscore-dangle": ["off"], // To allow `_id` access when retrieving Mongo documents
     "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
     "react-hooks/exhaustive-deps": "warn" // Checks effect dependencies

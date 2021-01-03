@@ -24,7 +24,6 @@ function BackToTop(props) {
   });
 
   const handleClick = () => {
-    // eslint-disable-next-line no-undef
     window.scrollTo({
       top: 0,
       left: 0,

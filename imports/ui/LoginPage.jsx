@@ -10,9 +10,9 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
-import Footer from './Footer.jsx';
+import Footer from './components/Footer.jsx';
 
-const styles = {
+const styles = (theme) => ({
   root: {
     height: '100vh',
     padding: '80px 0',
@@ -20,20 +20,20 @@ const styles = {
     backgroundColor: '#fff',
   },
   inputForm: {
-    marginBottom: '16px',
+    marginBottom: theme.spacing(2),
   },
   button: {
-    marginTop: 8,
+    marginTop: theme.spacing(1),
   },
   header: {
-    marginBottom: '32px',
+    marginBottom: theme.spacing(4),
   },
   footer: {
     position: 'fixed',
     bottom: 0,
     width: '100%',
   },
-};
+});
 
 class LoginPage extends Component {
   constructor(props) {
@@ -49,16 +49,16 @@ class LoginPage extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(e) {
+  handleSubmit = (e) => {
     e.preventDefault();
     const { username, password } = this.state;
     Meteor.loginWithPassword(username, password);
-  }
+  };
 
-  handleChange(e) {
+  handleChange = (e) => {
     const { value, id } = e.target;
     this.setState({ [id]: value });
-  }
+  };
 
   render() {
     const { classes } = this.props;
