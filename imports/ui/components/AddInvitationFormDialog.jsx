@@ -26,7 +26,6 @@ class AddInvitationFormDialog extends Component {
     this.state = {
       recipientId: '',
       recipientName: '',
-      openSnackbar: false,
       isRecipientIdEmpty: false,
       isRecipientNameEmpty: false,
     };
@@ -55,8 +54,10 @@ class AddInvitationFormDialog extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    const recId = this.state.recipientId.trim().toLowerCase();
-    const recName = this.state.recipientName.trim();
+    const { recipientId, recipientName } = this.state;
+
+    const recId = recipientId.trim().toLowerCase();
+    const recName = recipientName.trim();
 
     if (recName === '') {
       this.setState({ isRecipientNameEmpty: true });
@@ -72,26 +73,26 @@ class AddInvitationFormDialog extends Component {
       this.setState({
         recipientId: '',
         recipientName: '',
-        openSnackbar: true,
       });
 
-      this.props.handleSnackbarAdd();
-      this.props.handleClose();
+      this.handleSnackbarAdd();
+      this.handleClose();
     }
   };
 
   render() {
     const { classes, handleClose } = this.props;
+    const { recipientName, recipientId, isRecipientNameEmpty, isRecipientIdEmpty } = this.state;
 
     return (
       <div>
-        <Dialog open={true} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth>
+        <Dialog open onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth>
           <DialogTitle id="form-dialog-title">Tambah Undangan</DialogTitle>
           <DialogContent>
             <TextField
               id="recipientName"
               type="text"
-              value={this.state.recipientName}
+              value={recipientName}
               onChange={this.handleNameChange}
               label="Nama Penerima"
               placeholder="contoh: Lisa Mayer"
@@ -101,13 +102,13 @@ class AddInvitationFormDialog extends Component {
               autoFocus
               color="primary"
               className={classes.inputForm}
-              error={this.state.isRecipientNameEmpty}
-              helperText={this.state.isRecipientNameEmpty ? 'Wajib diisi!' : ''}
+              error={isRecipientNameEmpty}
+              helperText={isRecipientNameEmpty ? 'Wajib diisi!' : ''}
             />
             <TextField
               id="recipientId"
               type="text"
-              value={this.state.recipientId}
+              value={recipientId}
               onChange={this.handleIdChange}
               label="ID Undangan"
               placeholder="contoh: lisa-mayer"
@@ -115,8 +116,8 @@ class AddInvitationFormDialog extends Component {
               fullWidth
               required
               color="primary"
-              error={this.state.isRecipientIdEmpty}
-              helperText={this.state.isRecipientIdEmpty ? 'Wajib diisi!' : 'Tidak boleh ada spasi'}
+              error={isRecipientIdEmpty}
+              helperText={isRecipientIdEmpty ? 'Wajib diisi!' : 'Tidak boleh ada spasi'}
             />
           </DialogContent>
           <DialogActions className={classes.dialogAction}>
@@ -140,7 +141,8 @@ class AddInvitationFormDialog extends Component {
 
 AddInvitationFormDialog.propTypes = {
   classes: PropTypes.object.isRequired,
-  handleClose: PropTypes.func,
+  handleClose: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/no-unused-prop-types
   handleSnackbarAdd: PropTypes.func,
 };
 
