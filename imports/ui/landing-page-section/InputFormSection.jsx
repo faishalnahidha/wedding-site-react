@@ -10,20 +10,20 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Snackbar from '@material-ui/core/Snackbar';
 
-const styles = {
+const styles = (theme) => ({
   root: {
-    padding: '32px 0',
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
     flexGrow: 1,
     backgroundColor: '#fff',
   },
   inputForm: {
-    margin: '8px 0',
+    marginBottom: theme.spacing(2),
   },
   button: {
-    marginTop: 8,
-    width: 120,
+    width: '120px',
   },
-};
+});
 
 const rsvpOptions = [
   {
@@ -31,15 +31,15 @@ const rsvpOptions = [
   },
   {
     value: 'Yes',
-    text: 'Gasskeun! Saya siap meluncur ke TKP!',
+    text: 'Siap! Saya pasti akan hadir',
   },
   {
     value: 'Maybe',
-    text: 'Ok, kalau sempat saya akan hadir',
+    text: 'OK, kalau sempat saya akan hadir',
   },
   {
     value: 'No',
-    text: 'Maaf tidak bisa hadir, saya doakan saja semoga lancar',
+    text: 'Maaf tidak bisa hadir, saya doakan semoga lancar',
   },
 ];
 
@@ -65,9 +65,10 @@ class InputFormSection extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
+    const { recipient } = this.props;
     const { rsvpInput, messageInput } = this.state;
 
-    const id = this.props.recipient._id;
+    const id = recipient._id;
     const rsvp = rsvpInput;
     const message = messageInput !== undefined ? messageInput : '';
 
@@ -80,6 +81,7 @@ class InputFormSection extends Component {
 
   render() {
     const { classes } = this.props;
+    const { rsvpInput, messageInput, openSnackbar } = this.state;
 
     return (
       <div className={classes.root}>
@@ -96,15 +98,16 @@ class InputFormSection extends Component {
               <form onSubmit={this.handleSubmit}>
                 <TextField
                   id="rsvpInput"
-                  value={this.state.rsvpInput}
+                  value={rsvpInput}
                   onChange={this.handleChange}
                   label="Konfirmasi kedatangan"
-                  variant="filled"
+                  variant="outlined"
                   select
                   SelectProps={{
                     native: true,
                   }}
                   fullWidth
+                  required
                   className={classes.inputForm}
                 >
                   {rsvpOptions.map((option) => (
@@ -116,10 +119,10 @@ class InputFormSection extends Component {
                 <TextField
                   id="messageInput"
                   type="text"
-                  value={this.state.messageInput}
+                  value={messageInput}
                   onChange={this.handleChange}
                   label="Pesan untuk pengantin"
-                  variant="filled"
+                  variant="outlined"
                   multiline
                   rows="3"
                   fullWidth
@@ -145,7 +148,7 @@ class InputFormSection extends Component {
             vertical: 'bottom',
             horizontal: 'center',
           }}
-          open={this.state.openSnackbar}
+          open={openSnackbar}
           autoHideDuration={3000}
           onClose={() => this.setState({ openSnackbar: false })}
           message="Pesan sudah diterima. Thank you!"

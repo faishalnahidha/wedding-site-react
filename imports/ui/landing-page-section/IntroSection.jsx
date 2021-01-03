@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -33,74 +33,63 @@ const styles = {
   },
 };
 
-class IntroSection extends Component {
-  constructor(props) {
-    super(props);
-  }
+function IntroSection(props) {
+  const { classes, recipientName, scrollToContentSection, scrollToLocationSection } = props;
 
-  render() {
-    const { classes, recipientName, scrollToContentSection, scrollToLocationSection } = this.props;
+  return (
+    <div className={classes.root}>
+      <Container maxWidth="xs" className={classes.container}>
+        <Grid container spacing={3} direction="row" justify="center" alignItems="center">
+          <Grid item xs={4}>
+            <img
+              src="/img/logo-white.svg"
+              alt="Mawar Kumbang Wedding Logo"
+              className={classes.logoWhite}
+            />
+          </Grid>
+          <Grid item xs={10}>
+            <img
+              src="/img/illustration-intro.png"
+              className={classes.mainIllustration}
+              alt="Mawar Kumbang Wedding Illustration"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Box className={classes.recipientColumn} marginBottom={2}>
+              <Typography variant="body2" color="inherit" align="center">
+                Kepada
+              </Typography>
+              <Typography variant="h6" color="inherit" align="center">
+                <strong>{recipientName}</strong>
+              </Typography>
+            </Box>
+          </Grid>
 
-    return (
-      <div className={classes.root}>
-        <Container maxWidth="xs" className={classes.container}>
-          <Grid container spacing={3} direction="row" justify="center" alignItems="center">
-            <Grid item xs={4}>
-              <img
-                src="/img/logo-white.svg"
-                alt="Mutik Izzan Wedding Logo"
-                className={classes.logoWhite}
-              />
-            </Grid>
-            <Grid item xs={10}>
-              <img
-                src="/img/illustration-intro.png"
-                className={classes.mainIllustration}
-                alt="Mutik Izzan Wedding Illustration"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Box className={classes.recipientColumn} marginBottom={2}>
-                <Typography variant="body2" color="inherit" align="center">
-                  Kepada
-                </Typography>
-                <Typography variant="h6" color="inherit" align="center">
-                  <strong>{recipientName}</strong>
-                </Typography>
-              </Box>
-            </Grid>
-
-            <Grid item xs={12}>
-              <Grid container spacing={2} direction="row" justify="center" alignItems="center">
-                <Grid item xs={10}>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    size="large"
-                    disableElevation
-                    fullWidth
-                    onClick={scrollToContentSection}
-                  >
-                    Lihat Undangan
-                  </Button>
-                </Grid>
-                <Grid item xs={10}>
-                  <Button
-                    color="secondary"
-                    size="large"
-                    fullWidth
-                    onClick={scrollToLocationSection}
-                  >
-                    Lihat Lokasi
-                  </Button>
-                </Grid>
+          <Grid item xs={12}>
+            <Grid container spacing={2} direction="row" justify="center" alignItems="center">
+              <Grid item xs={10}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  size="large"
+                  disableElevation
+                  fullWidth
+                  onClick={scrollToContentSection}
+                >
+                  Lihat Undangan
+                </Button>
+              </Grid>
+              <Grid item xs={10}>
+                <Button color="secondary" size="large" fullWidth onClick={scrollToLocationSection}>
+                  Lihat Lokasi
+                </Button>
               </Grid>
             </Grid>
           </Grid>
-        </Container>
-      </div>
-    );
-  }
+        </Grid>
+      </Container>
+    </div>
+  );
 }
 
 IntroSection.propTypes = {
