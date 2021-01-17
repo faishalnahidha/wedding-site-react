@@ -41,17 +41,13 @@ function IntroSection(props) {
       <Container maxWidth="xs" className={classes.container}>
         <Grid container spacing={3} direction="row" justify="center" alignItems="center">
           <Grid item xs={4}>
-            <img
-              src="/img/logo-white.svg"
-              alt="Mawar Kumbang Wedding Logo"
-              className={classes.logoWhite}
-            />
+            <img src="/img/logo-white.svg" alt="Wedding Logo White" className={classes.logoWhite} />
           </Grid>
           <Grid item xs={10}>
             <img
               src="/img/illustration-intro.png"
               className={classes.mainIllustration}
-              alt="Mawar Kumbang Wedding Illustration"
+              alt="Intro Illustration"
             />
           </Grid>
           <Grid item xs={12}>

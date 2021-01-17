@@ -44,10 +44,10 @@ const styles = (theme) => ({
     flexGrow: 1,
   },
   table: {
-    padding: '0',
+    padding: 0,
   },
   tableToolbar: {
-    padding: '0 16px',
+    paddingLeft: theme.spacing(2),
   },
   topSection: {
     width: '100%',
@@ -62,18 +62,45 @@ const styles = (theme) => ({
   },
   fabAdd: {
     position: 'fixed',
-    bottom: theme.spacing(2),
-    right: theme.spacing(2),
+    zIndex: 1200,
+    [theme.breakpoints.down('xs')]: {
+      bottom: theme.spacing(2),
+      right: theme.spacing(2),
+    },
+    [theme.breakpoints.up('sm')]: {
+      bottom: theme.spacing(3),
+      right: theme.spacing(3),
+    },
+    [theme.breakpoints.up('md')]: {
+      bottom: theme.spacing(5),
+      right: theme.spacing(5),
+    },
+    [theme.breakpoints.up('xl')]: {
+      bottom: theme.spacing(5),
+      right: theme.spacing(10),
+    },
   },
   fabBackToTop: {
     bottom: theme.spacing(10),
+    [theme.breakpoints.down('xs')]: {
+      bottom: theme.spacing(10),
+    },
+    [theme.breakpoints.up('sm')]: {
+      bottom: theme.spacing(11),
+    },
+    [theme.breakpoints.up('md')]: {
+      bottom: theme.spacing(13),
+    },
+    [theme.breakpoints.up('xl')]: {
+      bottom: theme.spacing(13),
+    },
   },
   toolbar: {
     padding: '0 4px 0 52px',
   },
   snackbar: {
     [theme.breakpoints.down('xs')]: {
-      bottom: 80,
+      bottom: theme.spacing(10),
     },
   },
 });
@@ -158,18 +185,20 @@ class CMSPage extends Component {
 
   renderRecipients() {
     const { recipients } = this.props;
+    /* ######### DON'T FORGET TO CHANGE DOMAIN FOR DIFFERENT PROJECTS! ######### */
+    const domain = 'mawarkumbang.ulem.com';
 
     return recipients.map((recipient) => (
       <TableRow key={recipient._id}>
         <TableCell>{recipient.name}</TableCell>
         <TableCell>
-          <Link href={`https://mutikizzanwedding.com/${recipient._id}`} target="_blank">
-            mutikizzanwedding.com/{recipient._id}
+          <Link href={`https://${domain}/${recipient._id}`} target="_blank">
+            {domain}/{recipient._id}
           </Link>
         </TableCell>
         <TableCell padding="none">
           <CopyToClipboard
-            text={`https://mutikizzanwedding.com/${recipient._id}`}
+            text={`https://${domain}/${recipient._id}`}
             onCopy={() => this.setState({ openSnackbarCopied: true })}
           >
             <IconButton size="medium">
@@ -178,10 +207,10 @@ class CMSPage extends Component {
           </CopyToClipboard>
         </TableCell>
         <TableCell padding="none">
-          {/* DON'T FORGET TO CHANGE HREF TEXT FOR DIFFERENT PROJECTS! */}
+          {/* ######### DON'T FORGET TO CHANGE HREF TEXT FOR DIFFERENT PROJECTS! ######### */}
           <IconButton
             size="medium"
-            href={`https://api.whatsapp.com/send?text=Assalamu%27alaikum%20Wr.%20Wb.%0A%0AKami%20mengundang%20Bapak%2FIbu%2FSaudara%2Fi%20untuk%20hadir%20pada%20acara%20pernikahan%20kami%0A%0A%2A%2AMutik%20Hidayati%20%26%20Faishal%20Izzan%20Nahidha%2A%2A%0A%0A%2AAkad%20Nikah%20%3A%20Sabtu%2C%2022%20Februari%202020%2A%0AWaktu%20%3A%2015.30%20WIB%0ATempat%20%3A%20Balong%20RT05%2FRW01%2C%20Kemasan%2C%20Sawit%2C%20Boyolali%0A%0A%2AResepsi%20%3A%20Minggu%2C%2023%20Februari%202020%2A%0AWaktu%20%3A%2009.00%20WIB%0ATempat%20%3A%20Gedung%20Kapujanggan%20Pengging%2C%20Bendan%2C%20Banyudono%2C%20Boyolali%0A%0AMerupakan%20kebahagiaan%20bagi%20kami%20bila%20Bapak%2FIbu%2FSaudara%2Fi%20berkenan%20hadir%20untuk%20memberikan%20doa%20restu%0A%0AWassalamu%27alaikum%20Wr.%20Wb.%0A-----------------------------%0Ahttps%3A%2F%2Fmutikizzanwedding.com%2F${recipient._id}`}
+            href={`https://api.whatsapp.com/send?text=Assalamu%27alaikum%20Wr.%20Wb.%0A%0AKami%20mengundang%20Bapak%2FIbu%2FSaudara%2Fi%20untuk%20hadir%20pada%20acara%20pernikahan%20kami%0A%0A%2A%2AMutik%20Hidayati%20%26%20Faishal%20Izzan%20Nahidha%2A%2A%0A%0A%2AAkad%20Nikah%20%3A%20Sabtu%2C%2022%20Februari%202020%2A%0AWaktu%20%3A%2015.30%20WIB%0ATempat%20%3A%20Balong%20RT05%2FRW01%2C%20Kemasan%2C%20Sawit%2C%20Boyolali%0A%0A%2AResepsi%20%3A%20Minggu%2C%2023%20Februari%202020%2A%0AWaktu%20%3A%2009.00%20WIB%0ATempat%20%3A%20Gedung%20Kapujanggan%20Pengging%2C%20Bendan%2C%20Banyudono%2C%20Boyolali%0A%0AMerupakan%20kebahagiaan%20bagi%20kami%20bila%20Bapak%2FIbu%2FSaudara%2Fi%20berkenan%20hadir%20untuk%20memberikan%20doa%20restu%0A%0AWassalamu%27alaikum%20Wr.%20Wb.%0A-----------------------------%0Ahttps%3A%2F%2Fmawarkumbang.ulem.com%2F${recipient._id}`}
             target="_blank"
           >
             <WhatsAppIcon fontSize="small" />
@@ -236,7 +265,7 @@ class CMSPage extends Component {
               <Container maxWidth="sm" className={classes.bottomSection}>
                 {/* #################### Table #################### */}
                 <Toolbar className={classes.tableToolbar}>
-                  <Typography variant="h6" className={classes.title}>
+                  <Typography variant="subtitle1" className={classes.title}>
                     Daftar Undangan
                   </Typography>
                 </Toolbar>

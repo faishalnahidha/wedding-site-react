@@ -6,9 +6,7 @@ export const Recipients = new Mongo.Collection('recipients');
 
 if (Meteor.isServer) {
   // This code only runs on the server
-  Meteor.publish('recipients', function recipientsPublication() {
-    return Recipients.find();
-  });
+  Meteor.publish('recipients', () => Recipients.find());
 
   Meteor.publish('recipients', (id) => {
     check(id, String);

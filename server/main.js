@@ -1,9 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { Recipients } from '../imports/api/recipients';
-// import "../imports/api/guests.js";
 
-const SEED_USERNAME = 'meteorite';
+const SEED_USERNAME = 'user'; // before 'meteorite'
 const SEED_PASSWORD = 'password';
 
 Meteor.startup(() => {
@@ -29,12 +28,12 @@ Meteor.startup(() => {
   }
 
   if (Recipients.find().count() === 0) {
-    const chizuruMizuhara = {
-      _id: 'chizuru-mizuhara',
-      name: 'Chizuru Mizuhara',
+    const lisaMayer = {
+      _id: 'lisa-mayer',
+      name: 'Lisa Mayer',
       createdAt: new Date(),
     };
 
-    Recipients.insert(chizuruMizuhara);
+    Recipients.insert(lisaMayer);
   }
 });

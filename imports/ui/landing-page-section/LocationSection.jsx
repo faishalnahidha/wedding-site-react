@@ -8,9 +8,12 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 
+import { reception } from '../../api/invitationVariables.js';
+
 const styles = (theme) => ({
   root: {
-    padding: '12px 0',
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(2),
     flexGrow: 1,
     backgroundColor: '#fff',
   },
@@ -33,8 +36,9 @@ function LocationSection(props) {
   return (
     <div className={classes.root}>
       <Container disableGutters maxWidth="xs">
+        {/* ########## DON'T FORGET TO CHANGE IFRAME FOR DIFFERENT PROJECTS! ########## */}
         <iframe
-          title="Google Map Gedung Kapujanggan"
+          title="Location Map"
           frameBorder="0"
           allowFullScreen=""
           style={{ width: '100%', height: '62.5vh', border: 0 }}
@@ -48,9 +52,9 @@ function LocationSection(props) {
               Lokasi Resepsi
             </Typography>
             <Typography variant="h6" color="primary" gutterBottom>
-              <strong>Gedung Kapujanggan Pengging</strong>
+              <strong>{reception.location}</strong>
             </Typography>
-            <Typography variant="body2">RT 15/RW 03 Bendan, Banyudono, Boyolali</Typography>
+            <Typography variant="body2">{reception.locationMore}</Typography>
           </Grid>
           <Grid item xs={10}>
             <Button
@@ -59,7 +63,7 @@ function LocationSection(props) {
               size="large"
               disableElevation
               fullWidth
-              href="https://goo.gl/maps/NVsCTR2mbXVdLXXk7"
+              href={reception.locationUrl}
               target="_blank"
             >
               Buka Peta
@@ -69,7 +73,7 @@ function LocationSection(props) {
           <Grid item xs={5}>
             <img
               src="/img/logo-gradient.svg"
-              alt="Mutik Izzan Wedding Logo"
+              alt="Wedding Logo Gradient"
               className={classes.logoGradient}
             />
           </Grid>

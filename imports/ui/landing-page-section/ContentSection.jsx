@@ -12,6 +12,8 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Divider from '@material-ui/core/Divider';
 import Link from '@material-ui/core/Link';
 
+import { bride, groom, akad, reception } from '../../api/invitationVariables.js';
+
 const styles = {
   root: {
     padding: '48px 0 0',
@@ -57,9 +59,11 @@ function ContentSection(props) {
           </Grid>
           <Grid item xs={12}>
             <Typography variant="h5" gutterBottom color="primary">
-              <strong>Mawar Mutia Namaga</strong>
+              <strong>{bride.name}</strong>
             </Typography>
-            <Typography variant="body1">Putri Bp. Wage Wahyudi & Ibu Maya Mayasari</Typography>
+            <Typography variant="body1">
+              Putri Bp. {bride.father} & Ibu {bride.mother}
+            </Typography>
           </Grid>
           <Grid item xs={12}>
             <Typography variant="body2" color="textSecondary">
@@ -68,9 +72,11 @@ function ContentSection(props) {
           </Grid>
           <Grid item xs={12}>
             <Typography variant="h5" gutterBottom color="primary">
-              <strong>Borikum Bangsawan Aji</strong>
+              <strong>{groom.name}</strong>
             </Typography>
-            <Typography variant="body1">Putra Bp. Panji Prasasta & Ibu Ayu Anggraini</Typography>
+            <Typography variant="body1">
+              Putra Bp. {groom.father} & Ibu {groom.mother}
+            </Typography>
           </Grid>
 
           {/* ################## Cards Section ################## */}
@@ -85,20 +91,16 @@ function ContentSection(props) {
               <Divider />
               <CardContent>
                 <Typography variant="subtitle1">
-                  <strong>Sabtu, 20 Februari 2020</strong>
+                  <strong>{akad.date}</strong>
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                  pukul 15:00 WIB
+                  pukul {akad.time}
                 </Typography>
                 <Typography variant="body2">
-                  di kediaman mempelai wanita
+                  di {akad.location}
                   <br />
-                  Balong RT 05/RW 01, Kemasan, Sawit, Boyolali.&nbsp;
-                  <Link
-                    href="https://goo.gl/maps/8Zh7u1zrAmAthoGF9"
-                    target="_blank"
-                    color="primary"
-                  >
+                  {akad.locationMore}.&nbsp;
+                  <Link href={akad.locationUrl} target="_blank" color="primary">
                     Lihat peta
                   </Link>
                 </Typography>
@@ -111,20 +113,21 @@ function ContentSection(props) {
               <Divider />
               <CardContent>
                 <Typography variant="h6">
-                  <strong>Minggu, 21 Februari 2021</strong>
+                  <strong>{reception.date}</strong>
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                  pukul 08:00 WIB
+                  pukul {reception.time}
                 </Typography>
                 <Typography variant="body2">
-                  di Gedung Kapujanggan Pengging <br />
-                  RT 15/RW 03 Bendan, Banyudono, Boyolali
+                  di {reception.location}
+                  <br />
+                  {reception.locationMore}
                 </Typography>
               </CardContent>
             </Card>
           </Grid>
           <Grid item xs={12}>
-            <Box marginTop={3} marginBottom={3}>
+            <Box marginTop={3} marginBottom={4}>
               <img src="/img/icon-location.svg" alt="Location Icon" className={classes.icon} />
             </Box>
           </Grid>

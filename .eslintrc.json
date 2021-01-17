@@ -33,10 +33,6 @@
         "endOfLine": "auto"
       }
     ],
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "react/forbid-prop-types": "off",
-    "react/jsx-props-no-spreading": "off",
-    "react/require-default-props": "off",
     "indent": ["error", 2],
     "quotes": [
       "error",
@@ -46,9 +42,30 @@
       //
       { "allowTemplateLiterals": true }
     ],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/forbid-prop-types": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/require-default-props": "off",
+    "import/prefer-default-export": "off",
+    "import/extensions": ["off", "never"],
     "import/no-absolute-path": ["off"], // To allow absolute path imports in Meteor
     "no-underscore-dangle": ["off"], // To allow `_id` access when retrieving Mongo documents
     "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
-    "react-hooks/exhaustive-deps": "warn" // Checks effect dependencies
+    "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
+    "object-shorthand": [
+      "error",
+      "always",
+      {
+        "avoidQuotes": false
+      }
+    ],
+    "meteor/eventmap-params": [
+      "error",
+      {
+        "eventParamName": "event",
+        "templateInstanceParamName": "instance"
+      }
+    ],
+    "meteor/template-names": ["off"]
   }
 }

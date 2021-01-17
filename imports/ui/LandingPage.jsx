@@ -41,7 +41,7 @@ class LandingPage extends Component {
   };
 
   renderInputFormSection = (recipient) => {
-    if (recipient._id != 0) {
+    if (recipient._id !== 0) {
       return <InputFormSection recipient={recipient} />;
     }
     return <div style={{ backgroundColor: '#fff', width: '100%', height: '32px' }} />;
@@ -59,7 +59,7 @@ class LandingPage extends Component {
     }
 
     return (
-      <React.Fragment>
+      <>
         <IntroSection
           recipientName={recipient.name}
           scrollToContentSection={this.scrollToContentSection}
@@ -75,7 +75,7 @@ class LandingPage extends Component {
         {this.renderInputFormSection(recipient)}
         <Footer />
         <BackToTopButton />
-      </React.Fragment>
+      </>
     );
   }
 }
