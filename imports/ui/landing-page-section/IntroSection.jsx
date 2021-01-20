@@ -83,9 +83,9 @@ function IntroSection(props) {
           <Grid item xs={10}>
             <Fade triggerOnce>
               <img
-                src="/img/illustration-intro.png"
+                src="/img/illustration-intro.svg"
                 className={classes.mainIllustration}
-                alt="Intro Illustration"
+                alt="Mawar and Kumbang"
               />
             </Fade>
           </Grid>

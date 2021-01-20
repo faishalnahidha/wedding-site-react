@@ -55,6 +55,7 @@ class AddInvitationFormDialog extends Component {
     event.preventDefault();
 
     const { recipientId, recipientName } = this.state;
+    const { handleSnackbarAdd, handleClose } = this.props;
 
     const recId = recipientId.trim().toLowerCase();
     const recName = recipientName.trim();
@@ -75,8 +76,8 @@ class AddInvitationFormDialog extends Component {
         recipientName: '',
       });
 
-      this.handleSnackbarAdd();
-      this.handleClose();
+      handleSnackbarAdd();
+      handleClose();
     }
   };
 

@@ -39,7 +39,7 @@ import LoginPage from './LoginPage.jsx';
 
 const styles = (theme) => ({
   root: {
-    backgroundColor: '#ffffff',
+    backgroundColor: theme.palette.background.default,
   },
   title: {
     flexGrow: 1,
@@ -73,31 +73,41 @@ const styles = (theme) => ({
       right: theme.spacing(3),
     },
     [theme.breakpoints.up('md')]: {
-      bottom: theme.spacing(5),
-      right: theme.spacing(5),
+      top: theme.spacing(5),
+      left: theme.spacing(3),
+    },
+    [theme.breakpoints.up('lg')]: {
+      top: theme.spacing(5),
+      left: '12%',
     },
     [theme.breakpoints.up('xl')]: {
-      bottom: theme.spacing(5),
-      right: theme.spacing(10),
+      top: theme.spacing(5),
+      left: '25%',
     },
   },
   fabBackToTop: {
-    bottom: theme.spacing(10),
     [theme.breakpoints.down('xs')]: {
       bottom: theme.spacing(10),
     },
     [theme.breakpoints.up('sm')]: {
       bottom: theme.spacing(11),
+      right: theme.spacing(3),
     },
     [theme.breakpoints.up('md')]: {
-      bottom: theme.spacing(13),
+      bottom: theme.spacing(3),
+      right: theme.spacing(3),
     },
     [theme.breakpoints.up('xl')]: {
-      bottom: theme.spacing(13),
+      bottom: theme.spacing(5),
+      right: theme.spacing(5),
     },
   },
   toolbar: {
     padding: '0 4px 0 52px',
+  },
+  appbar: {
+    backgroundColor: theme.palette.background.paper,
+    color: theme.palette.text.primary,
   },
   snackbar: {
     [theme.breakpoints.down('xs')]: {
@@ -237,7 +247,7 @@ class CMSPage extends Component {
             <div ref={this.top} className={classes.root} id="CMSPage">
               <ReactTitle title="Ulem Invitation Management System" />
               <ElevationScroll {...this.props}>
-                <AppBar position="sticky" color="primary">
+                <AppBar position="sticky" className={classes.appbar}>
                   <Toolbar className={classes.toolbar}>
                     <Typography variant="h6" align="center" className={classes.title}>
                       Ulem IMS
@@ -297,7 +307,7 @@ class CMSPage extends Component {
                 <Fab
                   onClick={this.handleOpenAddInvitationDialog}
                   variant="extended"
-                  color="secondary"
+                  color="primary"
                   className={classes.fabAdd}
                 >
                   <AddOutlinedIcon className={classes.extendedIcon} />
