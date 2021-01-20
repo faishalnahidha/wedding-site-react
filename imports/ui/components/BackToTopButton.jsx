@@ -18,6 +18,7 @@ const styles = (theme) => ({
 
 function BackToTop(props) {
   const { classes, className, ...other } = props;
+
   const trigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 600,

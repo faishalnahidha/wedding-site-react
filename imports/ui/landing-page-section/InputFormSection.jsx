@@ -39,7 +39,7 @@ const rsvpOptions = [
   },
   {
     value: 'No',
-    text: 'Maaf tidak bisa hadir, saya doakan semoga lancar',
+    text: 'Maaf tidak bisa hadir, saya doakan saja semoga lancar',
   },
 ];
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Zoom, AttentionSeeker } from 'react-awesome-reveal';
 
 import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -36,13 +37,12 @@ function LocationSection(props) {
   return (
     <div className={classes.root}>
       <Container disableGutters maxWidth="xs">
-        {/* ########## DON'T FORGET TO CHANGE IFRAME FOR DIFFERENT PROJECTS! ########## */}
         <iframe
           title="Location Map"
           frameBorder="0"
           allowFullScreen=""
           style={{ width: '100%', height: '62.5vh', border: 0 }}
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1977.6135990530518!2d110.67126588076933!3d-7.5501863079718365!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a6b720ad2333f%3A0xd838f4a090c3d8cc!2sGedung%20Kapujanggan!5e0!3m2!1sen!2sid!4v1580576699704!5m2!1sen!2sid"
+          src={reception.mapIframe}
         />
       </Container>
       <Container maxWidth="xs">
@@ -57,25 +57,29 @@ function LocationSection(props) {
             <Typography variant="body2">{reception.locationMore}</Typography>
           </Grid>
           <Grid item xs={10}>
-            <Button
-              variant="contained"
-              color="primary"
-              size="large"
-              disableElevation
-              fullWidth
-              href={reception.locationUrl}
-              target="_blank"
-            >
-              Buka Peta
-            </Button>
+            <Zoom duration={500}>
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                disableElevation
+                fullWidth
+                href={reception.locationUrl}
+                target="_blank"
+              >
+                Buka Peta
+              </Button>
+            </Zoom>
           </Grid>
           <Divider className={classes.divider} />
           <Grid item xs={5}>
-            <img
-              src="/img/logo-gradient.svg"
-              alt="Wedding Logo Gradient"
-              className={classes.logoGradient}
-            />
+            <AttentionSeeker effect="pulse" delay={1000}>
+              <img
+                src="/img/logo-gradient.svg"
+                alt="Wedding Logo Gradient"
+                className={classes.logoGradient}
+              />
+            </AttentionSeeker>
           </Grid>
         </Grid>
       </Container>

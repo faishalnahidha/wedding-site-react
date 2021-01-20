@@ -23,6 +23,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import Fab from '@material-ui/core/Fab';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import Zoom from '@material-ui/core/Zoom';
 
 import MuiAlert from '@material-ui/lab/Alert';
 
@@ -186,19 +187,20 @@ class CMSPage extends Component {
   renderRecipients() {
     const { recipients } = this.props;
     /* ######### DON'T FORGET TO CHANGE DOMAIN FOR DIFFERENT PROJECTS! ######### */
-    const domain = 'mawarkumbang.ulem.com';
+    const domain = 'mawarkumbang.ulem.com/';
 
     return recipients.map((recipient) => (
       <TableRow key={recipient._id}>
         <TableCell>{recipient.name}</TableCell>
         <TableCell>
-          <Link href={`https://${domain}/${recipient._id}`} target="_blank">
-            {domain}/{recipient._id}
+          <Link href={`https://${domain}${recipient._id}`} target="_blank">
+            {domain}
+            {recipient._id}
           </Link>
         </TableCell>
         <TableCell padding="none">
           <CopyToClipboard
-            text={`https://${domain}/${recipient._id}`}
+            text={`https://${domain}${recipient._id}`}
             onCopy={() => this.setState({ openSnackbarCopied: true })}
           >
             <IconButton size="medium">
@@ -291,15 +293,17 @@ class CMSPage extends Component {
 
               {/* #################### FAB #################### */}
               <BackToTopButton className={classes.fabBackToTop} />
-              <Fab
-                onClick={this.handleOpenAddInvitationDialog}
-                variant="extended"
-                color="secondary"
-                className={classes.fabAdd}
-              >
-                <AddOutlinedIcon className={classes.extendedIcon} />
-                Tambah Undangan
-              </Fab>
+              <Zoom in timeout={500} style={{ transitionDelay: '500ms' }}>
+                <Fab
+                  onClick={this.handleOpenAddInvitationDialog}
+                  variant="extended"
+                  color="secondary"
+                  className={classes.fabAdd}
+                >
+                  <AddOutlinedIcon className={classes.extendedIcon} />
+                  Tambah Undangan
+                </Fab>
+              </Zoom>
               {this.openAddInvitationDialog()}
 
               {/* #################### Snackbar #################### */}

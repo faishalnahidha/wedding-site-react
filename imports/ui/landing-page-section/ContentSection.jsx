@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Fade, Slide } from 'react-awesome-reveal';
 
 import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -58,12 +59,16 @@ function ContentSection(props) {
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h5" gutterBottom color="primary">
-              <strong>{bride.name}</strong>
-            </Typography>
-            <Typography variant="body1">
-              Putri Bp. {bride.father} & Ibu {bride.mother}
-            </Typography>
+            <Fade direction="up">
+              <div>
+                <Typography variant="h5" gutterBottom color="primary">
+                  <strong>{bride.name}</strong>
+                </Typography>
+                <Typography variant="body1">
+                  Putri Bp. {bride.father} & Ibu {bride.mother}
+                </Typography>
+              </div>
+            </Fade>
           </Grid>
           <Grid item xs={12}>
             <Typography variant="body2" color="textSecondary">
@@ -71,12 +76,16 @@ function ContentSection(props) {
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h5" gutterBottom color="primary">
-              <strong>{groom.name}</strong>
-            </Typography>
-            <Typography variant="body1">
-              Putra Bp. {groom.father} & Ibu {groom.mother}
-            </Typography>
+            <Fade direction="up" delay={300}>
+              <div>
+                <Typography variant="h5" gutterBottom color="primary">
+                  <strong>{groom.name}</strong>
+                </Typography>
+                <Typography variant="body1">
+                  Putra Bp. {groom.father} & Ibu {groom.mother}
+                </Typography>
+              </div>
+            </Fade>
           </Grid>
 
           {/* ################## Cards Section ################## */}
@@ -86,45 +95,49 @@ function ContentSection(props) {
             </Box>
           </Grid>
           <Grid item xs={12}>
-            <Card raised width="100%" className={classes.card}>
-              <CardHeader title="Akad Nikah" disableTypography className={classes.cardHeader} />
-              <Divider />
-              <CardContent>
-                <Typography variant="subtitle1">
-                  <strong>{akad.date}</strong>
-                </Typography>
-                <Typography variant="body2" gutterBottom>
-                  pukul {akad.time}
-                </Typography>
-                <Typography variant="body2">
-                  di {akad.location}
-                  <br />
-                  {akad.locationMore}.&nbsp;
-                  <Link href={akad.locationUrl} target="_blank" color="primary">
-                    Lihat peta
-                  </Link>
-                </Typography>
-              </CardContent>
-            </Card>
+            <Slide triggerOnce direction="right" delay={500}>
+              <Card raised width="100%" className={classes.card}>
+                <CardHeader title="Akad Nikah" disableTypography className={classes.cardHeader} />
+                <Divider />
+                <CardContent>
+                  <Typography variant="subtitle1">
+                    <strong>{akad.date}</strong>
+                  </Typography>
+                  <Typography variant="body2" gutterBottom>
+                    pukul {akad.time}
+                  </Typography>
+                  <Typography variant="body2">
+                    di {akad.location}
+                    <br />
+                    {akad.locationMore}.&nbsp;
+                    <Link href={akad.locationUrl} target="_blank" color="primary">
+                      Lihat peta
+                    </Link>
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Slide>
           </Grid>
           <Grid item xs={12}>
-            <Card raised width="100%" className={classes.card}>
-              <CardHeader title="Resepsi" disableTypography className={classes.cardHeader} />
-              <Divider />
-              <CardContent>
-                <Typography variant="h6">
-                  <strong>{reception.date}</strong>
-                </Typography>
-                <Typography variant="body2" gutterBottom>
-                  pukul {reception.time}
-                </Typography>
-                <Typography variant="body2">
-                  di {reception.location}
-                  <br />
-                  {reception.locationMore}
-                </Typography>
-              </CardContent>
-            </Card>
+            <Slide triggerOnce direction="right" delay={800}>
+              <Card raised width="100%" className={classes.card}>
+                <CardHeader title="Resepsi" disableTypography className={classes.cardHeader} />
+                <Divider />
+                <CardContent>
+                  <Typography variant="h6">
+                    <strong>{reception.date}</strong>
+                  </Typography>
+                  <Typography variant="body2" gutterBottom>
+                    pukul {reception.time}
+                  </Typography>
+                  <Typography variant="body2">
+                    di {reception.location}
+                    <br />
+                    {reception.locationMore}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Slide>
           </Grid>
           <Grid item xs={12}>
             <Box marginTop={3} marginBottom={4}>
