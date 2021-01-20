@@ -23,7 +23,7 @@
     "raf": "^3.4.1",
     "react": "^16.14.0",
     "react-awesome-reveal": "^3.7.0",
-    "react-copy-to-clipboard": "^5.0.2",
+    "react-copy-to-clipboard": "^5.0.3",
     "react-dom": "^16.14.0",
     "react-lottie": "^1.2.3",
     "react-meta-tags": "^0.7.4",
@@ -40,18 +40,18 @@
   "devDependencies": {
     "@meteorjs/eslint-config-meteor": "^1.0.5",
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.17.0",
+    "eslint": "^7.18.0",
     "eslint-config-airbnb": "^18.2.1",
-    "eslint-config-prettier": "^7.1.0",
+    "eslint-config-prettier": "^7.2.0",
     "eslint-import-resolver-meteor": "^0.4.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-meteor": "^7.2.2",
-    "eslint-plugin-prettier": "^3.3.0",
+    "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "prettier": "^2.2.1",
-    "webpack": "^4.44.2"
+    "webpack": "^4.46.0"
   },
   "eslintConfig": {
     "extends": "@meteorjs/eslint-config-meteor"
