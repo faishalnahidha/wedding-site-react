@@ -1,15 +1,71 @@
 {
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "meteor": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "airbnb",
+    "prettier",
+    "prettier/react",
+    "plugin:meteor/recommended"
+  ],
+  "parser": "babel-eslint",
   "parserOptions": {
-    "ecmaVersion": 6,
-    "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
-    }
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module",
+    "allowImportExportEverywhere": true
   },
-  "plugins": ["meteor", "react-hooks"],
-  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "plugins": ["react", "prettier", "meteor", "react-hooks"],
+  "settings": {
+    "import/resolver": "meteor"
+  },
   "rules": {
+    "linebreak-style": ["error", "windows"],
+    "no-unused-vars": ["error"],
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "indent": ["error", 2],
+    "quotes": [
+      "error",
+      "single",
+      // To allow Template Literals inside Component props.
+      // ex. <Component width={`50%`}/>
+      //
+      { "allowTemplateLiterals": true }
+    ],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/forbid-prop-types": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/require-default-props": "off",
+    "import/prefer-default-export": "off",
+    "import/extensions": ["off", "never"],
+    "import/no-absolute-path": ["off"], // To allow absolute path imports in Meteor
+    "no-underscore-dangle": ["off"], // To allow `_id` access when retrieving Mongo documents
     "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
-    "react-hooks/exhaustive-deps": "warn" // Checks effect dependencies
+    "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
+    "object-shorthand": [
+      "error",
+      "always",
+      {
+        "avoidQuotes": false
+      }
+    ],
+    "meteor/eventmap-params": [
+      "error",
+      {
+        "eventParamName": "event",
+        "templateInstanceParamName": "instance"
+      }
+    ],
+    "meteor/template-names": ["off"]
   }
 }

@@ -1,16 +1,14 @@
-import { Meteor } from "meteor/meteor";
-import { Mongo } from "meteor/mongo";
-import { check } from "meteor/check";
+import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
+import { check } from 'meteor/check';
 
-export const Recipients = new Mongo.Collection("recipients");
+export const Recipients = new Mongo.Collection('recipients');
 
 if (Meteor.isServer) {
   // This code only runs on the server
-  Meteor.publish("recipients", function recipientsPublication() {
-    return Recipients.find();
-  });
+  Meteor.publish('recipients', () => Recipients.find());
 
-  Meteor.publish("recipients", id => {
+  Meteor.publish('recipients', (id) => {
     check(id, String);
 
     return Recipients.find({ _id: id });
@@ -18,7 +16,7 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-  "recipients.insert"(idInput, nameInput) {
+  'recipients.insert'(idInput, nameInput) {
     check(idInput, String);
     check(nameInput, String);
 
@@ -30,21 +28,21 @@ Meteor.methods({
     Recipients.insert({
       _id: idInput,
       name: nameInput,
-      createdAt: new Date()
+      createdAt: new Date(),
     });
   },
-  "recipients.remove"(recipientId) {
+  'recipients.remove'(recipientId) {
     check(recipientId, String);
 
     Recipients.remove(recipientId);
   },
-  "recipients.updateRsvp"(recipientId, rsvpInput, messageInput) {
+  'recipients.updateRsvp'(recipientId, rsvpInput, messageInput) {
     check(recipientId, String);
     check(rsvpInput, String);
     check(messageInput, String);
 
     Recipients.update(recipientId, {
-      $set: { rsvp: rsvpInput, message: messageInput }
+      $set: { rsvp: rsvpInput, message: messageInput },
     });
-  }
+  },
 });
