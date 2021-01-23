@@ -11,7 +11,12 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 const styles = (theme) => ({
   root: {
     backgroundColor: theme.palette.background.default,
-    padding: '14px 0',
+    [theme.breakpoints.down('xs')]: {
+      padding: '12px 0',
+    },
+    [theme.breakpoints.up('sm')]: {
+      padding: '14px 0',
+    },
   },
   icon: {
     fontSize: 14,

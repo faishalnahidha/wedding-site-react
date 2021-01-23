@@ -17,10 +17,19 @@ import Footer from './components/Footer.jsx';
 
 const styles = (theme) => ({
   root: {
-    height: '100vh',
-    padding: '80px 0',
+    minHeight: '100vh',
+    paddingTop: '12vh',
+    position: 'relative',
     flexGrow: 1,
-    backgroundColor: '#fff',
+    backgroundColor: theme.palette.background.default,
+    [theme.breakpoints.down('xs')]: {
+      paddingBottom: theme.spacing(9),
+      marginBottom: -theme.spacing(9),
+    },
+    [theme.breakpoints.up('sm')]: {
+      paddingBottom: theme.spacing(6),
+      marginBottom: -theme.spacing(6),
+    },
   },
   inputForm: {
     marginBottom: theme.spacing(2),
@@ -32,7 +41,7 @@ const styles = (theme) => ({
     marginBottom: theme.spacing(4),
   },
   footer: {
-    position: 'fixed',
+    position: 'absolute',
     bottom: 0,
     width: '100%',
   },
