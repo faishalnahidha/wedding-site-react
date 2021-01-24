@@ -203,14 +203,14 @@ class CMSPage extends Component {
       <TableRow key={recipient._id}>
         <TableCell>{recipient.name}</TableCell>
         <TableCell>
-          <Link href={`https://${domain}${recipient._id}`} target="_blank">
+          <Link href={`http://${domain}${recipient._id}`} target="_blank">
             {domain}
             {recipient._id}
           </Link>
         </TableCell>
         <TableCell padding="none">
           <CopyToClipboard
-            text={`https://${domain}${recipient._id}`}
+            text={`http://${domain}${recipient._id}`}
             onCopy={() => this.setState({ openSnackbarCopied: true })}
           >
             <IconButton size="medium">
@@ -250,7 +250,7 @@ class CMSPage extends Component {
                 <AppBar position="sticky" className={classes.appbar}>
                   <Toolbar className={classes.toolbar}>
                     <Typography variant="h6" align="center" className={classes.title}>
-                      Ulem IMS
+                      Ullem IMS
                     </Typography>
                     <IconButton
                       aria-controls="menu"

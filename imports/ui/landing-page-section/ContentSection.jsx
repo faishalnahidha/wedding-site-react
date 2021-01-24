@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Fade, Slide } from 'react-awesome-reveal';
+import { Fade, Zoom } from 'react-awesome-reveal';
 
 import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -95,7 +95,7 @@ function ContentSection(props) {
             </Box>
           </Grid>
           <Grid item xs={12}>
-            <Slide triggerOnce direction="right" delay={500}>
+            <Zoom triggerOnce direction="up" duration={2000} delay={500}>
               <Card raised width="100%" className={classes.card}>
                 <CardHeader title="Akad Nikah" disableTypography className={classes.cardHeader} />
                 <Divider />
@@ -116,10 +116,10 @@ function ContentSection(props) {
                   </Typography>
                 </CardContent>
               </Card>
-            </Slide>
+            </Zoom>
           </Grid>
           <Grid item xs={12}>
-            <Slide triggerOnce direction="right" delay={800}>
+            <Zoom triggerOnce direction="up" duration={2000} delay={800}>
               <Card raised width="100%" className={classes.card}>
                 <CardHeader title="Resepsi" disableTypography className={classes.cardHeader} />
                 <Divider />
@@ -137,7 +137,7 @@ function ContentSection(props) {
                   </Typography>
                 </CardContent>
               </Card>
-            </Slide>
+            </Zoom>
           </Grid>
           <Grid item xs={12}>
             <Box marginTop={3} marginBottom={4}>
