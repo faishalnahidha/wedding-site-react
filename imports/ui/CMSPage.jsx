@@ -32,6 +32,8 @@ import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
 
+import { domain, whatsappMessage } from '../api/variables.js';
+
 import Footer from './components/Footer.jsx';
 import BackToTopButton from './components/BackToTopButton.jsx';
 import AddInvitationFormDialog from './components/AddInvitationFormDialog.jsx';
@@ -196,21 +198,19 @@ class CMSPage extends Component {
 
   renderRecipients() {
     const { recipients } = this.props;
-    /* ######### DON'T FORGET TO CHANGE DOMAIN FOR DIFFERENT PROJECTS! ######### */
-    const domain = 'mawarkumbang.ulem.com/';
 
     return recipients.map((recipient) => (
       <TableRow key={recipient._id}>
         <TableCell>{recipient.name}</TableCell>
         <TableCell>
-          <Link href={`https://${domain}${recipient._id}`} target="_blank">
+          <Link href={`http://${domain}${recipient._id}`} target="_blank">
             {domain}
             {recipient._id}
           </Link>
         </TableCell>
         <TableCell padding="none">
           <CopyToClipboard
-            text={`https://${domain}${recipient._id}`}
+            text={`http://${domain}${recipient._id}`}
             onCopy={() => this.setState({ openSnackbarCopied: true })}
           >
             <IconButton size="medium">
@@ -219,10 +219,9 @@ class CMSPage extends Component {
           </CopyToClipboard>
         </TableCell>
         <TableCell padding="none">
-          {/* ######### DON'T FORGET TO CHANGE HREF TEXT FOR DIFFERENT PROJECTS! ######### */}
           <IconButton
             size="medium"
-            href={`https://api.whatsapp.com/send?text=Assalamu%27alaikum%20Wr.%20Wb.%0A%0AKami%20mengundang%20Bapak%2FIbu%2FSaudara%2Fi%20untuk%20hadir%20pada%20acara%20pernikahan%20kami%0A%0A%2A%2AMutik%20Hidayati%20%26%20Faishal%20Izzan%20Nahidha%2A%2A%0A%0A%2AAkad%20Nikah%20%3A%20Sabtu%2C%2022%20Februari%202020%2A%0AWaktu%20%3A%2015.30%20WIB%0ATempat%20%3A%20Balong%20RT05%2FRW01%2C%20Kemasan%2C%20Sawit%2C%20Boyolali%0A%0A%2AResepsi%20%3A%20Minggu%2C%2023%20Februari%202020%2A%0AWaktu%20%3A%2009.00%20WIB%0ATempat%20%3A%20Gedung%20Kapujanggan%20Pengging%2C%20Bendan%2C%20Banyudono%2C%20Boyolali%0A%0AMerupakan%20kebahagiaan%20bagi%20kami%20bila%20Bapak%2FIbu%2FSaudara%2Fi%20berkenan%20hadir%20untuk%20memberikan%20doa%20restu%0A%0AWassalamu%27alaikum%20Wr.%20Wb.%0A-----------------------------%0Ahttps%3A%2F%2Fmawarkumbang.ulem.com%2F${recipient._id}`}
+            href={`https://api.whatsapp.com/send?text=${whatsappMessage}${recipient._id}`}
             target="_blank"
           >
             <WhatsAppIcon fontSize="small" />
@@ -242,6 +241,7 @@ class CMSPage extends Component {
 
     return (
       <div className="main">
+        {/* If user logged in (not null), render CMS. If user not logged in (null), route to Login Page */}
         {user !== null ? (
           <>
             <div ref={this.top} className={classes.root} id="CMSPage">
@@ -250,7 +250,7 @@ class CMSPage extends Component {
                 <AppBar position="sticky" className={classes.appbar}>
                   <Toolbar className={classes.toolbar}>
                     <Typography variant="h6" align="center" className={classes.title}>
-                      Ulem IMS
+                      Ullem IMS
                     </Typography>
                     <IconButton
                       aria-controls="menu"
@@ -275,7 +275,7 @@ class CMSPage extends Component {
               </ElevationScroll>
 
               <Container maxWidth="sm" className={classes.bottomSection}>
-                {/* #################### Table #################### */}
+                {/* ######################################## TABLE ######################################## */}
                 <Toolbar className={classes.tableToolbar}>
                   <Typography variant="subtitle1" className={classes.title}>
                     Daftar Undangan
@@ -298,10 +298,11 @@ class CMSPage extends Component {
                     <TableBody>{this.renderRecipients()}</TableBody>
                   </Table>
                 </TableContainer>
+                {/* ######################################## TABLE END ######################################## */}
               </Container>
               <Footer />
 
-              {/* #################### FAB #################### */}
+              {/* ######################################## FAB ######################################## */}
               <BackToTopButton className={classes.fabBackToTop} />
               <Zoom in timeout={500} style={{ transitionDelay: '500ms' }}>
                 <Fab
@@ -316,7 +317,7 @@ class CMSPage extends Component {
               </Zoom>
               {this.openAddInvitationDialog()}
 
-              {/* #################### Snackbar #################### */}
+              {/* ######################################## SNACKBAR ######################################## */}
               <Snackbar
                 key="add-success"
                 anchorOrigin={{

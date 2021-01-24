@@ -7,11 +7,17 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import Link from '@material-ui/core/Link';
 
 const styles = (theme) => ({
   root: {
     backgroundColor: theme.palette.background.default,
-    padding: '14px 0',
+    [theme.breakpoints.down('xs')]: {
+      padding: '12px 0',
+    },
+    [theme.breakpoints.up('sm')]: {
+      padding: '14px 0',
+    },
   },
   icon: {
     fontSize: 14,
@@ -40,6 +46,7 @@ const styles = (theme) => ({
 
 function Footer(props) {
   const { classes, className } = props;
+
   return (
     <div className={clsx(classes.root, className)}>
       <Container maxWidth="sm">
@@ -51,7 +58,10 @@ function Footer(props) {
           </Grid>
           <Grid item xs={12} sm={6} className={classes.footerItemB}>
             <Typography variant="caption" color="textSecondary">
-              Copyright &copy; 2021 Ulem Undangan Digital
+              Copyright &copy; 2021{' '}
+              <Link href="https://ullem.com" target="_blank">
+                Ullem Undangan Digital
+              </Link>
             </Typography>
           </Grid>
         </Grid>
