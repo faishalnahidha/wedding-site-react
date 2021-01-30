@@ -10,6 +10,8 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Snackbar from '@material-ui/core/Snackbar';
 
+import MuiAlert from '@material-ui/lab/Alert';
+
 const styles = (theme) => ({
   root: {
     paddingTop: theme.spacing(4),
@@ -42,6 +44,10 @@ const rsvpOptions = [
     text: 'Maaf tidak bisa hadir, saya doakan saja semoga lancar',
   },
 ];
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 class InputFormSection extends Component {
   constructor(props) {
@@ -151,8 +157,11 @@ class InputFormSection extends Component {
           open={openSnackbar}
           autoHideDuration={3000}
           onClose={() => this.setState({ openSnackbar: false })}
-          message="Pesan sudah diterima. Thank you!"
-        />
+        >
+          <Alert onClose={() => this.setState({ openSnackbar: false })} severity="success">
+            Pesan sudah diterima. Terima kasih!
+          </Alert>
+        </Snackbar>
       </div>
     );
   }

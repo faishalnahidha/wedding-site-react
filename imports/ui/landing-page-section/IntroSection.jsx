@@ -46,7 +46,7 @@ const styles = {
   lottieContainer: {
     display: 'block',
     position: 'absolute',
-    bottom: 0,
+    bottom: '-8px',
     left: 0,
     width: '100%',
     zIndex: 0,
@@ -70,7 +70,7 @@ function IntroSection(props) {
         <div className={classes.background} />
       </Fade>
       <Container maxWidth="xs" className={classes.container}>
-        <Grid container spacing={3} direction="row" justify="center" alignItems="center">
+        <Grid container spacing={2} direction="row" justify="center" alignItems="center">
           <Grid item xs={4}>
             <Fade triggerOnce>
               <img
@@ -91,7 +91,7 @@ function IntroSection(props) {
           </Grid>
 
           <Grid item xs={12}>
-            <Box className={classes.recipientColumn} marginBottom={2}>
+            <Box className={classes.recipientColumn} marginBottom={1}>
               <Typography variant="body2" color="inherit" align="center">
                 Kepada
               </Typography>
@@ -104,7 +104,7 @@ function IntroSection(props) {
           </Grid>
 
           <Grid item xs={12}>
-            <Grid container spacing={1} direction="row" justify="center" alignItems="center">
+            <Grid container spacing={2} direction="row" justify="center" alignItems="center">
               <Grid item xs={10}>
                 <Zoom triggerOnce delay={1500} duration={500}>
                   <Button
@@ -122,6 +122,7 @@ function IntroSection(props) {
               <Grid item xs={10}>
                 <Zoom triggerOnce delay={1800} duration={500}>
                   <Button
+                    variant="outlined"
                     color="secondary"
                     size="large"
                     fullWidth
@@ -137,7 +138,7 @@ function IntroSection(props) {
       </Container>
       <div className={classes.lottieContainer}>
         <Fade delay={2300}>
-          <Lottie options={lottieDefaultOptions} height={64} width={64} />
+          <Lottie options={lottieDefaultOptions} height={48} width={48} />
         </Fade>
       </div>
     </div>
