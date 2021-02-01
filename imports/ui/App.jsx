@@ -5,9 +5,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 import { myTheme } from './theme'; // import file custom theming
 
-import LandingPageContainer from './LandingPageContainer.jsx';
-import CMSPageContainer from './CMSPageContainer.jsx';
-// import ErrorPage from './ErrorPage.jsx';
+import LandingPageContainer from './containers/LandingPageContainer.jsx';
+import CMSContainer from './containers/CMSContainer.jsx';
 
 const App = () => (
   <>
@@ -15,9 +14,8 @@ const App = () => (
       <ThemeProvider theme={myTheme}>
         <Switch>
           <Route exact path="/" component={LandingPageContainer} />
-          <Route exact path="/ims" component={CMSPageContainer} />
+          <Route exact path="/ims" component={CMSContainer} />
           <Route path="/:id" component={LandingPageContainer} />
-          {/* <Route component={ErrorPage} /> */}
         </Switch>
       </ThemeProvider>
     </CssBaseline>

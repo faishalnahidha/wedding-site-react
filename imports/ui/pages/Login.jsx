@@ -13,7 +13,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 
 import MuiAlert from '@material-ui/lab/Alert';
 
-import Footer from './components/Footer.jsx';
+import Footer from '../components/Footer.jsx';
 
 const styles = (theme) => ({
   root: {
@@ -56,7 +56,7 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-class LoginPage extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
 
@@ -185,8 +185,8 @@ class LoginPage extends Component {
   }
 }
 
-LoginPage.propTypes = {
+Login.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(LoginPage);
+export default withStyles(styles)(Login);

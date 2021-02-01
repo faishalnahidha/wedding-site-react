@@ -8,8 +8,8 @@ import ContentSection from './landing-page-section/ContentSection.jsx';
 import LocationSection from './landing-page-section/LocationSection.jsx';
 import InputFormSection from './landing-page-section/InputFormSection.jsx';
 import ErrorPage from './ErrorPage.jsx';
-import BackToTopButton from './components/BackToTopButton.jsx';
-import Footer from './components/Footer.jsx';
+import BackToTopButton from '../components/BackToTopButton.jsx';
+import Footer from '../components/Footer.jsx';
 
 class LandingPage extends Component {
   constructor(props) {

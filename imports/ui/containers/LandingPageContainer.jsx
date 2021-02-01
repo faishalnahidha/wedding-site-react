@@ -1,12 +1,12 @@
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 
-import { Recipients } from '../api/recipients.js';
+import { Recipients } from '../../api/recipients.js';
 
-import LandingPage from './LandingPage.jsx';
+import LandingPage from '../pages/LandingPage.jsx';
 
 export default withTracker(({ match }) => {
-  const id = match.params.id;
+  const { id } = match.params;
 
   /* ------- handle access from root dns --------- */
   if (id === undefined) {

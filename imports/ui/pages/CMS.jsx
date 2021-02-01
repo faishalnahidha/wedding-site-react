@@ -32,12 +32,12 @@ import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
 
-import { domain, whatsappMessage } from '../api/variables.js';
+import { domain, whatsappMessage } from '../../api/variables.js';
 
-import Footer from './components/Footer.jsx';
-import BackToTopButton from './components/BackToTopButton.jsx';
-import AddInvitationFormDialog from './components/AddInvitationFormDialog.jsx';
-import LoginPage from './LoginPage.jsx';
+import Footer from '../components/Footer.jsx';
+import BackToTopButton from '../components/BackToTopButton.jsx';
+import AddInvitationFormDialog from '../components/AddInvitationFormDialog.jsx';
+import Login from './Login.jsx';
 
 const styles = (theme) => ({
   root: {
@@ -351,7 +351,7 @@ class CMSPage extends Component {
             </div>
           </>
         ) : (
-          <LoginPage />
+          <Login />
         )}
       </div>
     );
