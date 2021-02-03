@@ -13,7 +13,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Divider from '@material-ui/core/Divider';
 import Link from '@material-ui/core/Link';
 
-import { bride, groom, akad, reception } from '../../api/variables.js';
+import { bride, groom, akad, reception } from '../../../api/variables.js';
 
 const styles = {
   root: {

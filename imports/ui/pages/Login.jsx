@@ -5,15 +5,15 @@ import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Snackbar from '@material-ui/core/Snackbar';
+import Paper from '@material-ui/core/Paper';
 
 import MuiAlert from '@material-ui/lab/Alert';
 
-import Footer from './components/Footer.jsx';
+import Footer from '../components/Footer.jsx';
 
 const styles = (theme) => ({
   root: {
@@ -21,7 +21,7 @@ const styles = (theme) => ({
     paddingTop: '12vh',
     position: 'relative',
     flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.paper,
     [theme.breakpoints.down('xs')]: {
       paddingBottom: theme.spacing(9),
       marginBottom: -theme.spacing(9),
@@ -50,13 +50,21 @@ const styles = (theme) => ({
       bottom: 80,
     },
   },
+  paper: {
+    padding: '64px 24px',
+    borderRadius: '8px',
+    outlined: 1,
+    [theme.breakpoints.down('xs')]: {
+      border: 'none',
+    },
+  },
 });
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-class LoginPage extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
 
@@ -68,9 +76,6 @@ class LoginPage extends Component {
       isUsernameError: false,
       isPasswordError: false,
     };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit = (e) => {
@@ -114,8 +119,8 @@ class LoginPage extends Component {
 
     return (
       <div className={classes.root}>
-        <Container maxWidth="xs">
-          <Grid container>
+        <Container maxWidth="xs" disableGutters>
+          <Paper variant="outlined" className={classes.paper}>
             <Typography variant="h5" gutterBottom align="center" className={classes.header}>
               ULEM Invitation Management System
             </Typography>
@@ -160,7 +165,7 @@ class LoginPage extends Component {
                 Login
               </Button>
             </form>
-          </Grid>
+          </Paper>
         </Container>
         <Footer className={classes.footer} />
 
@@ -185,8 +190,8 @@ class LoginPage extends Component {
   }
 }
 
-LoginPage.propTypes = {
+Login.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(LoginPage);
+export default withStyles(styles)(Login);

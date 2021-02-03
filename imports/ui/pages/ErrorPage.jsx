@@ -6,9 +6,9 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
-export default function SimpleContainer() {
+export default function ErrorPage() {
   return (
-    <React.Fragment>
+    <>
       <Container maxWidth="xs">
         <Box height="62.5vh" position="relative">
           <Box
@@ -35,6 +35,6 @@ export default function SimpleContainer() {
 
         <Typography />
       </Container>
-    </React.Fragment>
+    </>
   );
 }

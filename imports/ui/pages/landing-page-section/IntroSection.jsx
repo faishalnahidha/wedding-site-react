@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 import Lottie from 'react-lottie';
-import animationData from '../lottie/scroll-down.json';
+import animationData from '../../components/lottie-files/scroll-down.json';
 
 const styles = {
   root: {

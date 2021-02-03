@@ -2,9 +2,9 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker, useTracker } from 'meteor/react-meteor-data';
 
 /* import collection api */
-import { Recipients } from '../api/recipients.js';
+import { Recipients } from '../../api/recipients.js';
 
-import CMSPage from './CMSPage.jsx';
+import CMS from '../pages/CMS.jsx';
 
 export default withTracker(() => {
   const user = useTracker(() => Meteor.user());
@@ -19,4 +19,4 @@ export default withTracker(() => {
     loading,
     user,
   };
-})(CMSPage);
+})(CMS);
