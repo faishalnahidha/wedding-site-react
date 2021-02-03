@@ -12,18 +12,24 @@ import Snackbar from '@material-ui/core/Snackbar';
 
 import MuiAlert from '@material-ui/lab/Alert';
 
+import { AttentionSeeker } from 'react-awesome-reveal';
+
 const styles = (theme) => ({
   root: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(5),
     flexGrow: 1,
-    backgroundColor: '#fff',
+    backgroundColor: theme.palette.background.paper,
   },
   inputForm: {
     marginBottom: theme.spacing(2),
   },
   button: {
     width: '120px',
+  },
+  logoGradient: {
+    width: '100%',
+    marginBottom: theme.spacing(4),
   },
 });
 
@@ -58,9 +64,6 @@ class InputFormSection extends Component {
       messageInput: '',
       openSnackbar: false,
     };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange = (event) => {
@@ -86,66 +89,79 @@ class InputFormSection extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, recipient } = this.props;
     const { rsvpInput, messageInput, openSnackbar } = this.state;
 
     return (
       <div className={classes.root}>
         <Container maxWidth="xs">
-          <Grid container spacing={1} justify="center" alignItems="flex-start">
-            <Grid item xs={12}>
-              <Typography variant="body2" gutterBottom>
-                Kami sangat berbahagia jika Saudara/i bersedia menghadiri acara resepsi pernikahan
-                kami
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              {/* #################### Form Group #################### */}
-              <form onSubmit={this.handleSubmit}>
-                <TextField
-                  id="rsvpInput"
-                  value={rsvpInput}
-                  onChange={this.handleChange}
-                  label="Konfirmasi kedatangan"
-                  variant="outlined"
-                  select
-                  SelectProps={{
-                    native: true,
-                  }}
-                  fullWidth
-                  required
-                  className={classes.inputForm}
-                >
-                  {rsvpOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.text}
-                    </option>
-                  ))}
-                </TextField>
-                <TextField
-                  id="messageInput"
-                  type="text"
-                  value={messageInput}
-                  onChange={this.handleChange}
-                  label="Pesan untuk pengantin"
-                  variant="outlined"
-                  multiline
-                  rows="3"
-                  fullWidth
-                  className={classes.inputForm}
+          <Grid container spacing={3} justify="center" alignItems="flex-start">
+            <Grid item xs={5}>
+              <AttentionSeeker effect="pulse" delay={1000}>
+                <img
+                  src="/img/logo-gradient.svg"
+                  alt="Wedding Logo Gradient"
+                  className={classes.logoGradient}
                 />
-                <Button
-                  type="submit"
-                  value="Submit"
-                  variant="contained"
-                  color="primary"
-                  disableElevation
-                  className={classes.button}
-                >
-                  Kirim
-                </Button>
-              </form>
+              </AttentionSeeker>
             </Grid>
+            {recipient._id !== '0' ? (
+              <>
+                <Grid item xs={12}>
+                  <Typography variant="body2">
+                    Kami sangat berbahagia jika Saudara/i bersedia menghadiri acara resepsi
+                    pernikahan kami
+                  </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  {/* #################### Form Group #################### */}
+                  <form onSubmit={this.handleSubmit}>
+                    <TextField
+                      id="rsvpInput"
+                      value={rsvpInput}
+                      onChange={this.handleChange}
+                      label="Konfirmasi kedatangan"
+                      variant="outlined"
+                      select
+                      SelectProps={{
+                        native: true,
+                      }}
+                      fullWidth
+                      required
+                      className={classes.inputForm}
+                    >
+                      {rsvpOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.text}
+                        </option>
+                      ))}
+                    </TextField>
+                    <TextField
+                      id="messageInput"
+                      type="text"
+                      value={messageInput}
+                      onChange={this.handleChange}
+                      label="Pesan untuk pengantin"
+                      variant="outlined"
+                      multiline
+                      rows="3"
+                      fullWidth
+                      className={classes.inputForm}
+                    />
+                    <Button
+                      type="submit"
+                      value="Submit"
+                      variant="contained"
+                      color="primary"
+                      disableElevation
+                      className={classes.button}
+                    >
+                      Kirim
+                    </Button>
+                  </form>
+                </Grid>
+              </>
+            ) : null}
           </Grid>
         </Container>
         {/* #################### Snackbar #################### */}

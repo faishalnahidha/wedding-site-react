@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Zoom, AttentionSeeker } from 'react-awesome-reveal';
+import { Zoom } from 'react-awesome-reveal';
 
 import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -16,7 +16,7 @@ const styles = (theme) => ({
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(2),
     flexGrow: 1,
-    backgroundColor: '#fff',
+    backgroundColor: theme.palette.background.paper,
   },
   locationColumn: {
     marginTop: theme.spacing(1),
@@ -24,10 +24,8 @@ const styles = (theme) => ({
   },
   divider: {
     width: '90%',
-    margin: '36px 0',
-  },
-  logoGradient: {
-    width: '100%',
+    marginTop: '36px',
+    marginBottom: theme.spacing(4),
   },
 });
 
@@ -72,15 +70,6 @@ function LocationSection(props) {
             </Zoom>
           </Grid>
           <Divider className={classes.divider} />
-          <Grid item xs={5}>
-            <AttentionSeeker effect="pulse" delay={1000}>
-              <img
-                src="/img/logo-gradient.svg"
-                alt="Wedding Logo Gradient"
-                className={classes.logoGradient}
-              />
-            </AttentionSeeker>
-          </Grid>
         </Grid>
       </Container>
     </div>
