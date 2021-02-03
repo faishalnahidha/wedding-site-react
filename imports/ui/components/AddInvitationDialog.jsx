@@ -19,7 +19,7 @@ const styles = {
   },
 };
 
-class AddInvitationFormDialog extends Component {
+class AddInvitationDialog extends Component {
   constructor(props) {
     super(props);
 
@@ -29,11 +29,6 @@ class AddInvitationFormDialog extends Component {
       isRecipientIdEmpty: false,
       isRecipientNameEmpty: false,
     };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleNameChange = this.handleNameChange.bind(this);
-    this.handleIdChange = this.handleIdChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange = (event) => {
@@ -140,11 +135,11 @@ class AddInvitationFormDialog extends Component {
   }
 }
 
-AddInvitationFormDialog.propTypes = {
+AddInvitationDialog.propTypes = {
   classes: PropTypes.object.isRequired,
   handleClose: PropTypes.func.isRequired,
   // eslint-disable-next-line react/no-unused-prop-types
   handleSnackbarAdd: PropTypes.func,
 };
 
-export default withStyles(styles)(AddInvitationFormDialog);
+export default withStyles(styles)(AddInvitationDialog);

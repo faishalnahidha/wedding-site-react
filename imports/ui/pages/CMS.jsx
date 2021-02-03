@@ -36,7 +36,7 @@ import { domain, whatsappMessage } from '../../api/variables.js';
 
 import Footer from '../components/Footer.jsx';
 import BackToTopButton from '../components/BackToTopButton.jsx';
-import AddInvitationFormDialog from '../components/AddInvitationFormDialog.jsx';
+import AddInvitationDialog from '../components/AddInvitationDialog.jsx';
 import Login from './Login.jsx';
 
 const styles = (theme) => ({
@@ -134,27 +134,20 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-class CMSPage extends Component {
+class CMS extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       openSnackbarAddSuccess: false,
       openSnackbarCopied: false,
+      openSnackbarRemoved: false,
       openAddDialog: false,
       anchorEl: null,
+      selectedRowAnchorEl: null,
+      selectedRowRecipientId: '',
     };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleOpenAddInvitationDialog = this.handleOpenAddInvitationDialog.bind(this);
-    this.handleCloseAddInvitationDialog = this.handleCloseAddInvitationDialog.bind(this);
-    this.handleOpenSnackbarAddSuccess = this.handleOpenSnackbarAddSuccess.bind(this);
   }
-
-  handleChange = (event) => {
-    const { value, id } = event.target;
-    this.setState({ [id]: value });
-  };
 
   handleOpenAddInvitationDialog = () => {
     this.setState({ openAddDialog: true });
@@ -176,13 +169,14 @@ class CMSPage extends Component {
     }
 
     return (
-      <AddInvitationFormDialog
+      <AddInvitationDialog
         handleClose={this.handleCloseAddInvitationDialog}
         handleSnackbarAdd={this.handleOpenSnackbarAddSuccess}
       />
     );
   };
 
+  /* Handle menu in toolbar */
   handleMenuClick = (event) => {
     this.setState({ anchorEl: event.currentTarget });
   };
@@ -194,6 +188,24 @@ class CMSPage extends Component {
   handleLogout = () => {
     this.handleMenuClose();
     Meteor.logout();
+  };
+
+  /* Handle more option in recipient row */
+  handleMoreOptionClick = (event, id) => {
+    this.setState({ selectedRowAnchorEl: event.currentTarget, selectedRowRecipientId: id });
+  };
+
+  handleMoreOptionClose = () => {
+    this.setState({ selectedRowAnchorEl: null });
+  };
+
+  handleRemoveRecipient = () => {
+    const { selectedRowRecipientId } = this.state;
+
+    this.handleMoreOptionClose();
+    Meteor.call('recipients.remove', selectedRowRecipientId);
+
+    this.setState({ openSnackbarRemoved: true });
   };
 
   renderRecipients() {
@@ -209,6 +221,15 @@ class CMSPage extends Component {
           </Link>
         </TableCell>
         <TableCell padding="none">
+          <IconButton
+            size="medium"
+            href={`https://api.whatsapp.com/send?text=${whatsappMessage}${recipient._id}`}
+            target="_blank"
+          >
+            <WhatsAppIcon fontSize="small" />
+          </IconButton>
+        </TableCell>
+        <TableCell padding="none">
           <CopyToClipboard
             text={`http://${domain}${recipient._id}`}
             onCopy={() => this.setState({ openSnackbarCopied: true })}
@@ -221,10 +242,11 @@ class CMSPage extends Component {
         <TableCell padding="none">
           <IconButton
             size="medium"
-            href={`https://api.whatsapp.com/send?text=${whatsappMessage}${recipient._id}`}
-            target="_blank"
+            aria-controls="menu"
+            aria-haspopup="true"
+            onClick={(e) => this.handleMoreOptionClick(e, recipient._id)}
           >
-            <WhatsAppIcon fontSize="small" />
+            <MoreVertOutlinedIcon fontSize="small" />
           </IconButton>
         </TableCell>
       </TableRow>
@@ -233,7 +255,14 @@ class CMSPage extends Component {
 
   render() {
     const { classes, loading, user } = this.props;
-    const { anchorEl, openSnackbarAddSuccess, openSnackbarCopied } = this.state;
+    const {
+      anchorEl,
+      selectedRowAnchorEl,
+      openSnackbarAddSuccess,
+      openSnackbarCopied,
+      openSnackbarRemoved,
+      selectedRowRecipientId,
+    } = this.state;
 
     if (loading) {
       return <LinearProgress />;
@@ -262,7 +291,7 @@ class CMSPage extends Component {
                       <MoreVertOutlinedIcon fontSize="default" />
                     </IconButton>
                     <Menu
-                      id="simple-menu"
+                      id="toolbar-menu"
                       anchorEl={anchorEl}
                       keepMounted
                       open={Boolean(anchorEl)}
@@ -275,7 +304,7 @@ class CMSPage extends Component {
               </ElevationScroll>
 
               <Container maxWidth="sm" className={classes.bottomSection}>
-                {/* ######################################## TABLE ######################################## */}
+                {/* ########################################  TABLE START  ######################################## */}
                 <Toolbar className={classes.tableToolbar}>
                   <Typography variant="subtitle1" className={classes.title}>
                     Daftar Undangan
@@ -293,16 +322,29 @@ class CMSPage extends Component {
                         </TableCell>
                         <TableCell />
                         <TableCell />
+                        <TableCell />
                       </TableRow>
                     </TableHead>
                     <TableBody>{this.renderRecipients()}</TableBody>
                   </Table>
                 </TableContainer>
-                {/* ######################################## TABLE END ######################################## */}
+                {/* ########################################  TABLE END  ######################################## */}
               </Container>
+
+              {/* ########  SELECTED ROW MORE OPTIONS ######## */}
+              <Menu
+                id="row-menu"
+                anchorEl={selectedRowAnchorEl}
+                keepMounted
+                open={Boolean(selectedRowAnchorEl)}
+                onClose={this.handleMoreOptionClose}
+              >
+                {/* <MenuItem onClick={this.handleMoreOptionClose}>Edit</MenuItem> */}
+                <MenuItem onClick={this.handleRemoveRecipient}>Hapus</MenuItem>
+              </Menu>
               <Footer />
 
-              {/* ######################################## FAB ######################################## */}
+              {/* ########################################  FAB  ######################################## */}
               <BackToTopButton className={classes.fabBackToTop} />
               <Zoom in timeout={500} style={{ transitionDelay: '500ms' }}>
                 <Fab
@@ -317,7 +359,7 @@ class CMSPage extends Component {
               </Zoom>
               {this.openAddInvitationDialog()}
 
-              {/* ######################################## SNACKBAR ######################################## */}
+              {/* ########################################  SNACKBAR  ######################################## */}
               <Snackbar
                 key="add-success"
                 anchorOrigin={{
@@ -344,9 +386,21 @@ class CMSPage extends Component {
                 }}
                 className={classes.snackbar}
                 open={openSnackbarCopied}
-                autoHideDuration={1000}
+                autoHideDuration={2000}
                 onClose={() => this.setState({ openSnackbarCopied: false })}
                 message="Link berhasil disalin"
+              />
+              <Snackbar
+                key="removed"
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'center',
+                }}
+                className={classes.snackbar}
+                open={openSnackbarRemoved}
+                autoHideDuration={2000}
+                onClose={() => this.setState({ openSnackbarRemoved: false })}
+                message={`${selectedRowRecipientId} telah dihapus!`}
               />
             </div>
           </>
@@ -358,11 +412,11 @@ class CMSPage extends Component {
   }
 }
 
-CMSPage.propTypes = {
+CMS.propTypes = {
   classes: PropTypes.object.isRequired,
   user: PropTypes.object,
   recipients: PropTypes.array,
   loading: PropTypes.bool,
 };
 
-export default withStyles(styles)(CMSPage);
+export default withStyles(styles)(CMS);
