@@ -25,11 +25,11 @@ const styles = {
     textAlign: 'center',
   },
   icon: {
-    width: 40,
+    width: '40px',
   },
   card: {
-    borderRadius: 8,
-    minWidth: 256,
+    borderRadius: '8px',
+    minWidth: '256px',
     textAlign: 'center',
   },
   cardHeader: {

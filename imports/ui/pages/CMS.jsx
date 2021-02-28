@@ -10,7 +10,6 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Container from '@material-ui/core/Container';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -26,14 +25,11 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Zoom from '@material-ui/core/Zoom';
 import Tooltip from '@material-ui/core/Tooltip';
-import Button from '@material-ui/core/Button';
-import Hidden from '@material-ui/core/Hidden';
 import Paper from '@material-ui/core/Paper';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import Avatar from '@material-ui/core/Avatar';
 
 import MuiAlert from '@material-ui/lab/Alert';
@@ -45,12 +41,13 @@ import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 
 import { domain, whatsappMessage } from '../../api/variables.js';
+import mapRsvp from '../../lib/mapRsvp.js';
 
-import Footer from '../components/Footer.jsx';
 import BackToTopButton from '../components/BackToTopButton.jsx';
 import AddInvitationDialog from '../components/AddInvitationDialog.jsx';
 import DesktopRecipientMessageDialog from '../components/DesktopRecipientMessageDialog.jsx';
 import Login from './Login.jsx';
+import MobileRecipientDetailDialog from '../components/MobileRecipientDetailDialog.jsx';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,12 +65,12 @@ const useStyles = makeStyles((theme) => ({
   },
   mainSection: {
     [theme.breakpoints.down('xs')]: {
-      padding: '0 0 40px',
+      padding: '0 0 56px',
       minHeight: 'calc(100vh - 128px)',
       backgroundColor: theme.palette.background.paper,
     },
     [theme.breakpoints.up('sm')]: {
-      padding: '16px 8px 40px',
+      padding: '16px 8px 48px',
       minHeight: 'calc(100vh - 112px)',
     },
   },
@@ -85,23 +82,27 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 1200,
     [theme.breakpoints.down('xs')]: {
       bottom: theme.spacing(2),
-      right: theme.spacing(2),
+      left: 0,
+      right: 0,
+      margin: '0 auto',
     },
     [theme.breakpoints.up('sm')]: {
       bottom: theme.spacing(3),
-      right: theme.spacing(3),
+      left: 0,
+      right: 0,
+      margin: '0 auto',
     },
     [theme.breakpoints.up('md')]: {
-      top: theme.spacing(5),
-      left: theme.spacing(3),
+      bottom: theme.spacing(4),
     },
     [theme.breakpoints.up('lg')]: {
       top: theme.spacing(5),
       left: theme.spacing(2),
+      margin: '0',
     },
     [theme.breakpoints.up('xl')]: {
       top: theme.spacing(5),
-      left: '13%',
+      left: '15%',
     },
   },
   fabBackToTop: {
@@ -109,16 +110,16 @@ const useStyles = makeStyles((theme) => ({
       bottom: theme.spacing(10),
     },
     [theme.breakpoints.up('sm')]: {
-      bottom: theme.spacing(11),
-      right: theme.spacing(3),
-    },
-    [theme.breakpoints.up('md')]: {
       bottom: theme.spacing(3),
       right: theme.spacing(3),
     },
+    [theme.breakpoints.up('md')]: {
+      bottom: theme.spacing(4),
+      right: theme.spacing(4),
+    },
     [theme.breakpoints.up('xl')]: {
-      bottom: theme.spacing(5),
-      right: theme.spacing(5),
+      bottom: theme.spacing(10),
+      right: theme.spacing(10),
     },
   },
   toolbar: {
@@ -134,10 +135,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   paper: {
-    borderRadius: '8px',
-    outlined: 1,
-    padding: theme.spacing(3),
-    paddingBottom: theme.spacing(5),
+    padding: '16px 24px 40px',
+  },
+  logo: {
+    height: '36px',
+    [theme.breakpoints.down('xs')]: {
+      height: '32px',
+    },
   },
 }));
 
@@ -158,13 +162,12 @@ function Alert(props) {
 }
 
 export default function CMS(props) {
-  const classes = useStyles();
-
   const [openSnackbarAddSuccess, setOpenSnackbarAddSuccess] = useState(false);
   const [openSnackbarCopied, setOpenSnackbarCopied] = useState(false);
   const [openSnackbarRemoved, setOpenSnackbarRemoved] = useState(false);
   const [openAddDialog, setOpenAddDialog] = useState(false);
   const [openDesktopRecipientMessage, setOpenDesktopRecipientMessage] = useState(false);
+  const [openMobileRecipientDetail, setOpenMobileRecipientDetail] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedRowAnchorEl, setSelectedRowAnchorEl] = useState(null);
   const [selectedRowRecipient, setSelectedRowRecipient] = useState(null);
@@ -206,14 +209,6 @@ export default function CMS(props) {
     setSelectedRowAnchorEl(null);
   };
 
-  const handleRemoveRecipient = () => {
-    // const { selectedRowRecipient } = this.state;
-
-    handleMoreOptionClose();
-    Meteor.call('recipients.remove', selectedRowRecipient._id);
-    setOpenSnackbarRemoved(true);
-  };
-
   /* Handle open and close desktop recipient message dialog */
   const handleOpenDesktopRecipientMessage = () => {
     setOpenDesktopRecipientMessage(true);
@@ -224,79 +219,25 @@ export default function CMS(props) {
     setOpenDesktopRecipientMessage(false);
   };
 
-  const renderRecipients = () => {
-    const { recipients } = props;
-
-    return recipients.map((recipient) => (
-      <TableRow key={recipient._id}>
-        <TableCell>{recipient.name}</TableCell>
-        <TableCell>
-          <Link href={`http://${domain}${recipient._id}`} target="_blank">
-            {domain}
-            {recipient._id}
-          </Link>
-        </TableCell>
-        <TableCell>{recipient.rsvp || ''}</TableCell>
-        <TableCell padding="none" align="right">
-          <Tooltip title="Share via Whatsapp">
-            <IconButton
-              href={`https://api.whatsapp.com/send?text=${whatsappMessage}${recipient._id}`}
-              target="_blank"
-            >
-              <WhatsAppIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Copy Link">
-            <CopyToClipboard
-              text={`http://${domain}${recipient._id}`}
-              onCopy={() => setOpenSnackbarCopied(true)}
-            >
-              <IconButton>
-                <FileCopyOutlinedIcon fontSize="small" />
-              </IconButton>
-            </CopyToClipboard>
-          </Tooltip>
-          <IconButton
-            size="medium"
-            aria-controls="menu"
-            aria-haspopup="true"
-            onClick={(e) => handleMoreOptionClick(e, recipient)}
-          >
-            <MoreVertOutlinedIcon fontSize="small" />
-          </IconButton>
-        </TableCell>
-      </TableRow>
-    ));
+  /* Handle open and close mobile recipient detail dialog */
+  const handleOpenMobileRecipientDetail = (recipient) => {
+    setSelectedRowRecipient(recipient);
+    setOpenMobileRecipientDetail(true);
   };
 
-  const renderMobileList = () => {
-    const { recipients } = props;
-
-    return recipients.map((recipient) => (
-      <ListItem button key={recipient._id}>
-        <ListItemAvatar>
-          <Avatar>
-            <PersonRoundedIcon />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText
-          primary={recipient.name}
-          secondary={recipient.rsvp && `RSVP: ${recipient.rsvp}`}
-        />
-        {/* <ListItemSecondaryAction>
-          <IconButton
-            edge="end"
-            href={`https://api.whatsapp.com/send?text=${whatsappMessage}${recipient._id}`}
-            target="_blank"
-          >
-            <WhatsAppIcon />
-          </IconButton>
-        </ListItemSecondaryAction> */}
-      </ListItem>
-    ));
+  const handleCloseMobileRecipientDetail = () => {
+    setOpenMobileRecipientDetail(false);
   };
 
-  const { loading, user } = props;
+  const handleRemoveRecipient = () => {
+    handleMoreOptionClose();
+    handleCloseMobileRecipientDetail();
+    Meteor.call('recipients.remove', selectedRowRecipient._id);
+    setOpenSnackbarRemoved(true);
+  };
+
+  const { loading, user, recipients } = props;
+  const classes = useStyles();
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('xs'));
 
   if (loading) {
@@ -304,18 +245,20 @@ export default function CMS(props) {
   }
 
   return (
-    <div>
+    <>
       {/* If user logged in (not null), render CMS. If user not logged in (null), route to Login Page */}
       {user !== null ? (
         <>
+          <ReactTitle title="Ulem Invitation Management System" />
           <div className={classes.root} id="CMSPage">
-            <ReactTitle title="Ulem Invitation Management System" />
             <ElevationScroll {...props}>
               <AppBar position="sticky" className={classes.appbar}>
                 <Toolbar className={classes.toolbar}>
-                  <Typography variant="h6" align="center" className={classes.title}>
-                    Ullem IMS
-                  </Typography>
+                  <img
+                    src="/img/logo-ullem-ims.svg"
+                    alt="Ullem IMS Logo"
+                    className={[classes.logo, classes.title].join(' ')}
+                  />
                   <IconButton
                     aria-controls="menu"
                     aria-haspopup="true"
@@ -351,34 +294,40 @@ export default function CMS(props) {
 
             <Container maxWidth="md" className={classes.mainSection}>
               {isMobile ? (
+                /* ########################################  LIST START  ######################################## */
                 <List
                   aria-label="recipient list"
-                  subheader={<ListSubheader component="div">Daftar Undangan</ListSubheader>}
+                  // subheader={<ListSubheader component="div">Daftar Undangan</ListSubheader>}
                 >
-                  {renderMobileList()}
+                  {recipients.map((recipient) => (
+                    <ListItem
+                      button
+                      key={recipient._id}
+                      onClick={() => handleOpenMobileRecipientDetail(recipient)}
+                    >
+                      <ListItemAvatar>
+                        <Avatar>
+                          <PersonRoundedIcon />
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={recipient.name}
+                        secondary={recipient.rsvp && mapRsvp(recipient.rsvp)}
+                      />
+                    </ListItem>
+                  ))}
                 </List>
               ) : (
                 /* ########################################  TABLE START  ######################################## */
                 <Paper variant="outlined" className={classes.paper}>
-                  <Toolbar className={classes.tableToolbar}>
+                  {/* <Toolbar className={classes.tableToolbar}>
                     <Typography variant="h6" align="left" className={classes.title}>
                       Daftar Undangan
                     </Typography>
-                    <Zoom in timeout={500} style={{ transitionDelay: '500ms' }}>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        size="large"
-                        disableElevation
-                        startIcon={<AddOutlinedIcon />}
-                        onClick={handleOpenAddInvitationDialog}
-                      >
-                        Tambah Undangan
-                      </Button>
-                    </Zoom>
-                  </Toolbar>
+                  </Toolbar> */}
                   <TableContainer className={classes.table}>
-                    <Table aria-label="recipient table">
+                    <Table aria-label="recipient-table">
+                      {/* ###############################  TABLE HEADER  ################################### */}
                       <TableHead className={classes.tableHead}>
                         <TableRow>
                           <TableCell>
@@ -393,15 +342,54 @@ export default function CMS(props) {
                           <TableCell />
                         </TableRow>
                       </TableHead>
-                      <TableBody>{renderRecipients()}</TableBody>
+                      <TableBody>
+                        {/* ############################  RENDER TABLE ROW  ############################### */}
+                        {recipients.map((recipient) => (
+                          <TableRow key={recipient._id}>
+                            <TableCell>{recipient.name}</TableCell>
+                            <TableCell>
+                              <Link href={`http://${domain}${recipient._id}`} target="_blank">
+                                {domain}
+                                {recipient._id}
+                              </Link>
+                            </TableCell>
+                            <TableCell>{mapRsvp(recipient.rsvp)}</TableCell>
+                            <TableCell padding="none" align="right">
+                              <Tooltip title="Share via WhatsApp">
+                                <IconButton
+                                  href={`https://api.whatsapp.com/send?text=${whatsappMessage}${recipient._id}`}
+                                  target="_blank"
+                                >
+                                  <WhatsAppIcon fontSize="small" />
+                                </IconButton>
+                              </Tooltip>
+                              <Tooltip title="Copy Link">
+                                <CopyToClipboard
+                                  text={`http://${domain}${recipient._id}`}
+                                  onCopy={() => setOpenSnackbarCopied(true)}
+                                >
+                                  <IconButton>
+                                    <FileCopyOutlinedIcon fontSize="small" />
+                                  </IconButton>
+                                </CopyToClipboard>
+                              </Tooltip>
+                              <IconButton
+                                size="medium"
+                                aria-controls="menu"
+                                aria-haspopup="true"
+                                onClick={(e) => handleMoreOptionClick(e, recipient)}
+                              >
+                                <MoreVertOutlinedIcon fontSize="small" />
+                              </IconButton>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
                     </Table>
                   </TableContainer>
                 </Paper>
-                /* ########################################  TABLE END  ######################################## */
               )}
             </Container>
-
-            <Footer />
 
             {/* ##################################  SELECTED ROW MORE OPTIONS ################################## */}
             <Menu
@@ -425,30 +413,46 @@ export default function CMS(props) {
             </Menu>
 
             {selectedRowRecipient && (
-              <DesktopRecipientMessageDialog
-                open={openDesktopRecipientMessage}
-                handleClose={handleCloseDesktopRecipientMessage}
-                recipientName={selectedRowRecipient.name}
-                recipientMessage={selectedRowRecipient.message}
-              />
+              <>
+                <DesktopRecipientMessageDialog
+                  open={openDesktopRecipientMessage}
+                  handleClose={handleCloseDesktopRecipientMessage}
+                  recipientName={selectedRowRecipient.name}
+                  recipientMessage={selectedRowRecipient.message}
+                />
+                <MobileRecipientDetailDialog
+                  open={openMobileRecipientDetail}
+                  handleClose={handleCloseMobileRecipientDetail}
+                  handleRemoveRecipient={handleRemoveRecipient}
+                  recipient={selectedRowRecipient}
+                />
+              </>
             )}
 
             {/* ########################################  FAB  ######################################## */}
             <BackToTopButton className={classes.fabBackToTop} />
-            <Hidden mdUp>
+            <Zoom in timeout={500} style={{ transitionDelay: '500ms' }}>
+              <Fab
+                onClick={handleOpenAddInvitationDialog}
+                variant="extended"
+                color="primary"
+                className={classes.fabAdd}
+              >
+                <AddOutlinedIcon className={classes.extendedIcon} />
+                Tambah Undangan
+              </Fab>
+            </Zoom>
+            {/* <Hidden xsDown>
               <Zoom in timeout={500} style={{ transitionDelay: '500ms' }}>
                 <Fab
                   onClick={handleOpenAddInvitationDialog}
-                  variant="extended"
                   color="primary"
                   className={classes.fabAdd}
                 >
-                  <AddOutlinedIcon className={classes.extendedIcon} />
-                  Tambah Undangan
+                  <AddOutlinedIcon />
                 </Fab>
               </Zoom>
-            </Hidden>
-
+            </Hidden> */}
             <AddInvitationDialog
               open={openAddDialog}
               handleClose={handleCloseAddInvitationDialog}
@@ -494,7 +498,7 @@ export default function CMS(props) {
               autoHideDuration={3000}
               onClose={() => setOpenSnackbarRemoved(false)}
               message={
-                selectedRowRecipient ? `Undangan ${selectedRowRecipient.name} telah dihapus!` : ''
+                selectedRowRecipient && `Undangan ${selectedRowRecipient.name} telah dihapus!`
               }
             />
           </div>
@@ -502,7 +506,7 @@ export default function CMS(props) {
       ) : (
         <Login />
       )}
-    </div>
+    </>
   );
 }
 
