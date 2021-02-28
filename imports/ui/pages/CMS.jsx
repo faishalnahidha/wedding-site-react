@@ -66,6 +66,7 @@ const useStyles = makeStyles((theme) => ({
   mainSection: {
     padding: '16px 8px 48px',
     [theme.breakpoints.down('xs')]: {
+      minHeight: 'calc(100vh - 56px)',
       padding: '0 0 56px',
       backgroundColor: theme.palette.background.paper,
     },
@@ -131,7 +132,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   paper: {
-    padding: '16px 24px 40px',
+    padding: '16px 24px 24px',
+    minHeight: '400px',
   },
   logo: {
     height: '36px',

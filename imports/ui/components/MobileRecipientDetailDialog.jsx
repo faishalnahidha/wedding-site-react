@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
   dialogActions: {
     display: 'block',
-    padding: '16px 24px',
+    padding: '8px 24px',
   },
   closeButton: {
     position: 'absolute',
@@ -101,7 +101,7 @@ export default function MobileRecipientDetailDialog(props) {
                 >
                   Link Undangan
                 </Typography>
-                <Link href={fullLink} variant="body1" display="block">
+                <Link href={fullLink} target="_blank" variant="body1" display="block">
                   {link}
                 </Link>
               </ListItemText>
