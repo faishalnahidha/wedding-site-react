@@ -64,14 +64,10 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: 0,
   },
   mainSection: {
+    padding: '16px 8px 48px',
     [theme.breakpoints.down('xs')]: {
       padding: '0 0 56px',
-      minHeight: 'calc(100vh - 128px)',
       backgroundColor: theme.palette.background.paper,
-    },
-    [theme.breakpoints.up('sm')]: {
-      padding: '16px 8px 48px',
-      minHeight: 'calc(100vh - 112px)',
     },
   },
   extendedIcon: {
