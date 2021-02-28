@@ -138,7 +138,6 @@ export default function Login() {
               variant="outlined"
               autoComplete="current-password"
               fullWidth
-              required
               className={classes.inputForm}
               error={isPasswordError}
             />
