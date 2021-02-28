@@ -2,26 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import Fab from '@material-ui/core/Fab';
 import Zoom from '@material-ui/core/Zoom';
 import KeyboardArrowUpRoundedIcon from '@material-ui/icons/KeyboardArrowUpRounded';
 
-const styles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     position: 'fixed',
     bottom: theme.spacing(2),
     right: theme.spacing(2),
   },
-});
+}));
 
-function BackToTop(props) {
-  const { classes, className, ...other } = props;
+export default function BackToTop(props) {
+  const { className, ...other } = props;
+  const classes = useStyles();
 
   const trigger = useScrollTrigger({
     disableHysteresis: true,
-    threshold: 600,
+    threshold: 500,
   });
 
   const handleClick = () => {
@@ -53,5 +54,3 @@ BackToTop.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object,
 };
-
-export default withStyles(styles)(BackToTop);

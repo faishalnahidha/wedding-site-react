@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { ReactTitle } from 'react-meta-tags';
 
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
+import useScrollTrigger from '@material-ui/core/useScrollTrigger';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Container from '@material-ui/core/Container';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -18,12 +19,18 @@ import TableRow from '@material-ui/core/TableRow';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import Link from '@material-ui/core/Link';
-import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Fab from '@material-ui/core/Fab';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Zoom from '@material-ui/core/Zoom';
+import Tooltip from '@material-ui/core/Tooltip';
+import Paper from '@material-ui/core/Paper';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemText from '@material-ui/core/ListItemText';
+import Avatar from '@material-ui/core/Avatar';
 
 import MuiAlert from '@material-ui/lab/Alert';
 
@@ -31,15 +38,18 @@ import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
+import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 
 import { domain, whatsappMessage } from '../../api/variables.js';
+import mapRsvp from '../../lib/mapRsvp.js';
 
-import Footer from '../components/Footer.jsx';
 import BackToTopButton from '../components/BackToTopButton.jsx';
 import AddInvitationDialog from '../components/AddInvitationDialog.jsx';
+import DesktopRecipientMessageDialog from '../components/DesktopRecipientMessageDialog.jsx';
 import Login from './Login.jsx';
+import MobileRecipientDetailDialog from '../components/MobileRecipientDetailDialog.jsx';
 
-const styles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.default,
   },
@@ -51,14 +61,18 @@ const styles = (theme) => ({
   },
   tableToolbar: {
     paddingLeft: theme.spacing(2),
+    paddingRight: 0,
   },
-  topSection: {
-    width: '100%',
-    padding: '32px 0',
-    backgroundColor: '#4568dc',
-  },
-  bottomSection: {
-    padding: '16px 8px 40px',
+  mainSection: {
+    [theme.breakpoints.down('xs')]: {
+      padding: '0 0 56px',
+      minHeight: 'calc(100vh - 128px)',
+      backgroundColor: theme.palette.background.paper,
+    },
+    [theme.breakpoints.up('sm')]: {
+      padding: '16px 8px 48px',
+      minHeight: 'calc(100vh - 112px)',
+    },
   },
   extendedIcon: {
     marginRight: '8px',
@@ -68,23 +82,27 @@ const styles = (theme) => ({
     zIndex: 1200,
     [theme.breakpoints.down('xs')]: {
       bottom: theme.spacing(2),
-      right: theme.spacing(2),
+      left: 0,
+      right: 0,
+      margin: '0 auto',
     },
     [theme.breakpoints.up('sm')]: {
       bottom: theme.spacing(3),
-      right: theme.spacing(3),
+      left: 0,
+      right: 0,
+      margin: '0 auto',
     },
     [theme.breakpoints.up('md')]: {
-      top: theme.spacing(5),
-      left: theme.spacing(3),
+      bottom: theme.spacing(4),
     },
     [theme.breakpoints.up('lg')]: {
       top: theme.spacing(5),
-      left: '12%',
+      left: theme.spacing(2),
+      margin: '0',
     },
     [theme.breakpoints.up('xl')]: {
       top: theme.spacing(5),
-      left: '25%',
+      left: '15%',
     },
   },
   fabBackToTop: {
@@ -92,16 +110,16 @@ const styles = (theme) => ({
       bottom: theme.spacing(10),
     },
     [theme.breakpoints.up('sm')]: {
-      bottom: theme.spacing(11),
-      right: theme.spacing(3),
-    },
-    [theme.breakpoints.up('md')]: {
       bottom: theme.spacing(3),
       right: theme.spacing(3),
     },
+    [theme.breakpoints.up('md')]: {
+      bottom: theme.spacing(4),
+      right: theme.spacing(4),
+    },
     [theme.breakpoints.up('xl')]: {
-      bottom: theme.spacing(5),
-      right: theme.spacing(5),
+      bottom: theme.spacing(10),
+      right: theme.spacing(10),
     },
   },
   toolbar: {
@@ -116,7 +134,16 @@ const styles = (theme) => ({
       bottom: theme.spacing(10),
     },
   },
-});
+  paper: {
+    padding: '16px 24px 40px',
+  },
+  logo: {
+    height: '36px',
+    [theme.breakpoints.down('xs')]: {
+      height: '32px',
+    },
+  },
+}));
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -134,289 +161,357 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-class CMS extends Component {
-  constructor(props) {
-    super(props);
+export default function CMS(props) {
+  const [openSnackbarAddSuccess, setOpenSnackbarAddSuccess] = useState(false);
+  const [openSnackbarCopied, setOpenSnackbarCopied] = useState(false);
+  const [openSnackbarRemoved, setOpenSnackbarRemoved] = useState(false);
+  const [openAddDialog, setOpenAddDialog] = useState(false);
+  const [openDesktopRecipientMessage, setOpenDesktopRecipientMessage] = useState(false);
+  const [openMobileRecipientDetail, setOpenMobileRecipientDetail] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedRowAnchorEl, setSelectedRowAnchorEl] = useState(null);
+  const [selectedRowRecipient, setSelectedRowRecipient] = useState(null);
 
-    this.state = {
-      openSnackbarAddSuccess: false,
-      openSnackbarCopied: false,
-      openSnackbarRemoved: false,
-      openAddDialog: false,
-      anchorEl: null,
-      selectedRowAnchorEl: null,
-      selectedRowRecipientId: '',
-    };
-  }
-
-  handleOpenAddInvitationDialog = () => {
-    this.setState({ openAddDialog: true });
+  /* Handle open and close desktop add invitation dialog */
+  const handleOpenAddInvitationDialog = () => {
+    setOpenAddDialog(true);
   };
 
-  handleCloseAddInvitationDialog = () => {
-    this.setState({ openAddDialog: false });
+  const handleCloseAddInvitationDialog = () => {
+    setOpenAddDialog(false);
   };
 
-  handleOpenSnackbarAddSuccess = () => {
-    this.setState({ openSnackbarAddSuccess: true });
-  };
-
-  openAddInvitationDialog = () => {
-    const { openAddDialog } = this.state;
-
-    if (!openAddDialog) {
-      return null;
-    }
-
-    return (
-      <AddInvitationDialog
-        handleClose={this.handleCloseAddInvitationDialog}
-        handleSnackbarAdd={this.handleOpenSnackbarAddSuccess}
-      />
-    );
+  const handleOpenSnackbarAddSuccess = () => {
+    setOpenSnackbarAddSuccess(true);
   };
 
   /* Handle menu in toolbar */
-  handleMenuClick = (event) => {
-    this.setState({ anchorEl: event.currentTarget });
+  const handleMenuClick = (event) => {
+    setAnchorEl(event.currentTarget);
   };
 
-  handleMenuClose = () => {
-    this.setState({ anchorEl: null });
+  const handleMenuClose = () => {
+    setAnchorEl(null);
   };
 
-  handleLogout = () => {
-    this.handleMenuClose();
+  const handleLogout = () => {
+    handleMenuClose();
     Meteor.logout();
   };
 
   /* Handle more option in recipient row */
-  handleMoreOptionClick = (event, id) => {
-    this.setState({ selectedRowAnchorEl: event.currentTarget, selectedRowRecipientId: id });
+  const handleMoreOptionClick = (event, recipient) => {
+    setSelectedRowAnchorEl(event.currentTarget);
+    setSelectedRowRecipient(recipient);
   };
 
-  handleMoreOptionClose = () => {
-    this.setState({ selectedRowAnchorEl: null });
+  const handleMoreOptionClose = () => {
+    setSelectedRowAnchorEl(null);
   };
 
-  handleRemoveRecipient = () => {
-    const { selectedRowRecipientId } = this.state;
-
-    this.handleMoreOptionClose();
-    Meteor.call('recipients.remove', selectedRowRecipientId);
-
-    this.setState({ openSnackbarRemoved: true });
+  /* Handle open and close desktop recipient message dialog */
+  const handleOpenDesktopRecipientMessage = () => {
+    setOpenDesktopRecipientMessage(true);
+    handleMoreOptionClose();
   };
 
-  renderRecipients() {
-    const { recipients } = this.props;
+  const handleCloseDesktopRecipientMessage = () => {
+    setOpenDesktopRecipientMessage(false);
+  };
 
-    return recipients.map((recipient) => (
-      <TableRow key={recipient._id}>
-        <TableCell>{recipient.name}</TableCell>
-        <TableCell>
-          <Link href={`http://${domain}${recipient._id}`} target="_blank">
-            {domain}
-            {recipient._id}
-          </Link>
-        </TableCell>
-        <TableCell padding="none">
-          <IconButton
-            size="medium"
-            href={`https://api.whatsapp.com/send?text=${whatsappMessage}${recipient._id}`}
-            target="_blank"
-          >
-            <WhatsAppIcon fontSize="small" />
-          </IconButton>
-        </TableCell>
-        <TableCell padding="none">
-          <CopyToClipboard
-            text={`http://${domain}${recipient._id}`}
-            onCopy={() => this.setState({ openSnackbarCopied: true })}
-          >
-            <IconButton size="medium">
-              <FileCopyOutlinedIcon fontSize="small" />
-            </IconButton>
-          </CopyToClipboard>
-        </TableCell>
-        <TableCell padding="none">
-          <IconButton
-            size="medium"
-            aria-controls="menu"
-            aria-haspopup="true"
-            onClick={(e) => this.handleMoreOptionClick(e, recipient._id)}
-          >
-            <MoreVertOutlinedIcon fontSize="small" />
-          </IconButton>
-        </TableCell>
-      </TableRow>
-    ));
+  /* Handle open and close mobile recipient detail dialog */
+  const handleOpenMobileRecipientDetail = (recipient) => {
+    setSelectedRowRecipient(recipient);
+    setOpenMobileRecipientDetail(true);
+  };
+
+  const handleCloseMobileRecipientDetail = () => {
+    setOpenMobileRecipientDetail(false);
+  };
+
+  const handleRemoveRecipient = () => {
+    handleMoreOptionClose();
+    handleCloseMobileRecipientDetail();
+    Meteor.call('recipients.remove', selectedRowRecipient._id);
+    setOpenSnackbarRemoved(true);
+  };
+
+  const { loading, user, recipients } = props;
+  const classes = useStyles();
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('xs'));
+
+  if (loading) {
+    return <LinearProgress />;
   }
 
-  render() {
-    const { classes, loading, user } = this.props;
-    const {
-      anchorEl,
-      selectedRowAnchorEl,
-      openSnackbarAddSuccess,
-      openSnackbarCopied,
-      openSnackbarRemoved,
-      selectedRowRecipientId,
-    } = this.state;
+  return (
+    <>
+      {/* If user logged in (not null), render CMS. If user not logged in (null), route to Login Page */}
+      {user !== null ? (
+        <>
+          <ReactTitle title="Ulem Invitation Management System" />
+          <div className={classes.root} id="CMSPage">
+            <ElevationScroll {...props}>
+              <AppBar position="sticky" className={classes.appbar}>
+                <Toolbar className={classes.toolbar}>
+                  <img
+                    src="/img/logo-ullem-ims.svg"
+                    alt="Ullem IMS Logo"
+                    className={[classes.logo, classes.title].join(' ')}
+                  />
+                  <IconButton
+                    aria-controls="menu"
+                    aria-haspopup="true"
+                    onClick={handleMenuClick}
+                    size="medium"
+                    color="inherit"
+                  >
+                    <MoreVertOutlinedIcon fontSize="default" />
+                  </IconButton>
 
-    if (loading) {
-      return <LinearProgress />;
-    }
-
-    return (
-      <div className="main">
-        {/* If user logged in (not null), render CMS. If user not logged in (null), route to Login Page */}
-        {user !== null ? (
-          <>
-            <div ref={this.top} className={classes.root} id="CMSPage">
-              <ReactTitle title="Ulem Invitation Management System" />
-              <ElevationScroll {...this.props}>
-                <AppBar position="sticky" className={classes.appbar}>
-                  <Toolbar className={classes.toolbar}>
-                    <Typography variant="h6" align="center" className={classes.title}>
-                      Ullem IMS
-                    </Typography>
-                    <IconButton
-                      aria-controls="menu"
-                      aria-haspopup="true"
-                      onClick={this.handleMenuClick}
-                      size="medium"
-                      color="inherit"
-                    >
-                      <MoreVertOutlinedIcon fontSize="default" />
-                    </IconButton>
-                    <Menu
-                      id="toolbar-menu"
-                      anchorEl={anchorEl}
-                      keepMounted
-                      open={Boolean(anchorEl)}
-                      onClose={this.handleMenuClose}
-                    >
-                      <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
-                    </Menu>
-                  </Toolbar>
-                </AppBar>
-              </ElevationScroll>
-
-              <Container maxWidth="sm" className={classes.bottomSection}>
-                {/* ########################################  TABLE START  ######################################## */}
-                <Toolbar className={classes.tableToolbar}>
-                  <Typography variant="subtitle1" className={classes.title}>
-                    Daftar Undangan
-                  </Typography>
+                  {/* ########  APP BAR MORE OPTIONS ######## */}
+                  <Menu
+                    id="toolbar-menu"
+                    anchorEl={anchorEl}
+                    getContentAnchorEl={null}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'right',
+                    }}
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleMenuClose}
+                  >
+                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                  </Menu>
                 </Toolbar>
-                <TableContainer className={classes.table}>
-                  <Table aria-label="simple table">
-                    <TableHead className={classes.tableHead}>
-                      <TableRow>
-                        <TableCell>
-                          <strong>Nama</strong>
-                        </TableCell>
-                        <TableCell>
-                          <strong>Link Undangan</strong>
-                        </TableCell>
-                        <TableCell />
-                        <TableCell />
-                        <TableCell />
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>{this.renderRecipients()}</TableBody>
-                  </Table>
-                </TableContainer>
-                {/* ########################################  TABLE END  ######################################## */}
-              </Container>
+              </AppBar>
+            </ElevationScroll>
 
-              {/* ########  SELECTED ROW MORE OPTIONS ######## */}
-              <Menu
-                id="row-menu"
-                anchorEl={selectedRowAnchorEl}
-                keepMounted
-                open={Boolean(selectedRowAnchorEl)}
-                onClose={this.handleMoreOptionClose}
+            <Container maxWidth="md" className={classes.mainSection}>
+              {isMobile ? (
+                /* ########################################  LIST START  ######################################## */
+                <List
+                  aria-label="recipient list"
+                  // subheader={<ListSubheader component="div">Daftar Undangan</ListSubheader>}
+                >
+                  {recipients.map((recipient) => (
+                    <ListItem
+                      button
+                      key={recipient._id}
+                      onClick={() => handleOpenMobileRecipientDetail(recipient)}
+                    >
+                      <ListItemAvatar>
+                        <Avatar>
+                          <PersonRoundedIcon />
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={recipient.name}
+                        secondary={recipient.rsvp && mapRsvp(recipient.rsvp)}
+                      />
+                    </ListItem>
+                  ))}
+                </List>
+              ) : (
+                /* ########################################  TABLE START  ######################################## */
+                <Paper variant="outlined" className={classes.paper}>
+                  {/* <Toolbar className={classes.tableToolbar}>
+                    <Typography variant="h6" align="left" className={classes.title}>
+                      Daftar Undangan
+                    </Typography>
+                  </Toolbar> */}
+                  <TableContainer className={classes.table}>
+                    <Table aria-label="recipient-table">
+                      {/* ###############################  TABLE HEADER  ################################### */}
+                      <TableHead className={classes.tableHead}>
+                        <TableRow>
+                          <TableCell>
+                            <strong>Nama</strong>
+                          </TableCell>
+                          <TableCell>
+                            <strong>Link Undangan</strong>
+                          </TableCell>
+                          <TableCell>
+                            <strong>RSVP</strong>
+                          </TableCell>
+                          <TableCell />
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {/* ############################  RENDER TABLE ROW  ############################### */}
+                        {recipients.map((recipient) => (
+                          <TableRow key={recipient._id}>
+                            <TableCell>{recipient.name}</TableCell>
+                            <TableCell>
+                              <Link href={`http://${domain}${recipient._id}`} target="_blank">
+                                {domain}
+                                {recipient._id}
+                              </Link>
+                            </TableCell>
+                            <TableCell>{mapRsvp(recipient.rsvp)}</TableCell>
+                            <TableCell padding="none" align="right">
+                              <Tooltip title="Share via WhatsApp">
+                                <IconButton
+                                  href={`https://api.whatsapp.com/send?text=${whatsappMessage}${recipient._id}`}
+                                  target="_blank"
+                                >
+                                  <WhatsAppIcon fontSize="small" />
+                                </IconButton>
+                              </Tooltip>
+                              <Tooltip title="Copy Link">
+                                <CopyToClipboard
+                                  text={`http://${domain}${recipient._id}`}
+                                  onCopy={() => setOpenSnackbarCopied(true)}
+                                >
+                                  <IconButton>
+                                    <FileCopyOutlinedIcon fontSize="small" />
+                                  </IconButton>
+                                </CopyToClipboard>
+                              </Tooltip>
+                              <IconButton
+                                size="medium"
+                                aria-controls="menu"
+                                aria-haspopup="true"
+                                onClick={(e) => handleMoreOptionClick(e, recipient)}
+                              >
+                                <MoreVertOutlinedIcon fontSize="small" />
+                              </IconButton>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Paper>
+              )}
+            </Container>
+
+            {/* ##################################  SELECTED ROW MORE OPTIONS ################################## */}
+            <Menu
+              id="row-menu"
+              anchorEl={selectedRowAnchorEl}
+              getContentAnchorEl={null}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              keepMounted
+              open={Boolean(selectedRowAnchorEl)}
+              onClose={handleMoreOptionClose}
+            >
+              <MenuItem onClick={handleOpenDesktopRecipientMessage}>Lihat Pesan</MenuItem>
+              <MenuItem onClick={handleRemoveRecipient}>Hapus</MenuItem>
+            </Menu>
+
+            {selectedRowRecipient && (
+              <>
+                <DesktopRecipientMessageDialog
+                  open={openDesktopRecipientMessage}
+                  handleClose={handleCloseDesktopRecipientMessage}
+                  recipientName={selectedRowRecipient.name}
+                  recipientMessage={selectedRowRecipient.message}
+                />
+                <MobileRecipientDetailDialog
+                  open={openMobileRecipientDetail}
+                  handleClose={handleCloseMobileRecipientDetail}
+                  handleRemoveRecipient={handleRemoveRecipient}
+                  recipient={selectedRowRecipient}
+                />
+              </>
+            )}
+
+            {/* ########################################  FAB  ######################################## */}
+            <BackToTopButton className={classes.fabBackToTop} />
+            <Zoom in timeout={500} style={{ transitionDelay: '500ms' }}>
+              <Fab
+                onClick={handleOpenAddInvitationDialog}
+                variant="extended"
+                color="primary"
+                className={classes.fabAdd}
               >
-                {/* <MenuItem onClick={this.handleMoreOptionClose}>Edit</MenuItem> */}
-                <MenuItem onClick={this.handleRemoveRecipient}>Hapus</MenuItem>
-              </Menu>
-              <Footer />
-
-              {/* ########################################  FAB  ######################################## */}
-              <BackToTopButton className={classes.fabBackToTop} />
+                <AddOutlinedIcon className={classes.extendedIcon} />
+                Tambah Undangan
+              </Fab>
+            </Zoom>
+            {/* <Hidden xsDown>
               <Zoom in timeout={500} style={{ transitionDelay: '500ms' }}>
                 <Fab
-                  onClick={this.handleOpenAddInvitationDialog}
-                  variant="extended"
+                  onClick={handleOpenAddInvitationDialog}
                   color="primary"
                   className={classes.fabAdd}
                 >
-                  <AddOutlinedIcon className={classes.extendedIcon} />
-                  Tambah Undangan
+                  <AddOutlinedIcon />
                 </Fab>
               </Zoom>
-              {this.openAddInvitationDialog()}
+            </Hidden> */}
+            <AddInvitationDialog
+              open={openAddDialog}
+              handleClose={handleCloseAddInvitationDialog}
+              handleSnackbarAdd={handleOpenSnackbarAddSuccess}
+            />
 
-              {/* ########################################  SNACKBAR  ######################################## */}
-              <Snackbar
-                key="add-success"
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'center',
-                }}
-                className={classes.snackbar}
-                open={openSnackbarAddSuccess}
-                autoHideDuration={3000}
-                onClose={() => this.setState({ openSnackbarAddSuccess: false })}
-              >
-                <Alert
-                  onClose={() => this.setState({ openSnackbarAddSuccess: false })}
-                  severity="success"
-                >
-                  Undangan berhasil ditambahkan!
-                </Alert>
-              </Snackbar>
-              <Snackbar
-                key="copied"
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'center',
-                }}
-                className={classes.snackbar}
-                open={openSnackbarCopied}
-                autoHideDuration={2000}
-                onClose={() => this.setState({ openSnackbarCopied: false })}
-                message="Link berhasil disalin"
-              />
-              <Snackbar
-                key="removed"
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'center',
-                }}
-                className={classes.snackbar}
-                open={openSnackbarRemoved}
-                autoHideDuration={2000}
-                onClose={() => this.setState({ openSnackbarRemoved: false })}
-                message={`${selectedRowRecipientId} telah dihapus!`}
-              />
-            </div>
-          </>
-        ) : (
-          <Login />
-        )}
-      </div>
-    );
-  }
+            {/* ########################################  SNACKBAR  ######################################## */}
+            <Snackbar
+              key="add-success"
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              className={classes.snackbar}
+              open={openSnackbarAddSuccess}
+              autoHideDuration={3000}
+              onClose={() => setOpenSnackbarAddSuccess(false)}
+            >
+              <Alert onClose={() => setOpenSnackbarAddSuccess(false)} severity="success">
+                Undangan berhasil ditambahkan!
+              </Alert>
+            </Snackbar>
+            <Snackbar
+              key="copied"
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              className={classes.snackbar}
+              open={openSnackbarCopied}
+              autoHideDuration={2000}
+              onClose={() => setOpenSnackbarCopied(false)}
+              message="Link berhasil di-copy"
+            />
+            <Snackbar
+              key="removed"
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              className={classes.snackbar}
+              open={openSnackbarRemoved}
+              autoHideDuration={3000}
+              onClose={() => setOpenSnackbarRemoved(false)}
+              message={
+                selectedRowRecipient && `Undangan ${selectedRowRecipient.name} telah dihapus!`
+              }
+            />
+          </div>
+        </>
+      ) : (
+        <Login />
+      )}
+    </>
+  );
 }
 
 CMS.propTypes = {
-  classes: PropTypes.object.isRequired,
   user: PropTypes.object,
   recipients: PropTypes.array,
   loading: PropTypes.bool,
 };
-
-export default withStyles(styles)(CMS);

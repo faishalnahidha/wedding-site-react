@@ -1,145 +1,179 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
 
-const styles = {
+import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    [theme.breakpoints.down('xs')]: {
+      marginTop: theme.spacing(7),
+    },
+  },
   inputForm: {
-    marginBottom: '24px',
+    marginBottom: theme.spacing(3),
   },
   dialogAction: {
     padding: '16px 24px',
   },
-};
+  mobileButtonGroup: {
+    marginTop: theme.spacing(3),
+  },
+  button: {
+    marginBottom: theme.spacing(2),
+  },
+  closeButton: {
+    position: 'absolute',
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: theme.palette.grey[500],
+  },
+}));
 
-class AddInvitationDialog extends Component {
-  constructor(props) {
-    super(props);
+const Transition = React.forwardRef((props, ref) => <Slide direction="up" ref={ref} {...props} />);
 
-    this.state = {
-      recipientId: '',
-      recipientName: '',
-      isRecipientIdEmpty: false,
-      isRecipientNameEmpty: false,
-    };
-  }
+export default function AddInvitationDialog(props) {
+  const { open, handleSnackbarAdd, handleClose } = props;
 
-  handleChange = (event) => {
-    const { value, id } = event.target;
-    this.setState({ [id]: value });
-  };
+  const classes = useStyles();
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('xs'));
 
-  handleNameChange = (event) => {
+  const [recipientId, setRecipientId] = useState('');
+  const [recipientName, setRecipientName] = useState('');
+  const [isRecipientIdEmpty, setIsRecipientIdEmpty] = useState(false);
+  const [isRecipientNameEmpty, setIsRecipientNameEmpty] = useState(false);
+
+  const handleIdChange = (event) => {
     const { value } = event.target;
-    this.setState({ recipientName: value, isRecipientNameEmpty: false });
+    setRecipientId(value);
+    setIsRecipientIdEmpty(false);
   };
 
-  handleIdChange = (event) => {
+  const handleNameChange = (event) => {
     const { value } = event.target;
-    this.setState({ recipientId: value, isRecipientIdEmpty: false });
+    setRecipientName(value);
+    setIsRecipientNameEmpty(false);
   };
 
-  handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-
-    const { recipientId, recipientName } = this.state;
-    const { handleSnackbarAdd, handleClose } = this.props;
 
     const recId = recipientId.trim().toLowerCase();
     const recName = recipientName.trim();
 
     if (recName === '') {
-      this.setState({ isRecipientNameEmpty: true });
+      setIsRecipientNameEmpty(true);
     }
 
     if (recId === '') {
-      this.setState({ isRecipientIdEmpty: true });
+      setIsRecipientIdEmpty(true);
     }
 
     if (recId !== '' && recName !== '') {
       Meteor.call('recipients.insert', recId, recName);
 
-      this.setState({
-        recipientId: '',
-        recipientName: '',
-      });
+      setRecipientId('');
+      setRecipientName('');
 
       handleSnackbarAdd();
       handleClose();
     }
   };
 
-  render() {
-    const { classes, handleClose } = this.props;
-    const { recipientName, recipientId, isRecipientNameEmpty, isRecipientIdEmpty } = this.state;
-
-    return (
-      <div>
-        <Dialog open onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth>
-          <DialogTitle id="form-dialog-title">Tambah Undangan</DialogTitle>
-          <DialogContent>
-            <TextField
-              id="recipientName"
-              type="text"
-              value={recipientName}
-              onChange={this.handleNameChange}
-              label="Nama Penerima"
-              placeholder="contoh: Lisa Mayer"
-              variant="outlined"
-              fullWidth
-              required
-              autoFocus
-              color="primary"
-              className={classes.inputForm}
-              error={isRecipientNameEmpty}
-              helperText={isRecipientNameEmpty ? 'Wajib diisi!' : ''}
-            />
-            <TextField
-              id="recipientId"
-              type="text"
-              value={recipientId}
-              onChange={this.handleIdChange}
-              label="ID Undangan"
-              placeholder="contoh: lisa-mayer"
-              variant="outlined"
-              fullWidth
-              required
-              color="primary"
-              error={isRecipientIdEmpty}
-              helperText={isRecipientIdEmpty ? 'Wajib diisi!' : 'Tidak boleh ada spasi'}
-            />
-          </DialogContent>
-          <DialogActions className={classes.dialogAction}>
-            <Button onClick={handleClose} color="primary">
-              Batal
-            </Button>
+  return (
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="add-invitation-dialog"
+      fullWidth
+      fullScreen={isMobile}
+      TransitionComponent={Transition}
+      className={classes.root}
+    >
+      <DialogTitle disableTypography>
+        <Typography variant="h6">Tambah Undangan</Typography>
+        <IconButton onClick={handleClose} className={classes.closeButton}>
+          <CloseRoundedIcon />
+        </IconButton>
+      </DialogTitle>
+      <DialogContent>
+        <TextField
+          id="recipientName"
+          type="text"
+          value={recipientName}
+          onChange={handleNameChange}
+          label="Nama Penerima"
+          placeholder="contoh: Lisa Mayer"
+          variant="outlined"
+          fullWidth
+          required
+          autoFocus
+          color="primary"
+          className={classes.inputForm}
+          error={isRecipientNameEmpty}
+          helperText={isRecipientNameEmpty ? 'Wajib diisi!' : ''}
+        />
+        <TextField
+          id="recipientId"
+          type="text"
+          value={recipientId}
+          onChange={handleIdChange}
+          label="ID Undangan"
+          placeholder="contoh: lisa-mayer"
+          variant="outlined"
+          fullWidth
+          required
+          color="primary"
+          error={isRecipientIdEmpty}
+          helperText={isRecipientIdEmpty ? 'Wajib diisi!' : 'Tidak boleh ada spasi'}
+        />
+        {isMobile ? (
+          <div className={classes.mobileButtonGroup}>
             <Button
-              onClick={this.handleSubmit}
+              onClick={handleSubmit}
               color="primary"
               variant="contained"
+              size="large"
               disableElevation
+              fullWidth
+              className={classes.button}
             >
               Tambah
             </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
-    );
-  }
+            <Button onClick={handleClose} color="primary" size="large" fullWidth>
+              Batal
+            </Button>
+          </div>
+        ) : null}
+      </DialogContent>
+      {!isMobile ? (
+        <DialogActions className={classes.dialogAction}>
+          <Button onClick={handleClose} color="primary">
+            Batal
+          </Button>
+          <Button onClick={handleSubmit} color="primary" variant="contained" disableElevation>
+            Tambah
+          </Button>
+        </DialogActions>
+      ) : null}
+    </Dialog>
+  );
 }
 
 AddInvitationDialog.propTypes = {
-  classes: PropTypes.object.isRequired,
+  open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
-  // eslint-disable-next-line react/no-unused-prop-types
   handleSnackbarAdd: PropTypes.func,
 };
-
-export default withStyles(styles)(AddInvitationDialog);

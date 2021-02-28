@@ -42,5 +42,10 @@ export const myTheme = createMuiTheme({
         borderRadius: 50,
       },
     },
+    MuiPaper: {
+      rounded: {
+        borderRadius: '8px',
+      },
+    },
   },
 });

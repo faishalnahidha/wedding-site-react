@@ -13,10 +13,10 @@ const styles = (theme) => ({
   root: {
     backgroundColor: theme.palette.background.default,
     [theme.breakpoints.down('xs')]: {
-      padding: '12px 0',
+      padding: '16px 0',
     },
     [theme.breakpoints.up('sm')]: {
-      padding: '14px 0',
+      padding: '22px 0',
     },
   },
   icon: {
@@ -52,15 +52,15 @@ function Footer(props) {
       <Container maxWidth="sm">
         <Grid container spacing={1}>
           <Grid item xs={12} sm={6} className={classes.footerItemA}>
-            <Typography variant="caption" color="textSecondary">
+            <Typography variant="body2" color="textSecondary">
               Made with <FavoriteIcon className={classes.icon} /> in Indonesia
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6} className={classes.footerItemB}>
-            <Typography variant="caption" color="textSecondary">
-              Copyright &copy; 2021{' '}
+            <Typography variant="body2" color="textSecondary">
+              &copy; 2021{' '}
               <Link href="https://ullem.com" target="_blank">
-                Ullem Undangan Digital
+                Ullem Undangan Online
               </Link>
             </Typography>
           </Grid>
