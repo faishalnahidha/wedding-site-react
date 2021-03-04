@@ -227,6 +227,7 @@ export default function CMS(props) {
     setOpenMobileRecipientDetail(false);
   };
 
+  /* Handle remove recipient node in database */
   const handleRemoveRecipient = () => {
     handleMoreOptionClose();
     handleCloseMobileRecipientDetail();
@@ -513,3 +514,5 @@ CMS.propTypes = {
   recipients: PropTypes.array,
   loading: PropTypes.bool,
 };
+
+// ######################################################### CMS ver1.1.2 #########################################################

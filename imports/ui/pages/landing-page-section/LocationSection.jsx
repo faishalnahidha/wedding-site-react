@@ -1,8 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Zoom } from 'react-awesome-reveal';
 
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -11,7 +10,7 @@ import Divider from '@material-ui/core/Divider';
 
 import { reception } from '../../../api/variables.js';
 
-const styles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(2),
@@ -27,10 +26,10 @@ const styles = (theme) => ({
     marginTop: '36px',
     marginBottom: theme.spacing(4),
   },
-});
+}));
 
-function LocationSection(props) {
-  const { classes } = props;
+export default function LocationSection() {
+  const classes = useStyles();
 
   return (
     <div className={classes.root}>
@@ -75,9 +74,3 @@ function LocationSection(props) {
     </div>
   );
 }
-
-LocationSection.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(LocationSection);

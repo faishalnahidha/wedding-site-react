@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Fade, Zoom } from 'react-awesome-reveal';
 
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import Lottie from 'react-lottie';
 import animationData from '../../components/lottie-files/scroll-down.json';
 
-const styles = {
+const useStyles = makeStyles({
   root: {
     height: '100vh',
     padding: '0',
@@ -51,10 +51,11 @@ const styles = {
     width: '100%',
     zIndex: 0,
   },
-};
+});
 
-function IntroSection(props) {
-  const { classes, recipientName, scrollToContentSection, scrollToLocationSection } = props;
+export default function IntroSection(props) {
+  const { recipientName, scrollToContentSection, scrollToLocationSection } = props;
+  const classes = useStyles();
   const lottieDefaultOptions = {
     loop: true,
     autoplay: true,
@@ -146,10 +147,7 @@ function IntroSection(props) {
 }
 
 IntroSection.propTypes = {
-  classes: PropTypes.object.isRequired,
   recipientName: PropTypes.string,
   scrollToContentSection: PropTypes.func,
   scrollToLocationSection: PropTypes.func,
 };
-
-export default withStyles(styles)(IntroSection);

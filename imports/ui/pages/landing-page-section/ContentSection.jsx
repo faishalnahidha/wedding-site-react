@@ -1,8 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Fade, Zoom } from 'react-awesome-reveal';
 
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -15,7 +14,7 @@ import Link from '@material-ui/core/Link';
 
 import { bride, groom, akad, reception } from '../../../api/variables.js';
 
-const styles = {
+const useStyles = makeStyles({
   root: {
     padding: '48px 0 0',
     flexGrow: 1,
@@ -37,10 +36,10 @@ const styles = {
     fontFamily: 'Nunito Sans, Arial',
     backgroundColor: '#fafafa',
   },
-};
+});
 
-function ContentSection(props) {
-  const { classes } = props;
+export default function ContentSection() {
+  const classes = useStyles();
 
   return (
     <div className={classes.root}>
@@ -149,9 +148,3 @@ function ContentSection(props) {
     </div>
   );
 }
-
-ContentSection.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(ContentSection);
