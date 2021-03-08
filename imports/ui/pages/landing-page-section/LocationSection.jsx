@@ -6,14 +6,13 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
+// import Divider from '@material-ui/core/Divider';
 
 import { reception } from '../../../api/variables.js';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(2),
+    paddingBottom: theme.spacing(5),
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
   },
@@ -68,7 +67,7 @@ export default function LocationSection() {
               </Button>
             </Zoom>
           </Grid>
-          <Divider className={classes.divider} />
+          {/* <Divider className={classes.divider} /> */}
         </Grid>
       </Container>
     </div>

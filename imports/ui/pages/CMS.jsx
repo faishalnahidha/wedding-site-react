@@ -319,11 +319,6 @@ export default function CMS(props) {
               ) : (
                 /* ########################################  TABLE START  ######################################## */
                 <Paper variant="outlined" className={classes.paper}>
-                  {/* <Toolbar className={classes.tableToolbar}>
-                    <Typography variant="h6" align="left" className={classes.title}>
-                      Daftar Undangan
-                    </Typography>
-                  </Toolbar> */}
                   <TableContainer className={classes.table}>
                     <Table aria-label="recipient-table">
                       {/* ###############################  TABLE HEADER  ################################### */}
@@ -441,17 +436,6 @@ export default function CMS(props) {
                 Tambah Undangan
               </Fab>
             </Zoom>
-            {/* <Hidden xsDown>
-              <Zoom in timeout={500} style={{ transitionDelay: '500ms' }}>
-                <Fab
-                  onClick={handleOpenAddInvitationDialog}
-                  color="primary"
-                  className={classes.fabAdd}
-                >
-                  <AddOutlinedIcon />
-                </Fab>
-              </Zoom>
-            </Hidden> */}
             <AddInvitationDialog
               open={openAddDialog}
               handleClose={handleCloseAddInvitationDialog}

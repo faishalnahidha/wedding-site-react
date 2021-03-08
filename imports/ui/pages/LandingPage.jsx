@@ -7,6 +7,7 @@ import IntroSection from './landing-page-section/IntroSection.jsx';
 import ContentSection from './landing-page-section/ContentSection.jsx';
 import LocationSection from './landing-page-section/LocationSection.jsx';
 import InputFormSection from './landing-page-section/InputFormSection.jsx';
+import GallerySection from './landing-page-section/GallerySection.jsx';
 import ErrorPage from './ErrorPage.jsx';
 import BackToTopButton from '../components/BackToTopButton.jsx';
 import Footer from '../components/Footer.jsx';
@@ -19,7 +20,7 @@ export default function LandingPage(props) {
     if (contentSectionRef.current) {
       contentSectionRef.current.scrollIntoView({
         behavior: 'smooth',
-        block: 'nearest',
+        block: 'start',
       });
     }
   };
@@ -28,7 +29,7 @@ export default function LandingPage(props) {
     if (locationSectionRef.current) {
       locationSectionRef.current.scrollIntoView({
         behavior: 'smooth',
-        block: 'nearest',
+        block: 'start',
       });
     }
   };
@@ -57,6 +58,7 @@ export default function LandingPage(props) {
       <div ref={locationSectionRef}>
         <LocationSection />
       </div>
+      <GallerySection />
       <InputFormSection recipient={recipient} />
       <Footer />
       <BackToTopButton />

@@ -14,11 +14,12 @@ import Link from '@material-ui/core/Link';
 
 import { bride, groom, akad, reception } from '../../../api/variables.js';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
-    padding: '48px 0 0',
+    paddingTop: theme.spacing(6),
+    paddingBottom: theme.spacing(6),
     flexGrow: 1,
-    backgroundColor: '#fff',
+    backgroundColor: theme.palette.background.paper,
   },
   container: {
     textAlign: 'center',
@@ -34,9 +35,9 @@ const useStyles = makeStyles({
   cardHeader: {
     fontSize: 16,
     fontFamily: 'Nunito Sans, Arial',
-    backgroundColor: '#fafafa',
+    backgroundColor: theme.palette.background.default,
   },
-});
+}));
 
 export default function ContentSection() {
   const classes = useStyles();
@@ -139,7 +140,7 @@ export default function ContentSection() {
             </Zoom>
           </Grid>
           <Grid item xs={12}>
-            <Box marginTop={3} marginBottom={4}>
+            <Box marginTop={6}>
               <img src="/img/icon-location.svg" alt="Location Icon" className={classes.icon} />
             </Box>
           </Grid>

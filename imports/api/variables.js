@@ -35,3 +35,36 @@ export const domain = 'mawarkumbang.ullem.com/'; // slash "/" in the end is mand
 /* Convert string into URL (Target code: UTF-8) */
 export const whatsappMessage =
   'Assalamu%27alaikum%20Wr.%20Wb.%0A%0AKami%20mengundang%20Bapak%2FIbu%2FSaudara%2Fi%20untuk%20hadir%20pada%20acara%20pernikahan%20kami%0A%0A%2A%2AMutik%20Hidayati%20%26%20Faishal%20Izzan%20Nahidha%2A%2A%0A%0A%2AAkad%20Nikah%20%3A%20Sabtu%2C%2022%20Februari%202020%2A%0AWaktu%20%3A%2015.30%20WIB%0ATempat%20%3A%20Balong%20RT05%2FRW01%2C%20Kemasan%2C%20Sawit%2C%20Boyolali%0A%0A%2AResepsi%20%3A%20Minggu%2C%2023%20Februari%202020%2A%0AWaktu%20%3A%2009.00%20WIB%0ATempat%20%3A%20Gedung%20Kapujanggan%20Pengging%2C%20Bendan%2C%20Banyudono%2C%20Boyolali%0A%0AMerupakan%20kebahagiaan%20bagi%20kami%20bila%20Bapak%2FIbu%2FSaudara%2Fi%20berkenan%20hadir%20untuk%20memberikan%20doa%20restu%0A%0AWassalamu%27alaikum%20Wr.%20Wb.%0A-----------------------------%0Ahttps%3A%2F%2Fmawarkumbang.ullem.com%2F';
+
+export const galleryData = [
+  {
+    title: 'Photo 1',
+    img: '/img/gallery/photo-1.jpg',
+    thumbnail: '/img/gallery/thumbnail-1.jpg',
+    cols: 2,
+  },
+  {
+    title: 'Photo 2',
+    img: '/img/gallery/photo-2.jpg',
+    thumbnail: '/img/gallery/thumbnail-2.jpg',
+    cols: 1,
+  },
+  {
+    title: 'Photo 3',
+    img: '/img/gallery/photo-3.jpg',
+    thumbnail: '/img/gallery/thumbnail-3.jpg',
+    cols: 1,
+  },
+  {
+    title: 'Photo 4',
+    img: '/img/gallery/photo-4.jpg',
+    thumbnail: '/img/gallery/thumbnail-4.jpg',
+    cols: 1,
+  },
+  {
+    title: 'Photo 5',
+    img: '/img/gallery/photo-5.jpg',
+    thumbnail: '/img/gallery/thumbnail-5.jpg',
+    cols: 1,
+  },
+];

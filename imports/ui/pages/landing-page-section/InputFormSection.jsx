@@ -16,8 +16,8 @@ import { AttentionSeeker } from 'react-awesome-reveal';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(5),
+    paddingTop: theme.spacing(3),
+    paddingBottom: theme.spacing(6),
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
   },
