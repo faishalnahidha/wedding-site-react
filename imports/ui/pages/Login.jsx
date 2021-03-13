@@ -12,6 +12,7 @@ import Paper from '@material-ui/core/Paper';
 import MuiAlert from '@material-ui/lab/Alert';
 
 import Footer from '../components/Footer.jsx';
+import UllemImsLogo from '../components/UllemImsLogo.jsx';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -109,7 +110,7 @@ export default function Login() {
       <Container maxWidth="xs" disableGutters>
         <Paper variant="outlined" className={classes.paper}>
           <div className={classes.header}>
-            <img src="/img/logo-ullem-ims.svg" alt="Ullem IMS Logo" className={classes.logo} />
+            <UllemImsLogo className={classes.logo} />
             <Typography variant="subtitle1" align="center">
               Invitation Management System
             </Typography>

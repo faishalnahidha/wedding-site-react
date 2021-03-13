@@ -12,6 +12,10 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Divider from '@material-ui/core/Divider';
 import Link from '@material-ui/core/Link';
 
+import AltarIcon from '../../components/icons/AltarIcon.jsx';
+import GalleryIcon from '../../components/icons/GalleryIcon.jsx';
+import WeddingLocationIcon from '../../components/icons/WeddingLocationIcon.jsx';
+
 import { bride, groom, akad, reception } from '../../../api/variables.js';
 
 const useStyles = makeStyles((theme) => ({
@@ -26,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: {
     width: '40px',
+    height: '40px',
   },
   card: {
     borderRadius: '8px',
@@ -91,7 +96,7 @@ export default function ContentSection() {
           {/* ################## Cards Section ################## */}
           <Grid item xs={12}>
             <Box marginTop={3} marginBottom={3}>
-              <img src="/img/icon-altar.svg" alt="Altar Icon" className={classes.icon} />
+              <AltarIcon className={classes.icon} />
             </Box>
           </Grid>
           <Grid item xs={12}>
@@ -141,7 +146,7 @@ export default function ContentSection() {
           </Grid>
           <Grid item xs={12}>
             <Box marginTop={6}>
-              <img src="/img/icon-location.svg" alt="Location Icon" className={classes.icon} />
+              <WeddingLocationIcon className={classes.icon} />
             </Box>
           </Grid>
         </Grid>

@@ -38,6 +38,7 @@ import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
+import MoreHorizOutlinedIcon from '@material-ui/icons/MoreHorizOutlined';
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 
 import { domain, whatsappMessage } from '../../api/variables.js';
@@ -48,6 +49,7 @@ import AddInvitationDialog from '../components/AddInvitationDialog.jsx';
 import DesktopRecipientMessageDialog from '../components/DesktopRecipientMessageDialog.jsx';
 import Login from './Login.jsx';
 import MobileRecipientDetailDialog from '../components/MobileRecipientDetailDialog.jsx';
+import UllemImsLogo from '../components/UllemImsLogo.jsx';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -253,11 +255,7 @@ export default function CMS(props) {
             <ElevationScroll {...props}>
               <AppBar position="sticky" className={classes.appbar}>
                 <Toolbar className={classes.toolbar}>
-                  <img
-                    src="/img/logo-ullem-ims.svg"
-                    alt="Ullem IMS Logo"
-                    className={[classes.logo, classes.title].join(' ')}
-                  />
+                  <UllemImsLogo className={[classes.logo, classes.title].join(' ')} />
                   <IconButton
                     aria-controls="menu"
                     aria-haspopup="true"
@@ -373,7 +371,7 @@ export default function CMS(props) {
                                 aria-haspopup="true"
                                 onClick={(e) => handleMoreOptionClick(e, recipient)}
                               >
-                                <MoreVertOutlinedIcon fontSize="small" />
+                                <MoreHorizOutlinedIcon fontSize="small" />
                               </IconButton>
                             </TableCell>
                           </TableRow>

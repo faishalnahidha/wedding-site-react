@@ -8,6 +8,7 @@ import GridListTile from '@material-ui/core/GridListTile';
 import ButtonBase from '@material-ui/core/ButtonBase';
 
 import Lightbox from '../../components/Lightbox.jsx';
+import GalleryIcon from '../../components/icons/GalleryIcon.jsx';
 
 import { galleryData } from '../../../api/variables.js';
 
@@ -30,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: {
     width: '40px',
+    height: '40px',
   },
 }));
 
@@ -52,7 +54,7 @@ export default function GallerySection() {
       <div className={classes.root}>
         <Container maxWidth="xs">
           <Box marginBottom={6} textAlign="center">
-            <img src="/img/icon-gallery.svg" alt="Altar Icon" className={classes.icon} />
+            <GalleryIcon className={classes.icon} />
           </Box>
           <GridList cellHeight={180} cols={2} className={classes.gridList}>
             {galleryData.map((tile) => (
