@@ -13,7 +13,6 @@ import Divider from '@material-ui/core/Divider';
 import Link from '@material-ui/core/Link';
 
 import AltarIcon from '../../components/icons/AltarIcon.jsx';
-import GalleryIcon from '../../components/icons/GalleryIcon.jsx';
 import WeddingLocationIcon from '../../components/icons/WeddingLocationIcon.jsx';
 
 import { bride, groom, akad, reception } from '../../../api/variables.js';

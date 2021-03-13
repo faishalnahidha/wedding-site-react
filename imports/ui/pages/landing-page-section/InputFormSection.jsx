@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Snackbar from '@material-ui/core/Snackbar';
+import Divider from '@material-ui/core/Divider';
 
 import MuiAlert from '@material-ui/lab/Alert';
 
@@ -16,7 +17,7 @@ import { AttentionSeeker } from 'react-awesome-reveal';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    paddingTop: theme.spacing(3),
+    paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(6),
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
@@ -30,6 +31,10 @@ const useStyles = makeStyles((theme) => ({
   logoGradient: {
     width: '100%',
     marginBottom: theme.spacing(4),
+  },
+  divider: {
+    width: 'calc(100vw - 48px)',
+    marginBottom: theme.spacing(6),
   },
 }));
 
@@ -84,6 +89,7 @@ export default function InputFormSection(props) {
     <div className={classes.root}>
       <Container maxWidth="xs">
         <Grid container spacing={3} justify="center" alignItems="flex-start">
+          <Divider className={classes.divider} />
           <Grid item xs={5}>
             <AttentionSeeker effect="pulse" delay={1000}>
               <img
