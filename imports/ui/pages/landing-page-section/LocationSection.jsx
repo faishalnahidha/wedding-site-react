@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 // import Divider from '@material-ui/core/Divider';
 
-import { reception } from '../../../api/variables.js';
+import { reception } from '../../../lib/variables.js';
 
 const useStyles = makeStyles((theme) => ({
   root: {

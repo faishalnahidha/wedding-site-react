@@ -10,7 +10,7 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import Lightbox from '../../components/Lightbox.jsx';
 import GalleryIcon from '../../components/icons/GalleryIcon.jsx';
 
-import { galleryData } from '../../../api/variables.js';
+import { galleryData } from '../../../lib/variables.js';
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -22,7 +22,7 @@ import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 
 import green from '@material-ui/core/colors/green';
 
-import { domain, whatsappMessage } from '../../api/variables.js';
+import { domain, whatsappMessage } from '../../lib/variables.js';
 import mapRsvp from '../../lib/mapRsvp.js';
 
 const useStyles = makeStyles((theme) => ({

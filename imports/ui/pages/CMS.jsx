@@ -28,6 +28,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Paper from '@material-ui/core/Paper';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import ListSubheader from '@material-ui/core/ListSubheader';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
@@ -41,7 +42,7 @@ import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
 import MoreHorizOutlinedIcon from '@material-ui/icons/MoreHorizOutlined';
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 
-import { domain, whatsappMessage } from '../../api/variables.js';
+import { domain, whatsappMessage } from '../../lib/variables.js';
 import mapRsvp from '../../lib/mapRsvp.js';
 
 import BackToTopButton from '../components/BackToTopButton.jsx';
@@ -237,11 +238,11 @@ export default function CMS(props) {
     setOpenSnackbarRemoved(true);
   };
 
-  const { loading, user, recipients } = props;
+  const { isLoading, user, recipients, recipientsCount } = props;
   const classes = useStyles();
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('xs'));
 
-  if (loading) {
+  if (isLoading) {
     return <LinearProgress />;
   }
 
@@ -294,7 +295,11 @@ export default function CMS(props) {
                 /* ########################################  LIST START  ######################################## */
                 <List
                   aria-label="recipient list"
-                  // subheader={<ListSubheader component="div">Daftar Undangan</ListSubheader>}
+                  subheader={
+                    <ListSubheader component="div">
+                      Daftar Undangan ({recipientsCount})
+                    </ListSubheader>
+                  }
                 >
                   {recipients.map((recipient) => (
                     <ListItem
@@ -494,7 +499,8 @@ export default function CMS(props) {
 CMS.propTypes = {
   user: PropTypes.object,
   recipients: PropTypes.array,
-  loading: PropTypes.bool,
+  recipientsCount: PropTypes.number,
+  isLoading: PropTypes.bool,
 };
 
 // ######################################################### CMS ver1.1.2 #########################################################

@@ -15,7 +15,7 @@ import Link from '@material-ui/core/Link';
 import AltarIcon from '../../components/icons/AltarIcon.jsx';
 import WeddingLocationIcon from '../../components/icons/WeddingLocationIcon.jsx';
 
-import { bride, groom, akad, reception } from '../../../api/variables.js';
+import { bride, groom, akad, reception } from '../../../lib/variables.js';
 
 const useStyles = makeStyles((theme) => ({
   root: {

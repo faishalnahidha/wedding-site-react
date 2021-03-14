@@ -35,9 +35,9 @@ export default function LandingPage(props) {
     }
   };
 
-  const { loading, recipient, recipientExists } = props;
+  const { isLoading, recipient, recipientExists } = props;
 
-  if (loading) {
+  if (isLoading) {
     return <LinearProgress />;
   }
 

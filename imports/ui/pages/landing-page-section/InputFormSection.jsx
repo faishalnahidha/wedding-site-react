@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(4),
   },
   divider: {
-    width: 'calc(100vw - 48px)',
+    width: 'calc(100% - 48px)',
     marginBottom: theme.spacing(6),
   },
 }));
