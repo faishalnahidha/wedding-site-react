@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 
-import { Recipients } from '../../api/recipients.js';
+import { RecipientsCollection } from '../../db/RecipientsCollection.js';
 
 import LandingPage from '../pages/LandingPage.jsx';
 
@@ -22,18 +22,18 @@ export default withTracker(({ match }) => {
   }
 
   const recipientId = id.toLowerCase();
-  const recipientsHandle = Meteor.subscribe('recipients', recipientId);
+  const handler = Meteor.subscribe('recipients.one', recipientId);
 
-  const loading = !recipientsHandle.ready();
-  const recipient = Recipients.findOne({ _id: recipientId });
-  const recipientExists = !loading && recipient !== undefined && recipient !== null;
+  const isLoading = !handler.ready();
+  const recipient = RecipientsCollection.findOne({ _id: recipientId });
+  const recipientExists = !isLoading && recipient !== undefined && recipient !== null;
 
   /* if (recipient !== undefined) {
         console.log('recipient: ' + recipient.name);
     } */
 
   return {
-    loading,
+    isLoading,
     recipient,
     recipientExists,
   };

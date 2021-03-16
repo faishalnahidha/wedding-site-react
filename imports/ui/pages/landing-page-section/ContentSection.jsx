@@ -1,8 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Fade, Zoom } from 'react-awesome-reveal';
 
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -13,19 +12,24 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Divider from '@material-ui/core/Divider';
 import Link from '@material-ui/core/Link';
 
-import { bride, groom, akad, reception } from '../../../api/variables.js';
+import AltarIcon from '../../components/icons/AltarIcon.jsx';
+import WeddingLocationIcon from '../../components/icons/WeddingLocationIcon.jsx';
 
-const styles = {
+import { bride, groom, akad, reception } from '../../../lib/variables.js';
+
+const useStyles = makeStyles((theme) => ({
   root: {
-    padding: '48px 0 0',
+    paddingTop: theme.spacing(6),
+    paddingBottom: theme.spacing(6),
     flexGrow: 1,
-    backgroundColor: '#fff',
+    backgroundColor: theme.palette.background.paper,
   },
   container: {
     textAlign: 'center',
   },
   icon: {
     width: '40px',
+    height: '40px',
   },
   card: {
     borderRadius: '8px',
@@ -35,12 +39,12 @@ const styles = {
   cardHeader: {
     fontSize: 16,
     fontFamily: 'Nunito Sans, Arial',
-    backgroundColor: '#fafafa',
+    backgroundColor: theme.palette.background.default,
   },
-};
+}));
 
-function ContentSection(props) {
-  const { classes } = props;
+export default function ContentSection() {
+  const classes = useStyles();
 
   return (
     <div className={classes.root}>
@@ -91,7 +95,7 @@ function ContentSection(props) {
           {/* ################## Cards Section ################## */}
           <Grid item xs={12}>
             <Box marginTop={3} marginBottom={3}>
-              <img src="/img/icon-altar.svg" alt="Altar Icon" className={classes.icon} />
+              <AltarIcon className={classes.icon} />
             </Box>
           </Grid>
           <Grid item xs={12}>
@@ -140,8 +144,8 @@ function ContentSection(props) {
             </Zoom>
           </Grid>
           <Grid item xs={12}>
-            <Box marginTop={3} marginBottom={4}>
-              <img src="/img/icon-location.svg" alt="Location Icon" className={classes.icon} />
+            <Box marginTop={6}>
+              <WeddingLocationIcon className={classes.icon} />
             </Box>
           </Grid>
         </Grid>
@@ -149,9 +153,3 @@ function ContentSection(props) {
     </div>
   );
 }
-
-ContentSection.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(ContentSection);

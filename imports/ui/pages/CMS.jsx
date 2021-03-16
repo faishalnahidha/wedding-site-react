@@ -28,6 +28,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Paper from '@material-ui/core/Paper';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import ListSubheader from '@material-ui/core/ListSubheader';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
@@ -38,9 +39,10 @@ import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
+import MoreHorizOutlinedIcon from '@material-ui/icons/MoreHorizOutlined';
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 
-import { domain, whatsappMessage } from '../../api/variables.js';
+import { domain, whatsappMessage } from '../../lib/variables.js';
 import mapRsvp from '../../lib/mapRsvp.js';
 
 import BackToTopButton from '../components/BackToTopButton.jsx';
@@ -48,6 +50,7 @@ import AddInvitationDialog from '../components/AddInvitationDialog.jsx';
 import DesktopRecipientMessageDialog from '../components/DesktopRecipientMessageDialog.jsx';
 import Login from './Login.jsx';
 import MobileRecipientDetailDialog from '../components/MobileRecipientDetailDialog.jsx';
+import UllemImsLogo from '../components/UllemImsLogo.jsx';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -227,6 +230,7 @@ export default function CMS(props) {
     setOpenMobileRecipientDetail(false);
   };
 
+  /* Handle remove recipient node in database */
   const handleRemoveRecipient = () => {
     handleMoreOptionClose();
     handleCloseMobileRecipientDetail();
@@ -234,11 +238,11 @@ export default function CMS(props) {
     setOpenSnackbarRemoved(true);
   };
 
-  const { loading, user, recipients } = props;
+  const { isLoading, user, recipients, recipientsCount } = props;
   const classes = useStyles();
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('xs'));
 
-  if (loading) {
+  if (isLoading) {
     return <LinearProgress />;
   }
 
@@ -252,11 +256,7 @@ export default function CMS(props) {
             <ElevationScroll {...props}>
               <AppBar position="sticky" className={classes.appbar}>
                 <Toolbar className={classes.toolbar}>
-                  <img
-                    src="/img/logo-ullem-ims.svg"
-                    alt="Ullem IMS Logo"
-                    className={[classes.logo, classes.title].join(' ')}
-                  />
+                  <UllemImsLogo className={[classes.logo, classes.title].join(' ')} />
                   <IconButton
                     aria-controls="menu"
                     aria-haspopup="true"
@@ -295,7 +295,11 @@ export default function CMS(props) {
                 /* ########################################  LIST START  ######################################## */
                 <List
                   aria-label="recipient list"
-                  // subheader={<ListSubheader component="div">Daftar Undangan</ListSubheader>}
+                  subheader={
+                    <ListSubheader component="div">
+                      Daftar Undangan ({recipientsCount})
+                    </ListSubheader>
+                  }
                 >
                   {recipients.map((recipient) => (
                     <ListItem
@@ -318,11 +322,6 @@ export default function CMS(props) {
               ) : (
                 /* ########################################  TABLE START  ######################################## */
                 <Paper variant="outlined" className={classes.paper}>
-                  {/* <Toolbar className={classes.tableToolbar}>
-                    <Typography variant="h6" align="left" className={classes.title}>
-                      Daftar Undangan
-                    </Typography>
-                  </Toolbar> */}
                   <TableContainer className={classes.table}>
                     <Table aria-label="recipient-table">
                       {/* ###############################  TABLE HEADER  ################################### */}
@@ -377,7 +376,7 @@ export default function CMS(props) {
                                 aria-haspopup="true"
                                 onClick={(e) => handleMoreOptionClick(e, recipient)}
                               >
-                                <MoreVertOutlinedIcon fontSize="small" />
+                                <MoreHorizOutlinedIcon fontSize="small" />
                               </IconButton>
                             </TableCell>
                           </TableRow>
@@ -440,17 +439,6 @@ export default function CMS(props) {
                 Tambah Undangan
               </Fab>
             </Zoom>
-            {/* <Hidden xsDown>
-              <Zoom in timeout={500} style={{ transitionDelay: '500ms' }}>
-                <Fab
-                  onClick={handleOpenAddInvitationDialog}
-                  color="primary"
-                  className={classes.fabAdd}
-                >
-                  <AddOutlinedIcon />
-                </Fab>
-              </Zoom>
-            </Hidden> */}
             <AddInvitationDialog
               open={openAddDialog}
               handleClose={handleCloseAddInvitationDialog}
@@ -511,5 +499,8 @@ export default function CMS(props) {
 CMS.propTypes = {
   user: PropTypes.object,
   recipients: PropTypes.array,
-  loading: PropTypes.bool,
+  recipientsCount: PropTypes.number,
+  isLoading: PropTypes.bool,
 };
+
+// ######################################################### CMS ver1.1.2 #########################################################
