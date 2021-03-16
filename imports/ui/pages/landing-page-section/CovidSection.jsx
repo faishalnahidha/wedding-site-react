@@ -7,6 +7,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
 
 import CovidMaskIcon from '../../components/icons/CovidMaskIcon.jsx';
 import CovidNohandshakeIcon from '../../components/icons/CovidNohandshakeIcon.jsx';
@@ -47,6 +48,12 @@ const useStyles = makeStyles((theme) => ({
   text: {
     marginBottom: theme.spacing(2),
   },
+  divider: {
+    width: 'calc(100% - 24px)',
+    marginBottom: theme.spacing(6),
+    marginRight: 'auto',
+    marginLeft: 'auto',
+  },
 }));
 
 function MyCircleIcon(props) {
@@ -61,6 +68,7 @@ export default function CovidSection() {
   return (
     <div className={classes.root}>
       <Container maxWidth="xs">
+        <Divider className={classes.divider} />
         <Typography variant="h6" align="center" className={classes.text}>
           Himbauan
         </Typography>
