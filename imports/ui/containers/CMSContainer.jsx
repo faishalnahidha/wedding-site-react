@@ -8,11 +8,6 @@ import CMS from '../pages/CMS.jsx';
 
 export default withTracker(() => {
   const user = useTracker(() => Meteor.user());
-
-  if (!user) {
-    return { user: null };
-  }
-
   const handler = Meteor.subscribe('recipients');
 
   const isLoading = !handler.ready();
