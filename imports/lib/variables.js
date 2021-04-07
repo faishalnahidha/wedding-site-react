@@ -13,7 +13,7 @@ export const groom = {
 };
 
 export const akad = {
-  date: 'Minggu, 21 Februari 2021',
+  date: 'Sabtu, 20 Februari 2021',
   time: '8:00 WIB',
   location: 'Resto Bale Rantjah',
   locationMore: 'Dusun 2 Gombang, Sawit, Kab. Boyolali',
@@ -34,7 +34,7 @@ export const domain = 'mawarkumbang.ullem.com/'; // slash "/" in the end is mand
 
 /* Convert string into URL (Target code: UTF-8) */
 export const whatsappMessage =
-  "Assalamu'alaikum%20Wr.%20Wb.%0A%0AKami%20mengundang%20Bapak%2FIbu%2FSaudara%2Fi%20untuk%20hadir%20pada%20acara%20pernikahan%20kami%0A%0A**Mawar%20Mutia%20Namaga%20%26%20Borikum%20Bangsawan%20Aji**%0A%0A*Akad%20Nikah%20%3A%20Minggu%2C%2021%20Februari%202021*%0AWaktu%20%3A%2008.00%20WIB%0ATempat%20%3A%20Resto%20Bale%20Rantjah%2C%20Dusun%202%20Gombang%2C%20Sawit%2C%20Kab.%20Boyolali%0A%0A*Resepsi%20%3A%20Minggu%2C%2021%20Februari%202021*%0AWaktu%20%3A%2010.00%20WIB%0ATempat%20%3A%20Semar%20Resto%20Boyolali%2C%20Jalan%20Raya%20Boyolali-Solo%20KM%202%2C%20Mojosongo%2C%20Kab%2C%20Boyolali%0A%0AMerupakan%20kebahagiaan%20bagi%20kami%20bila%20Bapak%2FIbu%2FSaudara%2Fi%20berkenan%20hadir%20untuk%20memberikan%20doa%20restu%0A%0AWassalamu'alaikum%20Wr.%20Wb.%0A-------------------------------%0Ahttps%3A%2F%2Fmawarkumbang.ullem.com%2F";
+  "Assalamu'alaikum%20Wr.%20Wb.%0A%0AKami%20mengundang%20Bapak%2FIbu%2FSaudara%2Fi%20untuk%20hadir%20pada%20acara%20pernikahan%20kami%0A%0A**Mawar%20Mutia%20Namaga%20%26%20Borikum%20Bangsawan%20Aji**%0A%0A*Akad%20Nikah%20%3A%20Sabtu%2C%2020%20Februari%202021*%0AWaktu%20%3A%2008.00%20WIB%0ATempat%20%3A%20Resto%20Bale%20Rantjah%2C%20Dusun%202%20Gombang%2C%20Sawit%2C%20Kab.%20Boyolali%0A%0A*Resepsi%20%3A%20Minggu%2C%2021%20Februari%202021*%0AWaktu%20%3A%2010.00%20WIB%0ATempat%20%3A%20Semar%20Resto%20Boyolali%2C%20Jalan%20Raya%20Boyolali-Solo%20KM%202%2C%20Mojosongo%2C%20Kab%2C%20Boyolali%0A%0AMerupakan%20kebahagiaan%20bagi%20kami%20bila%20Bapak%2FIbu%2FSaudara%2Fi%20berkenan%20hadir%20untuk%20memberikan%20doa%20restu%0A%0AWassalamu'alaikum%20Wr.%20Wb.%0A-------------------------------%0Ahttps%3A%2F%2Fmawarkumbang.ullem.com%2F";
 
 export const galleryData = [
   {
