@@ -38,6 +38,7 @@ export default function LocationSection() {
           frameBorder="0"
           allowFullScreen=""
           style={{ width: '100%', height: '62.5vh', border: 0 }}
+          loading="lazy"
           src={reception.mapIframe}
         />
       </Container>
