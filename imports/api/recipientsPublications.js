@@ -20,6 +20,6 @@ Meteor.publish('recipients.one', function (id) {
 Meteor.publish('recipients.latestMessages', function () {
   return RecipientsCollection.find(
     { message: { $exists: true } },
-    { fields: { name: 1, message: 1 }, limit: 5 }
+    { fields: { name: 1, message: 1 }, limit: 8 }
   );
 });
