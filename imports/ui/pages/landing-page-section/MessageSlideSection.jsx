@@ -81,7 +81,10 @@ export default function MessageSlideSection(props) {
       return { ...noDataAvailable, isLoading: true };
     }
 
-    const latestMessages = RecipientsCollection.find({}, { sort: { name: 1 } }).fetch();
+    const latestMessages = RecipientsCollection.find(
+      { message: { $exists: true } },
+      { sort: { name: 1 } }
+    ).fetch();
 
     return { latestMessages };
   });
