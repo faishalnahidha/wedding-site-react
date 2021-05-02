@@ -251,7 +251,7 @@ export default function CMS(props) {
       {/* If user logged in (not null), render CMS. If user not logged in (null), route to Login Page */}
       {user !== null ? (
         <>
-          <ReactTitle title="Ulem Invitation Management System" />
+          <ReactTitle title="Ullem Invitation Management System" />
           <div className={classes.root} id="CMSPage">
             <ElevationScroll {...props}>
               <AppBar position="sticky" className={classes.appbar}>
