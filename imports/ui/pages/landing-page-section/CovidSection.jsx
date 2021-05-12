@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
   container: {
-    textAlign: 'center',
+    padding: '0 24px',
   },
   iconContainer: {
     width: '56px',
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     borderRadius: '50%',
     borderStyle: 'solid',
-    borderWidth: '2px',
+    borderWidth: '1.5px',
     borderColor: theme.palette.divider,
     boxSizing: 'border-box',
     marginRight: theme.spacing(3),
@@ -49,10 +49,8 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
   },
   divider: {
-    width: 'calc(100% - 24px)',
+    width: '100%',
     marginBottom: theme.spacing(6),
-    marginRight: 'auto',
-    marginLeft: 'auto',
   },
 }));
 
@@ -67,12 +65,12 @@ export default function CovidSection() {
 
   return (
     <div className={classes.root}>
-      <Container maxWidth="xs">
+      <Container maxWidth="xs" className={classes.container}>
         <Divider className={classes.divider} />
         <Typography variant="h6" align="center" className={classes.text}>
           Himbauan
         </Typography>
-        <Typography variant="body2" gutterBottom className={classes.text}>
+        <Typography variant="body1" color="textSecondary" gutterBottom className={classes.text}>
           Karena situasi pandemi saat ini, maka tamu undangan diwajibkan mematuhi protokol kesehatan
         </Typography>
         <List>

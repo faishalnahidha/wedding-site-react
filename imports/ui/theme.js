@@ -17,23 +17,42 @@ export const myTheme = createMuiTheme({
     text: {
       primary: 'rgba(33, 37, 41, 0.87)',
       secondary: 'rgba(33, 37, 41, 0.6)',
+      dark: '#212529',
     },
   },
   typography: {
-    fontFamily: 'Nunito Sans, Arial',
+    fontFamily: 'Nunito Sans, sans-serif',
+    allVariants: {
+      color: 'rgba(33, 37, 41, 0.87)',
+    },
+    h5: {
+      letterSpacing: '0.18px',
+    },
     h6: {
       fontWeight: 600,
+      lineHeight: '24px',
+      letterSpacing: '0.15px',
+    },
+    subtitle1: {
+      fontWeight: 'bold',
+      letterSpacing: '0.15px',
+    },
+    subtitle2: {
+      fontWeight: 'bold',
+    },
+    body1: {
+      lineHeight: '24px',
+      letterSpacing: '0.5px',
+    },
+    body2: {
+      lineHeight: '20px',
+      letterSpacing: '0.25px',
     },
     button: {
       fontSize: 14,
       fontWeight: 600,
+      letterSpacing: '1.25px',
       textTransform: 'none',
-    },
-    subtitle1: {
-      fontWeight: 600,
-    },
-    subtitle2: {
-      fontWeight: 600,
     },
   },
   overrides: {

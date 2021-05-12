@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Grid from '@material-ui/core/Grid';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 import IntroSection from './landing-page-section/IntroSection.jsx';
@@ -48,23 +49,30 @@ export default function LandingPage(props) {
 
   return (
     <>
-      <IntroSection
-        recipientName={recipient.name}
-        scrollToContentSection={scrollToContentSection}
-        scrollToLocationSection={scrollToLocationSection}
-      />
-      <div ref={contentSectionRef}>
-        {/* put Component inside div to make ref worked! */}
-        <ContentSection />
-      </div>
-      <div ref={locationSectionRef}>
-        <LocationSection />
-      </div>
-      <GallerySection />
-      <MessageSlideSection />
-      <CovidSection />
-      <InputFormSection recipient={recipient} />
-      <Footer />
+      <Grid container>
+        <Grid item xs={12} lg={7}>
+          <IntroSection
+            recipientName={recipient.name}
+            scrollToContentSection={scrollToContentSection}
+            scrollToLocationSection={scrollToLocationSection}
+          />
+        </Grid>
+        <Grid item xs={12} lg={5}>
+          <div ref={contentSectionRef}>
+            {/* put Component inside div to make ref worked! */}
+            <ContentSection />
+          </div>
+          <div ref={locationSectionRef}>
+            <LocationSection />
+          </div>
+          <GallerySection />
+          <MessageSlideSection />
+          <CovidSection />
+          <InputFormSection recipient={recipient} />
+          <Footer />
+        </Grid>
+      </Grid>
+
       <BackToTopButton />
     </>
   );

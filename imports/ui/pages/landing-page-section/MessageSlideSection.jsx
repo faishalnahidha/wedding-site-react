@@ -6,7 +6,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Skeleton from '@material-ui/lab/Skeleton';
 import Carousel from 'react-material-ui-carousel';
 
@@ -20,6 +19,10 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
   },
+  container: {
+    textAlign: 'center',
+    padding: '0 24px',
+  },
   carouselItem: {
     width: '100%',
     minHeight: '176px',
@@ -28,8 +31,13 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'no-wrap',
     justifyContent: 'center',
   },
-  messageText: {
+  messageTypography: {
     marginBottom: theme.spacing(2),
+    fontSize: '20px',
+    fontWeight: 400,
+    lineHeight: '28px',
+    letterSpacing: '0.15px',
+    color: theme.palette.text.secondary,
   },
   icon: {
     width: '40px',
@@ -45,10 +53,10 @@ function CarouselItem(props) {
   const classes = useStyles();
   return (
     <div className={classes.carouselItem}>
-      <Typography variant="h6" align="center" color="textSecondary" className={classes.messageText}>
-        "{props.item.message}"
+      <Typography align="center" className={classes.messageTypography}>
+        &ldquo;{props.item.message}&rdquo;
       </Typography>
-      <Typography variant="body2" align="center">
+      <Typography variant="body1" align="center" color="textPrimary">
         {props.item.name}
       </Typography>
     </div>
@@ -71,7 +79,7 @@ function CarouselItemLoading() {
   );
 }
 
-export default function MessageSlideSection(props) {
+export default function MessageSlideSection() {
   const { latestMessages, isLoading } = useTracker(() => {
     const noDataAvailable = { item: [] };
 
@@ -93,7 +101,7 @@ export default function MessageSlideSection(props) {
 
   return (
     <div className={classes.root}>
-      <Container maxWidth="xs">
+      <Container maxWidth="xs" className={classes.container}>
         <Box marginBottom={4} textAlign="center">
           <QuotesIcon className={classes.icon} />
         </Box>
