@@ -52,8 +52,8 @@ export default function GallerySection() {
   return (
     <>
       <div className={classes.root}>
-        <Container maxWidth="xs">
-          <Box marginBottom={6} textAlign="center">
+        <Container maxWidth="xs" disableGutters>
+          <Box pb={6} textAlign="center">
             <GalleryIcon className={classes.icon} />
           </Box>
           <GridList cellHeight={180} cols={2} className={classes.gridList}>

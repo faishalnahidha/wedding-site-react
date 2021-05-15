@@ -1,12 +1,12 @@
 import React from 'react';
 import { Zoom } from 'react-awesome-reveal';
+import { use100vh } from 'react-div-100vh';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-// import Divider from '@material-ui/core/Divider';
 
 import { reception } from '../../../lib/variables.js';
 
@@ -16,60 +16,58 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
   },
-  locationColumn: {
-    marginTop: theme.spacing(1),
+  container: {
     textAlign: 'center',
-  },
-  divider: {
-    width: '90%',
-    marginTop: '36px',
-    marginBottom: theme.spacing(4),
+    padding: '16px 24px 0',
   },
 }));
 
 export default function LocationSection() {
   const classes = useStyles();
+  const height100 = use100vh();
+  const height62 = height100 ? height100 * 0.62 : '62vh';
 
   return (
     <div className={classes.root}>
       <Container disableGutters maxWidth="xs">
-        <iframe
-          title="Location Map"
-          frameBorder="0"
-          allowFullScreen=""
-          style={{ width: '100%', height: '62.5vh', border: 0 }}
-          loading="lazy"
-          src={reception.mapIframe}
-        />
+        <Box width="100%" height={height62}>
+          <iframe
+            title="Location Map"
+            frameBorder="0"
+            allowFullScreen=""
+            style={{ width: '100%', height: '100%', border: 0 }}
+            loading="lazy"
+            src={reception.mapIframe}
+          />
+        </Box>
       </Container>
-      <Container maxWidth="xs">
-        <Grid container spacing={3} justify="center" alignItems="center">
-          <Grid item xs={12} className={classes.locationColumn}>
-            <Typography variant="subtitle1" gutterBottom>
-              Lokasi Resepsi
-            </Typography>
-            <Typography variant="h6" color="primary" gutterBottom>
-              <strong>{reception.location}</strong>
-            </Typography>
-            <Typography variant="body2">{reception.locationMore}</Typography>
-          </Grid>
-          <Grid item xs={10}>
-            <Zoom duration={500}>
-              <Button
-                variant="contained"
-                color="primary"
-                size="large"
-                disableElevation
-                fullWidth
-                href={reception.locationUrl}
-                target="_blank"
-              >
-                Buka Peta
-              </Button>
-            </Zoom>
-          </Grid>
-          {/* <Divider className={classes.divider} /> */}
-        </Grid>
+      <Container maxWidth="xs" className={classes.container}>
+        <Box width="100%">
+          <Typography variant="subtitle1" color="textPrimary" gutterBottom>
+            Lokasi Resepsi
+          </Typography>
+          <Typography variant="h5" color="primary" gutterBottom>
+            {reception.location}
+          </Typography>
+          <Typography variant="body1" color="textPrimary">
+            {reception.locationMore}
+          </Typography>
+        </Box>
+        <Box width="100%" px={1} mt={3}>
+          <Zoom duration={500}>
+            <Button
+              variant="contained"
+              color="secondary"
+              size="large"
+              disableElevation
+              fullWidth
+              href={reception.locationUrl}
+              target="_blank"
+            >
+              Buka Peta
+            </Button>
+          </Zoom>
+        </Box>
       </Container>
     </div>
   );

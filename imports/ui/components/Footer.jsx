@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   icon: {
-    fontSize: 14,
+    fontSize: 16,
     color: '#f03434',
     position: 'relative',
     top: 2,
@@ -33,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       textAlign: 'left',
     },
+    [theme.breakpoints.up('lg')]: {
+      textAlign: 'center',
+    },
   },
   footerItemB: {
     [theme.breakpoints.down('xs')]: {
@@ -40,6 +43,9 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.up('sm')]: {
       textAlign: 'right',
+    },
+    [theme.breakpoints.up('lg')]: {
+      textAlign: 'center',
     },
   },
 }));
@@ -52,13 +58,13 @@ export default function Footer(props) {
     <div className={clsx(classes.root, className)}>
       <Container maxWidth="sm">
         <Grid container spacing={1}>
-          <Grid item xs={12} sm={6} className={classes.footerItemA}>
-            <Typography variant="body2" color="textSecondary">
+          <Grid item xs={12} sm={6} lg={12} className={classes.footerItemA}>
+            <Typography variant="body1" color="textSecondary">
               Made with <FavoriteIcon className={classes.icon} /> in Indonesia
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={6} className={classes.footerItemB}>
-            <Typography variant="body2" color="textSecondary">
+          <Grid item xs={12} sm={6} lg={12} className={classes.footerItemB}>
+            <Typography variant="body1" color="textSecondary">
               &copy; 2021{' '}
               <Link href="https://ullem.com" target="_blank">
                 Ullem Undangan Online
