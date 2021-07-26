@@ -5,6 +5,7 @@ export const bride = {
   father: 'Wage Wahyudi',
   mother: 'Maya Mayasari',
   instagram: 'mawar_mutia',
+  instagramUrl: 'https://www.instagram.com/ullemdotcom/',
 };
 
 export const groom = {
@@ -12,6 +13,7 @@ export const groom = {
   father: 'Panji Prasasta',
   mother: 'Ayu Anggraini',
   instagram: 'kumbanggg',
+  instagramUrl: 'https://www.instagram.com/ullemdotcom/',
 };
 
 export const akad = {

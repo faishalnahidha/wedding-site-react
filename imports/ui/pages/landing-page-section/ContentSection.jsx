@@ -72,11 +72,12 @@ export default function ContentSection() {
           <Box mb={3}>
             <Fade direction="up">
               <div>
-                <Typography variant="h5" color="textPrimary" gutterBottom>
+                <Typography variant="h5" color="textPrimary">
                   <strong>{bride.name}</strong>
                 </Typography>
                 <Button
-                  href="#text-buttons"
+                  href={bride.instagramUrl}
+                  target="_blank"
                   color="primary"
                   startIcon={<InstagramIcon className={classes.instagramIcon} />}
                 >
@@ -96,11 +97,12 @@ export default function ContentSection() {
           <Box mb={3}>
             <Fade direction="up" delay={300}>
               <div>
-                <Typography variant="h5" color="textPrimary" gutterBottom>
+                <Typography variant="h5" color="textPrimary">
                   <strong>{groom.name}</strong>
                 </Typography>
                 <Button
-                  href="#text-buttons"
+                  href={groom.instagramUrl}
+                  target="_blank"
                   color="primary"
                   startIcon={<InstagramIcon className={classes.instagramIcon} />}
                 >
