@@ -4,12 +4,14 @@ export const bride = {
   name: 'Mawar Mutia Namaga',
   father: 'Wage Wahyudi',
   mother: 'Maya Mayasari',
+  instagram: 'mawar_mutia',
 };
 
 export const groom = {
   name: 'Borikum Bangsawan Aji',
   father: 'Panji Prasasta',
   mother: 'Ayu Anggraini',
+  instagram: 'kumbanggg',
 };
 
 export const akad = {

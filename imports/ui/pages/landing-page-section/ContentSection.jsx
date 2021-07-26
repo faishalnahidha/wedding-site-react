@@ -4,6 +4,7 @@ import { Fade, Zoom } from 'react-awesome-reveal';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -13,6 +14,7 @@ import Link from '@material-ui/core/Link';
 
 import AltarIcon from '../../components/icons/AltarIcon.jsx';
 import WeddingLocationIcon from '../../components/icons/WeddingLocationIcon.jsx';
+import InstagramIcon from '../../components/icons/InstagramIcon.jsx';
 
 import { bride, groom, akad, reception } from '../../../lib/variables.js';
 
@@ -30,6 +32,11 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     width: '40px',
     height: '40px',
+  },
+  instagramIcon: {
+    width: '18px',
+    height: '18px',
+    fill: theme.palette.primary.main,
   },
   card: {
     borderRadius: '8px',
@@ -65,9 +72,16 @@ export default function ContentSection() {
           <Box mb={3}>
             <Fade direction="up">
               <div>
-                <Typography variant="h5" color="primary" gutterBottom>
-                  {bride.name}
+                <Typography variant="h5" color="textPrimary" gutterBottom>
+                  <strong>{bride.name}</strong>
                 </Typography>
+                <Button
+                  href="#text-buttons"
+                  color="primary"
+                  startIcon={<InstagramIcon className={classes.instagramIcon} />}
+                >
+                  {bride.instagram}
+                </Button>
                 <Typography variant="body1" color="textPrimary">
                   Putri Bp. {bride.father} & Ibu {bride.mother}
                 </Typography>
@@ -82,9 +96,16 @@ export default function ContentSection() {
           <Box mb={3}>
             <Fade direction="up" delay={300}>
               <div>
-                <Typography variant="h5" color="primary" gutterBottom>
-                  {groom.name}
+                <Typography variant="h5" color="textPrimary" gutterBottom>
+                  <strong>{groom.name}</strong>
                 </Typography>
+                <Button
+                  href="#text-buttons"
+                  color="primary"
+                  startIcon={<InstagramIcon className={classes.instagramIcon} />}
+                >
+                  {groom.instagram}
+                </Button>
                 <Typography variant="body1" color="textPrimary">
                   Putra Bp. {groom.father} & Ibu {groom.mother}
                 </Typography>
