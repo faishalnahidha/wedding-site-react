@@ -46,8 +46,8 @@ export default function LocationSection() {
           <Typography variant="subtitle1" color="textPrimary" gutterBottom>
             Lokasi Resepsi
           </Typography>
-          <Typography variant="h5" color="primary" gutterBottom>
-            {reception.location}
+          <Typography variant="h5" color="textPrimary" gutterBottom>
+            <strong>{reception.location}</strong>
           </Typography>
           <Typography variant="body1" color="textPrimary">
             {reception.locationMore}
@@ -57,14 +57,14 @@ export default function LocationSection() {
           <Zoom duration={500}>
             <Button
               variant="contained"
-              color="secondary"
+              color="primary"
               size="large"
               disableElevation
               fullWidth
               href={reception.locationUrl}
               target="_blank"
             >
-              Buka Peta
+              Buka Google Maps
             </Button>
           </Zoom>
         </Box>

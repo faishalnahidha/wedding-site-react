@@ -48,6 +48,10 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'Nunito Sans, Arial',
     backgroundColor: theme.palette.background.default,
   },
+  livestreamLogo: {
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(3),
+  },
 }));
 
 export default function ContentSection() {
@@ -122,6 +126,7 @@ export default function ContentSection() {
           <AltarIcon className={classes.icon} />
         </Box>
 
+        {/* ############## Card Akad Nikah ############## */}
         <Box py={3}>
           <Zoom triggerOnce direction="up" duration={1500} delay={500}>
             <Card raised width="100%" className={classes.card}>
@@ -131,38 +136,69 @@ export default function ContentSection() {
                 <Typography variant="subtitle1" gutterBottom>
                   <strong>{akad.date}</strong>
                 </Typography>
-                <Typography variant="body1" gutterBottom>
+                <Typography variant="body2" gutterBottom>
                   pukul {akad.time}
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="body2">
                   di {akad.location}
                   <br />
                   {akad.locationMore}.&nbsp;
-                  <Link href={akad.locationUrl} target="_blank" color="secondary">
-                    Lihat peta
+                  <Link href={akad.locationUrl} target="_blank" color="primary">
+                    Lihat Peta
                   </Link>
                 </Typography>
               </CardContent>
             </Card>
           </Zoom>
         </Box>
+        {/* ############## Card Resepsi ############## */}
         <Box pb={3}>
           <Zoom triggerOnce direction="up" duration={1500} delay={800}>
             <Card raised width="100%" className={classes.card}>
               <CardHeader title="Resepsi" disableTypography className={classes.cardHeader} />
               <Divider />
               <CardContent>
-                <Typography variant="h6" color="primary" gutterBottom>
+                <Typography variant="h6" color="textPrimary" gutterBottom>
                   {reception.date}
                 </Typography>
-                <Typography variant="body1" gutterBottom>
+                <Typography variant="body2" gutterBottom>
                   pukul {reception.time}
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="body2">
                   di {reception.location}
                   <br />
                   {reception.locationMore}
                 </Typography>
+              </CardContent>
+            </Card>
+          </Zoom>
+        </Box>
+        {/* ############## Card Pernikahan Virtual ############## */}
+        <Box pb={3}>
+          <Zoom triggerOnce direction="up" duration={1500} delay={800}>
+            <Card width="100%" className={classes.card}>
+              <CardHeader
+                title="Pernikahan Virtual"
+                disableTypography
+                className={classes.cardHeader}
+              />
+              <Divider />
+              <CardContent>
+                <img
+                  src="/img/logo/brand/a-logo-brand-youtube.svg"
+                  alt="Youtube Logo"
+                  className={classes.livestreamLogo}
+                />
+                <Button
+                  href="#"
+                  target="_blank"
+                  variant="contained"
+                  size="large"
+                  color="primary"
+                  disableElevation
+                >
+                  Lihat Live Streaming
+                </Button>
               </CardContent>
             </Card>
           </Zoom>

@@ -8,6 +8,8 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Snackbar from '@material-ui/core/Snackbar';
 import Divider from '@material-ui/core/Divider';
 
@@ -38,6 +40,9 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     marginBottom: theme.spacing(6),
   },
+  checkbox:{
+    marginBottom: theme.spacing(2),
+  }
 }));
 
 const rsvpOptions = [
@@ -65,6 +70,7 @@ function Alert(props) {
 export default function InputFormSection(props) {
   const [rsvpInput, setRsvpInput] = useState('');
   const [messageInput, setMessageInput] = useState('');
+  const [checkbox, setCheckbox] = useState(false);
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const { recipient } = props;
@@ -77,6 +83,11 @@ export default function InputFormSection(props) {
   const handleMessageChange = (event) => {
     setMessageInput(event.target.value);
   };
+
+  const handleCheckbox = (event) => {
+    setCheckbox(event.target.checked);
+    // console.log('checkbox: ' + checkbox);
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -117,7 +128,7 @@ export default function InputFormSection(props) {
                   onChange={handleRsvpChange}
                   label="Konfirmasi kedatangan"
                   variant="outlined"
-                  color="secondary"
+                  color="primary"
                   select
                   SelectProps={{
                     native: true,
@@ -132,6 +143,19 @@ export default function InputFormSection(props) {
                     </option>
                   ))}
                 </TextField>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={checkbox}
+                      onChange={handleCheckbox}
+                      name="checkbox"
+                      color="primary"
+                    />
+                  }
+                  label="Datang dengan pasangan"
+                  className={classes.checkbox}
+                />
+                
                 <TextField
                   id="messageInput"
                   type="text"
@@ -139,7 +163,7 @@ export default function InputFormSection(props) {
                   onChange={handleMessageChange}
                   label="Pesan untuk pengantin"
                   variant="outlined"
-                  color="secondary"
+                  color="primary"
                   multiline
                   rows="3"
                   fullWidth
@@ -149,7 +173,7 @@ export default function InputFormSection(props) {
                   type="submit"
                   value="Submit"
                   variant="contained"
-                  color="secondary"
+                  color="primary"
                   disableElevation
                   className={classes.button}
                 >

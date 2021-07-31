@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
+import ImageList from '@material-ui/core/ImageList';
+import ImageListItem from '@material-ui/core/ImageListItem';
 import ButtonBase from '@material-ui/core/ButtonBase';
 
 import Lightbox from '../../components/Lightbox.jsx';
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
   },
-  gridList: {
+  imageList: {
     width: '100%',
   },
   image: {
@@ -38,10 +38,10 @@ const useStyles = makeStyles((theme) => ({
 export default function GallerySection() {
   const classes = useStyles();
   const [openLightbox, setOpenLightbox] = useState(false);
-  const [clickedTile, setClickedTile] = useState(null);
+  const [clickedItem, setClickedItem] = useState(null);
 
-  const handleOpenLightbox = (tile) => {
-    setClickedTile(tile);
+  const handleOpenLightbox = (item) => {
+    setClickedItem(item);
     setOpenLightbox(true);
   };
 
@@ -56,25 +56,25 @@ export default function GallerySection() {
           <Box pb={6} textAlign="center">
             <GalleryIcon className={classes.icon} />
           </Box>
-          <GridList cellHeight={180} cols={2} className={classes.gridList}>
-            {galleryData.map((tile) => (
-              <GridListTile
+          <ImageList cellHeight={180} cols={2} className={classes.imageList}>
+            {galleryData.map((item) => (
+              <ImageListItem
                 component={ButtonBase}
-                key={tile.img}
-                cols={tile.cols || 1}
-                onClick={() => handleOpenLightbox(tile)}
+                key={item.img}
+                cols={item.cols || 1}
+                onClick={() => handleOpenLightbox(item)}
               >
-                <img src={tile.thumbnail} alt={tile.title} />
-              </GridListTile>
+                <img src={item.thumbnail} alt={item.title} />
+              </ImageListItem>
             ))}
-          </GridList>
+          </ImageList>
         </Container>
       </div>
-      {clickedTile && (
+      {clickedItem && (
         <Lightbox
           open={openLightbox}
-          imagePath={clickedTile.img}
-          imageTitle={clickedTile.title}
+          imagePath={clickedItem.img}
+          imageTitle={clickedItem.title}
           handleClose={handleCloseLightbox}
         />
       )}
