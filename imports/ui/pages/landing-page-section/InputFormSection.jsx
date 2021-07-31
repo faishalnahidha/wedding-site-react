@@ -40,9 +40,9 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     marginBottom: theme.spacing(6),
   },
-  checkbox:{
+  checkbox: {
     marginBottom: theme.spacing(2),
-  }
+  },
 }));
 
 const rsvpOptions = [
@@ -87,13 +87,14 @@ export default function InputFormSection(props) {
   const handleCheckbox = (event) => {
     setCheckbox(event.target.checked);
     // console.log('checkbox: ' + checkbox);
-  }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const isWithPartner = checkbox;
     const message = messageInput !== undefined ? messageInput : '';
 
-    Meteor.call('recipients.updateRsvp', recipient._id, rsvpInput, message);
+    Meteor.call('recipients.updateRsvp', recipient._id, rsvpInput, isWithPartner, message);
 
     setOpenSnackbar(true);
   };
@@ -155,7 +156,7 @@ export default function InputFormSection(props) {
                   label="Datang dengan pasangan"
                   className={classes.checkbox}
                 />
-                
+
                 <TextField
                   id="messageInput"
                   type="text"
