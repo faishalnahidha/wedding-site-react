@@ -120,6 +120,20 @@ export default function MobileRecipientDetailDialog(props) {
                 </Typography>
               </ListItemText>
             </ListItem>
+            {/* <ListItem>
+              <ListItemText disableTypography>
+                <Typography
+                  variant="overline"
+                  display="block"
+                  className={classes.overlineTypography}
+                >
+                  Dengan Pasangan?
+                </Typography>
+                <Typography variant="body1" display="block">
+                  {recipient.withPartner ? 'Iya' : 'Tidak'}
+                </Typography>
+              </ListItemText>
+            </ListItem> */}
             <ListItem>
               <ListItemText disableTypography>
                 <Typography

@@ -10,7 +10,7 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import Lightbox from '../../components/Lightbox.jsx';
 import GalleryIcon from '../../components/icons/GalleryIcon.jsx';
 
-import { galleryData } from '../../../lib/variables.js';
+import { galleryData, youtubeSrc } from '../../../lib/variables.js';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,6 +32,21 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     width: '40px',
     height: '40px',
+  },
+  videoResponsive: {
+    position: 'relative',
+    height: 0,
+    overflow: 'hidden',
+    paddingBottom: '56.25%',
+    marginRight: 8,
+    marginBottom: 8,
+  },
+  iframe: {
+    left: 0,
+    top: 0,
+    height: '100%',
+    width: '100%',
+    position: 'absolute',
   },
 }));
 
@@ -56,7 +71,19 @@ export default function GallerySection() {
           <Box pb={6} textAlign="center">
             <GalleryIcon className={classes.icon} />
           </Box>
-          <ImageList cellHeight={180} cols={2} className={classes.imageList}>
+          <div className={classes.videoResponsive}>
+            <iframe
+              width="560"
+              height="315"
+              src={`https://www.youtube.com/embed/${youtubeSrc}?&autoplay=1&controls=1`}
+              title="Pre-wedding Video Youtube"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              className={classes.iframe}
+            />
+          </div>
+          <ImageList cellHeight={180} cols={2} gap={8} className={classes.imageList}>
             {galleryData.map((item) => (
               <ImageListItem
                 component={ButtonBase}

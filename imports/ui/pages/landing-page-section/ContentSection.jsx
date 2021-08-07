@@ -175,7 +175,7 @@ export default function ContentSection() {
         </Box>
         {/* ############## Card Pernikahan Virtual ############## */}
         <Box pb={3}>
-          <Zoom triggerOnce direction="up" duration={1500} delay={800}>
+          <Zoom triggerOnce direction="up" duration={1500} delay={1100}>
             <Card width="100%" className={classes.card}>
               <CardHeader
                 title="Pernikahan Virtual"
@@ -184,21 +184,25 @@ export default function ContentSection() {
               />
               <Divider />
               <CardContent>
-                <img
-                  src="/img/logo/brand/a-logo-brand-youtube.svg"
-                  alt="Youtube Logo"
-                  className={classes.livestreamLogo}
-                />
-                <Button
-                  href="#"
-                  target="_blank"
-                  variant="contained"
-                  size="large"
-                  color="primary"
-                  disableElevation
-                >
-                  Lihat Live Streaming
-                </Button>
+                <Box>
+                  <img
+                    src="/img/logo/brand/a-logo-brand-youtube.svg"
+                    alt="Youtube Logo"
+                    className={classes.livestreamLogo}
+                  />
+                </Box>
+                <Box>
+                  <Button
+                    href="#"
+                    target="_blank"
+                    variant="contained"
+                    size="large"
+                    color="primary"
+                    disableElevation
+                  >
+                    Lihat Live Streaming
+                  </Button>
+                </Box>
               </CardContent>
             </Card>
           </Zoom>

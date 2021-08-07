@@ -84,20 +84,24 @@ export default function InputFormSection(props) {
     setMessageInput(event.target.value);
   };
 
-  const handleCheckbox = (event) => {
-    setCheckbox(event.target.checked);
-    // console.log('checkbox: ' + checkbox);
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    const isWithPartner = checkbox;
+    // const isWithPartner = checkbox;
     const message = messageInput !== undefined ? messageInput : '';
 
-    Meteor.call('recipients.updateRsvp', recipient._id, rsvpInput, isWithPartner, message);
+    // Meteor.call('recipients.updateRsvp', recipient._id, rsvpInput, isWithPartner, message);
+    Meteor.call('recipients.updateRsvp', recipient._id, rsvpInput, message);
 
     setOpenSnackbar(true);
   };
+
+  // const handleShowCheckbox = () => {
+  //   if (rsvpInput === 'Yes' || rsvpInput === 'Maybe') {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // };
 
   return (
     <div className={classes.root}>
@@ -144,18 +148,22 @@ export default function InputFormSection(props) {
                     </option>
                   ))}
                 </TextField>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={checkbox}
-                      onChange={handleCheckbox}
-                      name="checkbox"
-                      color="primary"
-                    />
-                  }
-                  label="Datang dengan pasangan"
-                  className={classes.checkbox}
-                />
+
+                {/* ####### Feature Checkbox Experimental ####### */}
+                {/* {handleShowCheckbox() ? (
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={checkbox}
+                        onChange={handleCheckbox}
+                        name="checkbox"
+                        color="primary"
+                      />
+                    }
+                    label="Datang dengan pasangan"
+                    className={classes.checkbox}
+                  />
+                ) : null} */}
 
                 <TextField
                   id="messageInput"

@@ -73,15 +73,17 @@ export const galleryData = [
   },
 ];
 
+export const youtubeSrc = 'R_5EOhgH_Fc';
+
 export const weddingGiftAccounts = [
   {
     service: 'BCA',
     number: '00012345678',
-    owner: 'Mawar Mutia Namaga'
+    owner: 'Mawar Mutia Namaga',
   },
   {
     service: 'OVO',
     number: '081233334444',
-    owner: 'Borikum Bangsawan'
-  }
+    owner: 'Borikum Bangsawan',
+  },
 ];
