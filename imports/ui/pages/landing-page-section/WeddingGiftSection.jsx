@@ -1,0 +1,126 @@
+import React, { useState } from 'react';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Divider from '@material-ui/core/Divider';
+import Snackbar from '@material-ui/core/Snackbar';
+
+import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
+
+import { weddingGiftAccounts } from '../../../lib/variables.js';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    paddingBottom: theme.spacing(6),
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.paper,
+  },
+  container: {
+    padding: '0 24px',
+  },
+  card: {
+    borderRadius: '8px',
+    minWidth: '256px',
+    textAlign: 'center',
+  },
+  cardHeader: {
+    padding: '12px 0 12px',
+    backgroundColor: theme.palette.background.default,
+  },
+  copyButton: {
+    marginTop: theme.spacing(2),
+  },
+}));
+
+export default function WeddingGiftSection() {
+  const classes = useStyles();
+
+  const [openSnackbarCopied, setOpenSnackbarCopied] = useState(false);
+
+  return (
+    <div className={classes.root}>
+      <Container maxWidth="xs" className={classes.container}>
+        <Box width="100%">
+          <Typography variant="body1" color="textSecondary" paragraph>
+            Saudara/i yang ingin mengirim hadiah ke pernikahan kami, bisa transfer ke rekening di
+            bawah
+          </Typography>
+        </Box>
+        {/* #################### Cards #################### */}
+        <Box pt={1} pb={3}>
+          <Card width="100%" className={classes.card}>
+            <div disableTypography className={classes.cardHeader}>
+              <img src="/img/logo/payment/a-logo-payment-bca.svg" alt="BCA" />
+            </div>
+            <Divider />
+            <CardContent>
+              <Typography variant="subtitle1" gutterBottom>
+                <strong>No. Rekening {weddingGiftAccounts[0].number}</strong>
+              </Typography>
+              <Typography variant="body2">a/n {weddingGiftAccounts[0].owner}</Typography>
+              <CopyToClipboard
+                text={weddingGiftAccounts[0].number}
+                onCopy={() => setOpenSnackbarCopied(true)}
+              >
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  className={classes.copyButton}
+                  startIcon={<FileCopyOutlinedIcon />}
+                >
+                  Salin Nomor
+                </Button>
+              </CopyToClipboard>
+            </CardContent>
+          </Card>
+        </Box>
+        <Box>
+          <Card width="100%" className={classes.card}>
+            <div disableTypography className={classes.cardHeader}>
+              <img src="/img/logo/payment/a-logo-payment-ovo.svg" alt="OVO" />
+            </div>
+            <Divider />
+            <CardContent>
+              <Typography variant="subtitle1" gutterBottom>
+                <strong>No. {weddingGiftAccounts[1].number}</strong>
+              </Typography>
+              <Typography variant="body2">a/n {weddingGiftAccounts[1].owner}</Typography>
+              <CopyToClipboard
+                text={weddingGiftAccounts[1].number}
+                onCopy={() => setOpenSnackbarCopied(true)}
+              >
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  className={classes.copyButton}
+                  startIcon={<FileCopyOutlinedIcon />}
+                >
+                  Salin Nomor
+                </Button>
+              </CopyToClipboard>
+            </CardContent>
+          </Card>
+        </Box>
+      </Container>
+      {/* #################### Snackbar #################### */}
+      <Snackbar
+        key="copied"
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        className={classes.snackbar}
+        open={openSnackbarCopied}
+        autoHideDuration={2000}
+        onClose={() => setOpenSnackbarCopied(false)}
+        message="Nomor berhasil disalin"
+      />
+    </div>
+  );
+}

@@ -81,24 +81,21 @@ const useStyles = makeStyles((theme) => ({
     position: 'fixed',
     zIndex: 1200,
     [theme.breakpoints.down('xs')]: {
+      right: theme.spacing(2),
       bottom: theme.spacing(2),
-      left: 0,
-      right: 0,
-      margin: '0 auto',
     },
     [theme.breakpoints.up('sm')]: {
       bottom: theme.spacing(3),
-      left: 0,
-      right: 0,
-      margin: '0 auto',
+      right: theme.spacing(3),
     },
     [theme.breakpoints.up('md')]: {
       bottom: theme.spacing(4),
+      right: theme.spacing(4),
     },
     [theme.breakpoints.up('lg')]: {
       top: theme.spacing(5),
       left: theme.spacing(2),
-      margin: '0',
+      //margin: 0,
     },
     [theme.breakpoints.up('xl')]: {
       top: theme.spacing(5),
@@ -110,10 +107,14 @@ const useStyles = makeStyles((theme) => ({
       bottom: theme.spacing(10),
     },
     [theme.breakpoints.up('sm')]: {
-      bottom: theme.spacing(3),
+      bottom: theme.spacing(11),
       right: theme.spacing(3),
     },
     [theme.breakpoints.up('md')]: {
+      bottom: theme.spacing(12),
+      right: theme.spacing(4),
+    },
+    [theme.breakpoints.up('lg')]: {
       bottom: theme.spacing(4),
       right: theme.spacing(4),
     },
@@ -360,7 +361,7 @@ export default function CMS(props) {
                                   <WhatsAppIcon fontSize="small" />
                                 </IconButton>
                               </Tooltip>
-                              <Tooltip title="Copy Link">
+                              <Tooltip title="Salin Link">
                                 <CopyToClipboard
                                   text={`http://${domain}${recipient._id}`}
                                   onCopy={() => setOpenSnackbarCopied(true)}
@@ -471,7 +472,7 @@ export default function CMS(props) {
               open={openSnackbarCopied}
               autoHideDuration={2000}
               onClose={() => setOpenSnackbarCopied(false)}
-              message="Link berhasil di-copy"
+              message="Link berhasil disalin"
             />
             <Snackbar
               key="removed"
@@ -503,4 +504,4 @@ CMS.propTypes = {
   isLoading: PropTypes.bool,
 };
 
-// ######################################################### CMS ver1.1.2 #########################################################
+// ######################################################### CMS ver1.1.3 #########################################################

@@ -3,14 +3,14 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
+import ImageList from '@material-ui/core/ImageList';
+import ImageListItem from '@material-ui/core/ImageListItem';
 import ButtonBase from '@material-ui/core/ButtonBase';
 
 import Lightbox from '../../components/Lightbox.jsx';
 import GalleryIcon from '../../components/icons/GalleryIcon.jsx';
 
-import { galleryData } from '../../../lib/variables.js';
+import { galleryData, youtubeSrc } from '../../../lib/variables.js';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
   },
-  gridList: {
+  imageList: {
     width: '100%',
   },
   image: {
@@ -33,15 +33,30 @@ const useStyles = makeStyles((theme) => ({
     width: '40px',
     height: '40px',
   },
+  videoResponsive: {
+    position: 'relative',
+    height: 0,
+    overflow: 'hidden',
+    paddingBottom: '56.25%',
+    marginRight: 8,
+    marginBottom: 8,
+  },
+  iframe: {
+    left: 0,
+    top: 0,
+    height: '100%',
+    width: '100%',
+    position: 'absolute',
+  },
 }));
 
 export default function GallerySection() {
   const classes = useStyles();
   const [openLightbox, setOpenLightbox] = useState(false);
-  const [clickedTile, setClickedTile] = useState(null);
+  const [clickedItem, setClickedItem] = useState(null);
 
-  const handleOpenLightbox = (tile) => {
-    setClickedTile(tile);
+  const handleOpenLightbox = (item) => {
+    setClickedItem(item);
     setOpenLightbox(true);
   };
 
@@ -56,25 +71,37 @@ export default function GallerySection() {
           <Box pb={6} textAlign="center">
             <GalleryIcon className={classes.icon} />
           </Box>
-          <GridList cellHeight={180} cols={2} className={classes.gridList}>
-            {galleryData.map((tile) => (
-              <GridListTile
+          <div className={classes.videoResponsive}>
+            <iframe
+              width="560"
+              height="315"
+              src={`https://www.youtube.com/embed/${youtubeSrc}?&autoplay=1&controls=1`}
+              title="Pre-wedding Video Youtube"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              className={classes.iframe}
+            />
+          </div>
+          <ImageList cellHeight={180} cols={2} gap={8} className={classes.imageList}>
+            {galleryData.map((item) => (
+              <ImageListItem
                 component={ButtonBase}
-                key={tile.img}
-                cols={tile.cols || 1}
-                onClick={() => handleOpenLightbox(tile)}
+                key={item.img}
+                cols={item.cols || 1}
+                onClick={() => handleOpenLightbox(item)}
               >
-                <img src={tile.thumbnail} alt={tile.title} />
-              </GridListTile>
+                <img src={item.thumbnail} alt={item.title} />
+              </ImageListItem>
             ))}
-          </GridList>
+          </ImageList>
         </Container>
       </div>
-      {clickedTile && (
+      {clickedItem && (
         <Lightbox
           open={openLightbox}
-          imagePath={clickedTile.img}
-          imageTitle={clickedTile.title}
+          imagePath={clickedItem.img}
+          imageTitle={clickedItem.title}
           handleClose={handleCloseLightbox}
         />
       )}

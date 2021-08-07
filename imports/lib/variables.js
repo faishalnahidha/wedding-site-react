@@ -4,12 +4,16 @@ export const bride = {
   name: 'Mawar Mutia Namaga',
   father: 'Wage Wahyudi',
   mother: 'Maya Mayasari',
+  instagram: 'mawar_mutia',
+  instagramUrl: 'https://www.instagram.com/ullemdotcom/',
 };
 
 export const groom = {
   name: 'Borikum Bangsawan Aji',
   father: 'Panji Prasasta',
   mother: 'Ayu Anggraini',
+  instagram: 'kumbanggg',
+  instagramUrl: 'https://www.instagram.com/ullemdotcom/',
 };
 
 export const akad = {
@@ -66,5 +70,20 @@ export const galleryData = [
     img: '/img/gallery/photo-5.jpg',
     thumbnail: '/img/gallery/thumbnail-5.jpg',
     cols: 1,
+  },
+];
+
+export const youtubeSrc = 'R_5EOhgH_Fc';
+
+export const weddingGiftAccounts = [
+  {
+    service: 'BCA',
+    number: '00012345678',
+    owner: 'Mawar Mutia Namaga',
+  },
+  {
+    service: 'OVO',
+    number: '081233334444',
+    owner: 'Borikum Bangsawan',
   },
 ];

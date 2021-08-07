@@ -4,6 +4,7 @@ import { Fade, Zoom } from 'react-awesome-reveal';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -13,6 +14,7 @@ import Link from '@material-ui/core/Link';
 
 import AltarIcon from '../../components/icons/AltarIcon.jsx';
 import WeddingLocationIcon from '../../components/icons/WeddingLocationIcon.jsx';
+import InstagramIcon from '../../components/icons/InstagramIcon.jsx';
 
 import { bride, groom, akad, reception } from '../../../lib/variables.js';
 
@@ -31,6 +33,11 @@ const useStyles = makeStyles((theme) => ({
     width: '40px',
     height: '40px',
   },
+  instagramIcon: {
+    width: '18px',
+    height: '18px',
+    fill: theme.palette.primary.main,
+  },
   card: {
     borderRadius: '8px',
     minWidth: '256px',
@@ -40,6 +47,10 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 16,
     fontFamily: 'Nunito Sans, Arial',
     backgroundColor: theme.palette.background.default,
+  },
+  livestreamLogo: {
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(3),
   },
 }));
 
@@ -65,9 +76,17 @@ export default function ContentSection() {
           <Box mb={3}>
             <Fade direction="up">
               <div>
-                <Typography variant="h5" color="primary" gutterBottom>
-                  {bride.name}
+                <Typography variant="h5" color="textPrimary">
+                  <strong>{bride.name}</strong>
                 </Typography>
+                <Button
+                  href={bride.instagramUrl}
+                  target="_blank"
+                  color="primary"
+                  startIcon={<InstagramIcon className={classes.instagramIcon} />}
+                >
+                  {bride.instagram}
+                </Button>
                 <Typography variant="body1" color="textPrimary">
                   Putri Bp. {bride.father} & Ibu {bride.mother}
                 </Typography>
@@ -82,9 +101,17 @@ export default function ContentSection() {
           <Box mb={3}>
             <Fade direction="up" delay={300}>
               <div>
-                <Typography variant="h5" color="primary" gutterBottom>
-                  {groom.name}
+                <Typography variant="h5" color="textPrimary">
+                  <strong>{groom.name}</strong>
                 </Typography>
+                <Button
+                  href={groom.instagramUrl}
+                  target="_blank"
+                  color="primary"
+                  startIcon={<InstagramIcon className={classes.instagramIcon} />}
+                >
+                  {groom.instagram}
+                </Button>
                 <Typography variant="body1" color="textPrimary">
                   Putra Bp. {groom.father} & Ibu {groom.mother}
                 </Typography>
@@ -99,6 +126,7 @@ export default function ContentSection() {
           <AltarIcon className={classes.icon} />
         </Box>
 
+        {/* ############## Card Akad Nikah ############## */}
         <Box py={3}>
           <Zoom triggerOnce direction="up" duration={1500} delay={500}>
             <Card raised width="100%" className={classes.card}>
@@ -108,38 +136,73 @@ export default function ContentSection() {
                 <Typography variant="subtitle1" gutterBottom>
                   <strong>{akad.date}</strong>
                 </Typography>
-                <Typography variant="body1" gutterBottom>
+                <Typography variant="body2" gutterBottom>
                   pukul {akad.time}
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="body2">
                   di {akad.location}
                   <br />
                   {akad.locationMore}.&nbsp;
-                  <Link href={akad.locationUrl} target="_blank" color="secondary">
-                    Lihat peta
+                  <Link href={akad.locationUrl} target="_blank" color="primary">
+                    Lihat Peta
                   </Link>
                 </Typography>
               </CardContent>
             </Card>
           </Zoom>
         </Box>
+        {/* ############## Card Resepsi ############## */}
         <Box pb={3}>
           <Zoom triggerOnce direction="up" duration={1500} delay={800}>
             <Card raised width="100%" className={classes.card}>
               <CardHeader title="Resepsi" disableTypography className={classes.cardHeader} />
               <Divider />
               <CardContent>
-                <Typography variant="h6" color="primary" gutterBottom>
+                <Typography variant="h6" color="textPrimary" gutterBottom>
                   {reception.date}
                 </Typography>
-                <Typography variant="body1" gutterBottom>
+                <Typography variant="body2" gutterBottom>
                   pukul {reception.time}
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="body2">
                   di {reception.location}
                   <br />
                   {reception.locationMore}
                 </Typography>
+              </CardContent>
+            </Card>
+          </Zoom>
+        </Box>
+        {/* ############## Card Pernikahan Virtual ############## */}
+        <Box pb={3}>
+          <Zoom triggerOnce direction="up" duration={1500} delay={1100}>
+            <Card width="100%" className={classes.card}>
+              <CardHeader
+                title="Pernikahan Virtual"
+                disableTypography
+                className={classes.cardHeader}
+              />
+              <Divider />
+              <CardContent>
+                <Box>
+                  <img
+                    src="/img/logo/brand/a-logo-brand-youtube.svg"
+                    alt="Youtube Logo"
+                    className={classes.livestreamLogo}
+                  />
+                </Box>
+                <Box>
+                  <Button
+                    href="#"
+                    target="_blank"
+                    variant="contained"
+                    size="large"
+                    color="primary"
+                    disableElevation
+                  >
+                    Lihat Live Streaming
+                  </Button>
+                </Box>
               </CardContent>
             </Card>
           </Zoom>

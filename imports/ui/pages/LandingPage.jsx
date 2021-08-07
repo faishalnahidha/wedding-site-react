@@ -11,6 +11,7 @@ import GallerySection from './landing-page-section/GallerySection.jsx';
 import CovidSection from './landing-page-section/CovidSection.jsx';
 import MessageSlideSection from './landing-page-section/MessageSlideSection.jsx';
 import InputFormSection from './landing-page-section/InputFormSection.jsx';
+import WeddingGiftSection from './landing-page-section/WeddingGiftSection.jsx';
 import ErrorPage from './ErrorPage.jsx';
 import BackToTopButton from '../components/BackToTopButton.jsx';
 import Footer from '../components/Footer.jsx';
@@ -69,6 +70,7 @@ export default function LandingPage(props) {
           <MessageSlideSection />
           <CovidSection />
           <InputFormSection recipient={recipient} />
+          <WeddingGiftSection />
           <Footer />
         </Grid>
       </Grid>
