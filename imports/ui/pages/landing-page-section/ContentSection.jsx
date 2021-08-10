@@ -99,7 +99,7 @@ export default function ContentSection() {
             </Typography>
           </Box>
           <Box mb={3}>
-            <Fade direction="up" delay={300}>
+            <Fade direction="up" delay={200}>
               <div>
                 <Typography variant="h5" color="textPrimary">
                   <strong>{groom.name}</strong>
@@ -128,7 +128,7 @@ export default function ContentSection() {
 
         {/* ############## Card Akad Nikah ############## */}
         <Box py={3}>
-          <Zoom triggerOnce direction="up" duration={1500} delay={500}>
+          <Zoom triggerOnce direction="up" duration={1500} delay={200}>
             <Card raised width="100%" className={classes.card}>
               <CardHeader title="Akad Nikah" disableTypography className={classes.cardHeader} />
               <Divider />
@@ -153,7 +153,7 @@ export default function ContentSection() {
         </Box>
         {/* ############## Card Resepsi ############## */}
         <Box pb={3}>
-          <Zoom triggerOnce direction="up" duration={1500} delay={800}>
+          <Zoom triggerOnce direction="up" duration={1500} delay={200}>
             <Card raised width="100%" className={classes.card}>
               <CardHeader title="Resepsi" disableTypography className={classes.cardHeader} />
               <Divider />
@@ -175,7 +175,7 @@ export default function ContentSection() {
         </Box>
         {/* ############## Card Pernikahan Virtual ############## */}
         <Box pb={3}>
-          <Zoom triggerOnce direction="up" duration={1500} delay={1100}>
+          <Zoom triggerOnce direction="up" duration={1500} delay={200}>
             <Card width="100%" className={classes.card}>
               <CardHeader
                 title="Pernikahan Virtual"

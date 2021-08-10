@@ -75,15 +75,15 @@ export default function GallerySection() {
             <iframe
               width="560"
               height="315"
-              src={`https://www.youtube.com/embed/${youtubeSrc}?&autoplay=1&controls=1`}
+              src={`https://www.youtube.com/embed/${youtubeSrc}?&autoplay=1`}
               title="Pre-wedding Video Youtube"
-              frameborder="0"
+              frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
+              allowFullScreen
               className={classes.iframe}
             />
           </div>
-          <ImageList cellHeight={180} cols={2} gap={8} className={classes.imageList}>
+          <ImageList rowHeight={180} cols={2} gap={8} className={classes.imageList}>
             {galleryData.map((item) => (
               <ImageListItem
                 component={ButtonBase}
