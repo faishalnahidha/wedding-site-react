@@ -28,15 +28,12 @@ Meteor.methods({
     RecipientsCollection.remove(recipientId);
   },
 
-  // 'recipients.updateRsvp'(recipientId, rsvpInput, isWithPartner, messageInput) {
-  'recipients.updateRsvp'(recipientId, rsvpInput, isWithPartner, messageInput) {
+  'recipients.updateRsvp'(recipientId, rsvpInput, messageInput) {
     check(recipientId, String);
     check(rsvpInput, String);
-    // check(isWithPartner, Boolean);
     check(messageInput, String);
 
     RecipientsCollection.update(recipientId, {
-      //$set: { rsvp: rsvpInput, withPartner: isWithPartner, message: messageInput },
       $set: { rsvp: rsvpInput, message: messageInput },
     });
   },

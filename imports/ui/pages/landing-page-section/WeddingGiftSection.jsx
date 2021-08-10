@@ -55,7 +55,7 @@ export default function WeddingGiftSection() {
         {/* #################### Cards #################### */}
         <Box pt={1} pb={3}>
           <Card width="100%" className={classes.card}>
-            <div disableTypography className={classes.cardHeader}>
+            <div className={classes.cardHeader}>
               <img src="/img/logo/payment/a-logo-payment-bca.svg" alt="BCA" />
             </div>
             <Divider />
@@ -82,7 +82,7 @@ export default function WeddingGiftSection() {
         </Box>
         <Box>
           <Card width="100%" className={classes.card}>
-            <div disableTypography className={classes.cardHeader}>
+            <div className={classes.cardHeader}>
               <img src="/img/logo/payment/a-logo-payment-ovo.svg" alt="OVO" />
             </div>
             <Divider />
