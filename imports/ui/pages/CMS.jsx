@@ -265,7 +265,7 @@ export default function CMS(props) {
                     size="medium"
                     color="inherit"
                   >
-                    <MoreVertOutlinedIcon fontSize="default" />
+                    <MoreVertOutlinedIcon />
                   </IconButton>
 
                   {/* ########  APP BAR MORE OPTIONS ######## */}
