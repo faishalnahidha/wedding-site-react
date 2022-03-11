@@ -2,17 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import Link from '@material-ui/core/Link';
+import makeStyles from '@mui/styles/makeStyles';
+import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import Link from '@mui/material/Link';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.default,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       padding: '16px 0',
     },
     [theme.breakpoints.up('sm')]: {
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     margin: '0 2px',
   },
   footerItemA: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       textAlign: 'center',
     },
     [theme.breakpoints.up('sm')]: {
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   footerItemB: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       textAlign: 'center',
     },
     [theme.breakpoints.up('sm')]: {

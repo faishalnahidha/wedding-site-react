@@ -1,15 +1,15 @@
 import { Meteor } from 'meteor/meteor';
 import React, { useState } from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import Snackbar from '@material-ui/core/Snackbar';
-import Paper from '@material-ui/core/Paper';
+import makeStyles from '@mui/styles/makeStyles';
+import Container from '@mui/material/Container';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import Snackbar from '@mui/material/Snackbar';
+import Paper from '@mui/material/Paper';
 
-import MuiAlert from '@material-ui/lab/Alert';
+import MuiAlert from '@mui/material/Alert';
 
 import Footer from '../components/Footer.jsx';
 import UllemImsLogo from '../components/UllemImsLogo.jsx';
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       paddingTop: '5vh',
       paddingBottom: theme.spacing(9),
       marginBottom: -theme.spacing(9),
@@ -48,13 +48,13 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   },
   snackbar: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       bottom: 80,
     },
   },
   paper: {
     padding: '64px 24px',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       border: 'none',
       padding: '24px 24px',
     },

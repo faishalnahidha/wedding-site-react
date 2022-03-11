@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import Box from '@material-ui/core/Box';
-import ImageList from '@material-ui/core/ImageList';
-import ImageListItem from '@material-ui/core/ImageListItem';
-import ButtonBase from '@material-ui/core/ButtonBase';
+import makeStyles from '@mui/styles/makeStyles';
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
+import ButtonBase from '@mui/material/ButtonBase';
 
 import Lightbox from '../../components/Lightbox.jsx';
 import GalleryIcon from '../../components/icons/GalleryIcon.jsx';

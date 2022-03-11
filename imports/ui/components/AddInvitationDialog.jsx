@@ -2,23 +2,23 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 
-import { makeStyles } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Slide from '@material-ui/core/Slide';
+import makeStyles from '@mui/styles/makeStyles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import Slide from '@mui/material/Slide';
 
-import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginTop: theme.spacing(7),
     },
   },
@@ -48,7 +48,7 @@ export default function AddInvitationDialog(props) {
   const { open, handleSnackbarAdd, handleClose } = props;
 
   const classes = useStyles();
-  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('xs'));
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
   const [recipientId, setRecipientId] = useState('');
   const [recipientName, setRecipientName] = useState('');
@@ -102,9 +102,9 @@ export default function AddInvitationDialog(props) {
       TransitionComponent={Transition}
       className={classes.root}
     >
-      <DialogTitle disableTypography>
+      <DialogTitle>
         <Typography variant="h6">Tambah Undangan</Typography>
-        <IconButton onClick={handleClose} className={classes.closeButton}>
+        <IconButton onClick={handleClose} className={classes.closeButton} size="large">
           <CloseRoundedIcon />
         </IconButton>
       </DialogTitle>
