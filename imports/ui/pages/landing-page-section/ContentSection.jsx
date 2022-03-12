@@ -1,7 +1,7 @@
 import React from 'react';
 import { Fade, Zoom } from 'react-awesome-reveal';
 
-import makeStyles from '@mui/styles/makeStyles';
+import { styled } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -18,48 +18,45 @@ import InstagramIcon from '../../components/icons/InstagramIcon.jsx';
 
 import { bride, groom, akad, reception } from '../../../lib/variables.js';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    paddingTop: theme.spacing(6),
-    paddingBottom: theme.spacing(6),
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-  },
-  container: {
-    textAlign: 'center',
-    padding: '0 24px',
-  },
-  icon: {
-    width: '40px',
-    height: '40px',
-  },
-  instagramIcon: {
-    width: '18px',
-    height: '18px',
-    fill: theme.palette.primary.main,
-  },
-  card: {
-    borderRadius: '8px',
-    minWidth: '256px',
-    textAlign: 'center',
-  },
-  cardHeader: {
-    fontSize: 16,
-    fontFamily: 'Nunito Sans, Arial',
-    backgroundColor: theme.palette.background.default,
-  },
-  livestreamLogo: {
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(3),
-  },
+const Root = styled('div')(({ theme }) => ({
+  paddingTop: theme.spacing(6),
+  paddingBottom: theme.spacing(6),
+  flexGrow: 1,
+  backgroundColor: theme.palette.background.paper,
+}));
+
+const StyledCard = styled(Card)({
+  minWidth: '256px',
+  textAlign: 'center',
+});
+
+const StyledCardHeader = styled(CardHeader)(({ theme }) => ({
+  fontSize: 16,
+  fontFamily: 'Nunito Sans, Arial',
+  backgroundColor: theme.palette.background.default,
+}));
+
+const StyledInstagramIcon = styled(InstagramIcon)(({ theme }) => ({
+  width: '18px',
+  height: '18px',
+  fill: theme.palette.primary.main,
+}));
+
+const LivestreamLogo = styled('img')(({ theme }) => ({
+  paddingTop: theme.spacing(1),
+  paddingBottom: theme.spacing(3),
 }));
 
 export default function ContentSection() {
-  const classes = useStyles();
-
   return (
-    <div className={classes.root}>
-      <Container maxWidth="xs" className={classes.container}>
+    <Root>
+      <Container
+        maxWidth="xs"
+        sx={{
+          textAlign: 'center',
+          padding: '0 24px',
+        }}
+      >
         <Box pb={3}>
           <Typography variant="body1" color="textSecondary" gutterBottom>
             Assalamu&apos;alaikum Wr. Wb.
@@ -83,7 +80,7 @@ export default function ContentSection() {
                   href={bride.instagramUrl}
                   target="_blank"
                   color="primary"
-                  startIcon={<InstagramIcon className={classes.instagramIcon} />}
+                  startIcon={<StyledInstagramIcon />}
                 >
                   {bride.instagram}
                 </Button>
@@ -108,7 +105,7 @@ export default function ContentSection() {
                   href={groom.instagramUrl}
                   target="_blank"
                   color="primary"
-                  startIcon={<InstagramIcon className={classes.instagramIcon} />}
+                  startIcon={<StyledInstagramIcon />}
                 >
                   {groom.instagram}
                 </Button>
@@ -123,14 +120,14 @@ export default function ContentSection() {
         {/* ####################### Cards Section ####################### */}
 
         <Box py={3}>
-          <AltarIcon className={classes.icon} />
+          <AltarIcon style={{ width: '40px', height: '40px' }} />
         </Box>
 
-        {/* ############## Card Akad Nikah ############## */}
+        {/* ############## 'Akad Nikah' Card ############## */}
         <Box py={3}>
           <Zoom triggerOnce direction="up" duration={1500} delay={200}>
-            <Card raised width="100%" className={classes.card}>
-              <CardHeader title="Akad Nikah" disableTypography className={classes.cardHeader} />
+            <StyledCard raised width="100%">
+              <StyledCardHeader title="Akad Nikah" disableTypography />
               <Divider />
               <CardContent>
                 <Typography variant="subtitle1" gutterBottom>
@@ -148,14 +145,14 @@ export default function ContentSection() {
                   </Link>
                 </Typography>
               </CardContent>
-            </Card>
+            </StyledCard>
           </Zoom>
         </Box>
-        {/* ############## Card Resepsi ############## */}
+        {/* ############## 'Resepsi' Card ############## */}
         <Box pb={3}>
           <Zoom triggerOnce direction="up" duration={1500} delay={200}>
-            <Card raised width="100%" className={classes.card}>
-              <CardHeader title="Resepsi" disableTypography className={classes.cardHeader} />
+            <StyledCard raised width="100%">
+              <StyledCardHeader title="Resepsi" disableTypography />
               <Divider />
               <CardContent>
                 <Typography variant="h6" color="textPrimary" gutterBottom>
@@ -170,25 +167,20 @@ export default function ContentSection() {
                   {reception.locationMore}
                 </Typography>
               </CardContent>
-            </Card>
+            </StyledCard>
           </Zoom>
         </Box>
-        {/* ############## Card Pernikahan Virtual ############## */}
+        {/* ############## 'Pernikahan Virtual' Card ############## */}
         <Box pb={3}>
           <Zoom triggerOnce direction="up" duration={1500} delay={200}>
-            <Card width="100%" className={classes.card}>
-              <CardHeader
-                title="Pernikahan Virtual"
-                disableTypography
-                className={classes.cardHeader}
-              />
+            <StyledCard width="100%">
+              <StyledCardHeader title="Pernikahan Virtual" disableTypography />
               <Divider />
               <CardContent>
                 <Box>
-                  <img
+                  <LivestreamLogo
                     src="/img/logo/brand/a-logo-brand-youtube.svg"
                     alt="Youtube Logo"
-                    className={classes.livestreamLogo}
                   />
                 </Box>
                 <Box>
@@ -204,13 +196,13 @@ export default function ContentSection() {
                   </Button>
                 </Box>
               </CardContent>
-            </Card>
+            </StyledCard>
           </Zoom>
         </Box>
         <Box pt={3}>
-          <WeddingLocationIcon className={classes.icon} />
+          <WeddingLocationIcon style={{ width: '40px', height: '40px' }} />
         </Box>
       </Container>
-    </div>
+    </Root>
   );
 }
