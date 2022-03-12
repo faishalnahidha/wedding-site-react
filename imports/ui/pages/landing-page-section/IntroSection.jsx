@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Fade, Zoom } from 'react-awesome-reveal';
 import Div100vh from 'react-div-100vh';
 
-import makeStyles from '@mui/styles/makeStyles';
+import { styled } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -13,59 +13,36 @@ import Hidden from '@mui/material/Hidden';
 import Lottie from 'react-lottie';
 import animationData from '../../components/lottie-files/scroll-down.json';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: 0,
-    zIndex: 0,
-    position: 'relative',
-    [theme.breakpoints.up('lg')]: {
-      position: 'sticky',
-      top: '0',
-    },
+const Root = styled(Div100vh)(({ theme }) => ({
+  padding: 0,
+  zIndex: 0,
+  position: 'relative',
+  [theme.breakpoints.up('lg')]: {
+    position: 'sticky',
+    top: '0',
   },
-  container: {
-    height: '100%',
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignContent: 'center',
-    padding: '16px 24px 56px',
-    position: 'relative',
-    zIndex: 2,
-    [theme.breakpoints.up('lg')]: {
-      padding: '24px',
-    },
-  },
-  logoContainer: {
-    width: '38%',
-    [theme.breakpoints.up('md')]: {
-      width: '38%',
-    },
-  },
-  logoWhite: {
-    width: '100%',
-  },
-  mainIllustration: {
-    height: '32vh',
-    width: 'auto',
-    maxWidth: '100%',
-    [theme.breakpoints.up('sm')]: {
-      height: '40vh',
-    },
-  },
-  background: {
-    display: 'block',
-    width: '100%',
-    height: '100%',
-    zIndex: 0,
-    background: 'linear-gradient(153deg, #4568dc, #b06ab3)',
-    position: 'absolute',
+}));
+
+const Background = styled('div')({
+  display: 'block',
+  width: '100%',
+  height: '100%',
+  zIndex: 0,
+  background: 'linear-gradient(153deg, #4568dc, #b06ab3)',
+  position: 'absolute',
+});
+
+const MainIllustration = styled('img')(({ theme }) => ({
+  width: 'auto',
+  maxWidth: '100%',
+  height: '32vh',
+  [theme.breakpoints.up('sm')]: {
+    height: '40vh',
   },
 }));
 
 export default function IntroSection(props) {
   const { recipientName, scrollToContentSection, scrollToLocationSection } = props;
-  const classes = useStyles();
   const lottieDefaultOptions = {
     loop: true,
     autoplay: true,
@@ -76,23 +53,41 @@ export default function IntroSection(props) {
   };
 
   return (
-    <Div100vh className={classes.root}>
+    <Root>
       <Fade triggerOnce duration={1500}>
-        <div className={classes.background} />
+        <Background />
       </Fade>
-      <Container maxWidth="xs" className={classes.container}>
-        <Box className={classes.logoContainer}>
+      <Container
+        maxWidth="xs"
+        sx={{
+          height: '100%',
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+          alignContent: 'center',
+          position: 'relative',
+          zIndex: 2,
+          padding: {
+            xs: '16px 24px 56px',
+            lg: '24px',
+          },
+        }}
+      >
+        <Box
+          sx={{
+            width: {
+              //width breakpoint may has some use in future
+              xs: '38%',
+            },
+          }}
+        >
           <Fade triggerOnce>
-            <img src="/img/logo-white.svg" alt="Wedding Logo White" className={classes.logoWhite} />
+            <img src="/img/logo-white.svg" alt="Wedding Logo White" style={{ width: '100%' }} />
           </Fade>
         </Box>
         <Box width="100%" textAlign="center" mt={2}>
           <Fade triggerOnce>
-            <img
-              src="/img/illustration-intro.svg"
-              className={classes.mainIllustration}
-              alt="Mawar and Kumbang"
-            />
+            <MainIllustration src="/img/illustration-intro.svg" alt="Mawar and Kumbang" />
           </Fade>
         </Box>
         <Box width="100%" mt={2} id="bottom-group">
@@ -145,7 +140,7 @@ export default function IntroSection(props) {
           </Fade>
         </Box>
       </Hidden>
-    </Div100vh>
+    </Root>
   );
 }
 
