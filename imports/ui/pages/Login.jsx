@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 
 import makeStyles from '@mui/styles/makeStyles';
 import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -158,7 +159,9 @@ export default function Login() {
           </form>
         </Paper>
       </Container>
-      <Footer className={classes.footer} />
+      <Box position="absolute" bottom={0} width="100%" bgcolor="grey.50">
+        <Footer />
+      </Box>
 
       {/* #################### Snackbar #################### */}
       <Snackbar
