@@ -2,46 +2,16 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 
-import makeStyles from '@mui/styles/makeStyles';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 import Divider from '@mui/material/Divider';
 
-import MuiAlert from '@mui/material/Alert';
-
 import { AttentionSeeker } from 'react-awesome-reveal';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(6),
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-  },
-  container: {
-    padding: '0 24px',
-  },
-  inputForm: {
-    marginBottom: theme.spacing(2),
-  },
-  button: {
-    width: '120px',
-  },
-  logoGradient: {
-    width: '100%',
-  },
-  divider: {
-    width: '100%',
-    marginBottom: theme.spacing(6),
-  },
-  checkbox: {
-    marginBottom: theme.spacing(2),
-  },
-}));
 
 const rsvpOptions = [
   {
@@ -61,9 +31,9 @@ const rsvpOptions = [
   },
 ];
 
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 export default function InputFormSection(props) {
   const [rsvpInput, setRsvpInput] = useState('');
@@ -71,7 +41,6 @@ export default function InputFormSection(props) {
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const { recipient } = props;
-  const classes = useStyles();
 
   const handleRsvpChange = (event) => {
     setRsvpInput(event.target.value);
@@ -91,15 +60,24 @@ export default function InputFormSection(props) {
   };
 
   return (
-    <div className={classes.root}>
-      <Container maxWidth="xs" className={classes.container}>
-        <Divider className={classes.divider} />
+    <>
+      <Container
+        maxWidth="xs"
+        sx={{
+          pt: 1,
+          pb: 6,
+          px: 3,
+          flexGrow: 1,
+          bgcolor: 'background.paper',
+        }}
+      >
+        <Divider sx={{ width: '100%', mb: 6 }} />
         <Box width="38%" mx="auto" mb={6}>
           <AttentionSeeker effect="pulse" delay={1000}>
             <img
               src="/img/logo-gradient.svg"
               alt="Wedding Logo Gradient"
-              className={classes.logoGradient}
+              style={{ width: '100%' }}
             />
           </AttentionSeeker>
         </Box>
@@ -127,7 +105,7 @@ export default function InputFormSection(props) {
                   }}
                   fullWidth
                   required
-                  className={classes.inputForm}
+                  sx={{ mb: 2 }}
                 >
                   {rsvpOptions.map((option) => (
                     <option key={option.value} value={option.value}>
@@ -147,7 +125,7 @@ export default function InputFormSection(props) {
                   multiline
                   rows="3"
                   fullWidth
-                  className={classes.inputForm}
+                  sx={{ mb: 2 }}
                 />
                 <Button
                   type="submit"
@@ -155,7 +133,7 @@ export default function InputFormSection(props) {
                   variant="contained"
                   color="primary"
                   disableElevation
-                  className={classes.button}
+                  sx={{ width: '120px' }}
                 >
                   Kirim
                 </Button>
@@ -174,11 +152,11 @@ export default function InputFormSection(props) {
         autoHideDuration={3000}
         onClose={() => setOpenSnackbar(false)}
       >
-        <Alert onClose={() => setOpenSnackbar(false)} severity="success">
+        <Alert onClose={() => setOpenSnackbar(false)} severity="success" sx={{ width: '100%' }}>
           Pesan sudah diterima. Terima kasih!
         </Alert>
       </Snackbar>
-    </div>
+    </>
   );
 }
 
