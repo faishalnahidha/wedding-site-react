@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 
 import IntroSection from './landing-page-section/IntroSection.jsx';
@@ -74,8 +75,9 @@ export default function LandingPage(props) {
           <Footer />
         </Grid>
       </Grid>
-
-      <BackToTopButton />
+      <Box position="fixed" bottom="16px" right="16px">
+        <BackToTopButton />
+      </Box>
     </>
   );
 }

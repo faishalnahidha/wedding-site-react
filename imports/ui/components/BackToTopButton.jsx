@@ -16,10 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BackToTop(props) {
-  const { className, ...other } = props;
-  const classes = useStyles();
-
+export default function BackToTop() {
   const trigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 500,
@@ -35,16 +32,9 @@ export default function BackToTop(props) {
 
   return (
     <Zoom in={trigger}>
-      <div
-        onClick={handleClick}
-        role="presentation"
-        className={clsx(classes.root, className)}
-        {...other}
-      >
-        <Fab color="default" size="small">
-          <KeyboardArrowUpRoundedIcon />
-        </Fab>
-      </div>
+      <Fab color="default" size="small" onClick={handleClick} role="presentation">
+        <KeyboardArrowUpRoundedIcon />
+      </Fab>
     </Zoom>
   );
 }

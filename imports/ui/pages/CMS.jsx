@@ -8,6 +8,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Table from '@mui/material/Table';
@@ -247,252 +248,273 @@ export default function CMS(props) {
     return <LinearProgress />;
   }
 
-  return <>
-    {/* If user logged in (not null), render CMS. If user not logged in (null), route to Login Page */}
-    {user !== null ? (
-      <>
-        <ReactTitle title="Ullem Invitation Management System" />
-        <div className={classes.root} id="CMSPage">
-          <ElevationScroll {...props}>
-            <AppBar position="sticky" className={classes.appbar}>
-              <Toolbar className={classes.toolbar}>
-                <UllemImsLogo className={[classes.logo, classes.title].join(' ')} />
-                <IconButton
-                  aria-controls="menu"
-                  aria-haspopup="true"
-                  onClick={handleMenuClick}
-                  size="medium"
-                  color="inherit"
-                >
-                  <MoreVertOutlinedIcon />
-                </IconButton>
-
-                {/* ########  APP BAR MORE OPTIONS ######## */}
-                <Menu
-                  id="toolbar-menu"
-                  anchorEl={anchorEl}
-                  getContentAnchorEl={null}
-                  anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'right',
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  keepMounted
-                  open={Boolean(anchorEl)}
-                  onClose={handleMenuClose}
-                >
-                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                </Menu>
-              </Toolbar>
-            </AppBar>
-          </ElevationScroll>
-
-          <Container maxWidth="md" className={classes.mainSection}>
-            {isMobile ? (
-              /* ########################################  LIST START  ######################################## */
-              <List
-                aria-label="recipient list"
-                subheader={
-                  <ListSubheader component="div">
-                    Daftar Undangan ({recipientsCount})
-                  </ListSubheader>
-                }
-              >
-                {recipients.map((recipient) => (
-                  <ListItem
-                    button
-                    key={recipient._id}
-                    onClick={() => handleOpenMobileRecipientDetail(recipient)}
+  return (
+    <>
+      {/* If user logged in (not null), render CMS. If user not logged in (null), route to Login Page */}
+      {user !== null ? (
+        <>
+          <ReactTitle title="Ullem Invitation Management System" />
+          <div className={classes.root} id="CMSPage">
+            <ElevationScroll {...props}>
+              <AppBar position="sticky" className={classes.appbar}>
+                <Toolbar className={classes.toolbar}>
+                  <UllemImsLogo className={[classes.logo, classes.title].join(' ')} />
+                  <IconButton
+                    aria-controls="menu"
+                    aria-haspopup="true"
+                    onClick={handleMenuClick}
+                    size="medium"
+                    color="inherit"
                   >
-                    <ListItemAvatar>
-                      <Avatar>
-                        <PersonRoundedIcon />
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={recipient.name}
-                      secondary={recipient.rsvp && mapRsvp(recipient.rsvp)}
-                    />
-                  </ListItem>
-                ))}
-              </List>
-            ) : (
-              /* ########################################  TABLE START  ######################################## */
-              <Paper variant="outlined" className={classes.paper}>
-                <TableContainer className={classes.table}>
-                  <Table aria-label="recipient-table">
-                    {/* ###############################  TABLE HEADER  ################################### */}
-                    <TableHead className={classes.tableHead}>
-                      <TableRow>
-                        <TableCell>
-                          <strong>Nama</strong>
-                        </TableCell>
-                        <TableCell>
-                          <strong>Link Undangan</strong>
-                        </TableCell>
-                        <TableCell>
-                          <strong>RSVP</strong>
-                        </TableCell>
-                        <TableCell />
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {/* ############################  RENDER TABLE ROW  ############################### */}
-                      {recipients.map((recipient) => (
-                        <TableRow key={recipient._id}>
-                          <TableCell>{recipient.name}</TableCell>
+                    <MoreVertOutlinedIcon />
+                  </IconButton>
+
+                  {/* ########  APP BAR MORE OPTIONS ######## */}
+                  <Menu
+                    id="toolbar-menu"
+                    anchorEl={anchorEl}
+                    getContentAnchorEl={null}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'right',
+                    }}
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleMenuClose}
+                  >
+                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                  </Menu>
+                </Toolbar>
+              </AppBar>
+            </ElevationScroll>
+
+            <Container maxWidth="md" className={classes.mainSection}>
+              {isMobile ? (
+                /* ########################################  LIST START  ######################################## */
+                <List
+                  aria-label="recipient list"
+                  subheader={
+                    <ListSubheader component="div">
+                      Daftar Undangan ({recipientsCount})
+                    </ListSubheader>
+                  }
+                >
+                  {recipients.map((recipient) => (
+                    <ListItem
+                      button
+                      key={recipient._id}
+                      onClick={() => handleOpenMobileRecipientDetail(recipient)}
+                    >
+                      <ListItemAvatar>
+                        <Avatar>
+                          <PersonRoundedIcon />
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={recipient.name}
+                        secondary={recipient.rsvp && mapRsvp(recipient.rsvp)}
+                      />
+                    </ListItem>
+                  ))}
+                </List>
+              ) : (
+                /* ########################################  TABLE START  ######################################## */
+                <Paper variant="outlined" className={classes.paper}>
+                  <TableContainer className={classes.table}>
+                    <Table aria-label="recipient-table">
+                      {/* ###############################  TABLE HEADER  ################################### */}
+                      <TableHead className={classes.tableHead}>
+                        <TableRow>
                           <TableCell>
-                            <Link href={`http://${domain}${recipient._id}`} target="_blank">
-                              {domain}
-                              {recipient._id}
-                            </Link>
+                            <strong>Nama</strong>
                           </TableCell>
-                          <TableCell>{mapRsvp(recipient.rsvp)}</TableCell>
-                          <TableCell padding="none" align="right">
-                            <Tooltip title="Share via WhatsApp">
-                              <IconButton
-                                href={`https://api.whatsapp.com/send?text=${whatsappMessage}${recipient._id}`}
-                                target="_blank"
-                                size="large">
-                                <WhatsAppIcon fontSize="small" />
-                              </IconButton>
-                            </Tooltip>
-                            <Tooltip title="Salin Link">
-                              <CopyToClipboard
-                                text={`http://${domain}${recipient._id}`}
-                                onCopy={() => setOpenSnackbarCopied(true)}
-                              >
-                                <IconButton size="large">
-                                  <FileCopyOutlinedIcon fontSize="small" />
-                                </IconButton>
-                              </CopyToClipboard>
-                            </Tooltip>
-                            <IconButton
-                              size="medium"
-                              aria-controls="menu"
-                              aria-haspopup="true"
-                              onClick={(e) => handleMoreOptionClick(e, recipient)}
-                            >
-                              <MoreHorizOutlinedIcon fontSize="small" />
-                            </IconButton>
+                          <TableCell>
+                            <strong>Link Undangan</strong>
                           </TableCell>
+                          <TableCell>
+                            <strong>RSVP</strong>
+                          </TableCell>
+                          <TableCell />
                         </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </Paper>
-            )}
-          </Container>
+                      </TableHead>
+                      <TableBody>
+                        {/* ############################  RENDER TABLE ROW  ############################### */}
+                        {recipients.map((recipient) => (
+                          <TableRow key={recipient._id}>
+                            <TableCell>{recipient.name}</TableCell>
+                            <TableCell>
+                              <Link href={`http://${domain}${recipient._id}`} target="_blank">
+                                {domain}
+                                {recipient._id}
+                              </Link>
+                            </TableCell>
+                            <TableCell>{mapRsvp(recipient.rsvp)}</TableCell>
+                            <TableCell padding="none" align="right">
+                              <Tooltip title="Share via WhatsApp">
+                                <IconButton
+                                  href={`https://api.whatsapp.com/send?text=${whatsappMessage}${recipient._id}`}
+                                  target="_blank"
+                                  size="large"
+                                >
+                                  <WhatsAppIcon fontSize="small" />
+                                </IconButton>
+                              </Tooltip>
+                              <Tooltip title="Salin Link">
+                                <CopyToClipboard
+                                  text={`http://${domain}${recipient._id}`}
+                                  onCopy={() => setOpenSnackbarCopied(true)}
+                                >
+                                  <IconButton size="large">
+                                    <FileCopyOutlinedIcon fontSize="small" />
+                                  </IconButton>
+                                </CopyToClipboard>
+                              </Tooltip>
+                              <IconButton
+                                size="medium"
+                                aria-controls="menu"
+                                aria-haspopup="true"
+                                onClick={(e) => handleMoreOptionClick(e, recipient)}
+                              >
+                                <MoreHorizOutlinedIcon fontSize="small" />
+                              </IconButton>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Paper>
+              )}
+            </Container>
 
-          {/* ##################################  SELECTED ROW MORE OPTIONS ################################## */}
-          <Menu
-            id="row-menu"
-            anchorEl={selectedRowAnchorEl}
-            getContentAnchorEl={null}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'left',
-            }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'left',
-            }}
-            keepMounted
-            open={Boolean(selectedRowAnchorEl)}
-            onClose={handleMoreOptionClose}
-          >
-            <MenuItem onClick={handleOpenDesktopRecipientMessage}>Lihat Pesan</MenuItem>
-            <MenuItem onClick={handleRemoveRecipient}>Hapus</MenuItem>
-          </Menu>
-
-          {selectedRowRecipient && (
-            <>
-              <DesktopRecipientMessageDialog
-                open={openDesktopRecipientMessage}
-                handleClose={handleCloseDesktopRecipientMessage}
-                recipientName={selectedRowRecipient.name}
-                recipientMessage={selectedRowRecipient.message}
-              />
-              <MobileRecipientDetailDialog
-                open={openMobileRecipientDetail}
-                handleClose={handleCloseMobileRecipientDetail}
-                handleRemoveRecipient={handleRemoveRecipient}
-                recipient={selectedRowRecipient}
-              />
-            </>
-          )}
-
-          {/* ########################################  FAB  ######################################## */}
-          <BackToTopButton className={classes.fabBackToTop} />
-          <Zoom in timeout={500} style={{ transitionDelay: '500ms' }}>
-            <Fab
-              onClick={handleOpenAddInvitationDialog}
-              variant="extended"
-              color="primary"
-              className={classes.fabAdd}
+            {/* ##################################  SELECTED ROW MORE OPTIONS ################################## */}
+            <Menu
+              id="row-menu"
+              anchorEl={selectedRowAnchorEl}
+              getContentAnchorEl={null}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              keepMounted
+              open={Boolean(selectedRowAnchorEl)}
+              onClose={handleMoreOptionClose}
             >
-              <AddOutlinedIcon className={classes.extendedIcon} />
-              Tambah Undangan
-            </Fab>
-          </Zoom>
-          <AddInvitationDialog
-            open={openAddDialog}
-            handleClose={handleCloseAddInvitationDialog}
-            handleSnackbarAdd={handleOpenSnackbarAddSuccess}
-          />
+              <MenuItem onClick={handleOpenDesktopRecipientMessage}>Lihat Pesan</MenuItem>
+              <MenuItem onClick={handleRemoveRecipient}>Hapus</MenuItem>
+            </Menu>
 
-          {/* ########################################  SNACKBAR  ######################################## */}
-          <Snackbar
-            key="add-success"
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'center',
-            }}
-            className={classes.snackbar}
-            open={openSnackbarAddSuccess}
-            autoHideDuration={3000}
-            onClose={() => setOpenSnackbarAddSuccess(false)}
-          >
-            <Alert onClose={() => setOpenSnackbarAddSuccess(false)} severity="success">
-              Undangan berhasil ditambahkan!
-            </Alert>
-          </Snackbar>
-          <Snackbar
-            key="copied"
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'center',
-            }}
-            className={classes.snackbar}
-            open={openSnackbarCopied}
-            autoHideDuration={2000}
-            onClose={() => setOpenSnackbarCopied(false)}
-            message="Link berhasil disalin"
-          />
-          <Snackbar
-            key="removed"
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'center',
-            }}
-            className={classes.snackbar}
-            open={openSnackbarRemoved}
-            autoHideDuration={3000}
-            onClose={() => setOpenSnackbarRemoved(false)}
-            message={
-              selectedRowRecipient && `Undangan ${selectedRowRecipient.name} telah dihapus!`
-            }
-          />
-        </div>
-      </>
-    ) : (
-      <Login />
-    )}
-  </>;
+            {selectedRowRecipient && (
+              <>
+                <DesktopRecipientMessageDialog
+                  open={openDesktopRecipientMessage}
+                  handleClose={handleCloseDesktopRecipientMessage}
+                  recipientName={selectedRowRecipient.name}
+                  recipientMessage={selectedRowRecipient.message}
+                />
+                <MobileRecipientDetailDialog
+                  open={openMobileRecipientDetail}
+                  handleClose={handleCloseMobileRecipientDetail}
+                  handleRemoveRecipient={handleRemoveRecipient}
+                  recipient={selectedRowRecipient}
+                />
+              </>
+            )}
+
+            {/* ########################################  FAB  ######################################## */}
+            <Box
+              sx={{
+                position: 'fixed',
+                bottom: {
+                  xs: 80, // in px
+                  sm: 88,
+                  md: 96,
+                  lg: 32,
+                  xl: 80,
+                },
+                right: {
+                  xs: 24,
+                  md: 32,
+                  xl: 80,
+                },
+              }}
+            >
+              <BackToTopButton />
+            </Box>
+            <Zoom in timeout={500} style={{ transitionDelay: '500ms' }}>
+              <Fab
+                onClick={handleOpenAddInvitationDialog}
+                variant="extended"
+                color="primary"
+                className={classes.fabAdd}
+              >
+                <AddOutlinedIcon className={classes.extendedIcon} />
+                Tambah Undangan
+              </Fab>
+            </Zoom>
+            <AddInvitationDialog
+              open={openAddDialog}
+              handleClose={handleCloseAddInvitationDialog}
+              handleSnackbarAdd={handleOpenSnackbarAddSuccess}
+            />
+
+            {/* ########################################  SNACKBAR  ######################################## */}
+            <Snackbar
+              key="add-success"
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              className={classes.snackbar}
+              open={openSnackbarAddSuccess}
+              autoHideDuration={3000}
+              onClose={() => setOpenSnackbarAddSuccess(false)}
+            >
+              <Alert onClose={() => setOpenSnackbarAddSuccess(false)} severity="success">
+                Undangan berhasil ditambahkan!
+              </Alert>
+            </Snackbar>
+            <Snackbar
+              key="copied"
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              className={classes.snackbar}
+              open={openSnackbarCopied}
+              autoHideDuration={2000}
+              onClose={() => setOpenSnackbarCopied(false)}
+              message="Link berhasil disalin"
+            />
+            <Snackbar
+              key="removed"
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              className={classes.snackbar}
+              open={openSnackbarRemoved}
+              autoHideDuration={3000}
+              onClose={() => setOpenSnackbarRemoved(false)}
+              message={
+                selectedRowRecipient && `Undangan ${selectedRowRecipient.name} telah dihapus!`
+              }
+            />
+          </div>
+        </>
+      ) : (
+        <Login />
+      )}
+    </>
+  );
 }
 
 CMS.propTypes = {
