@@ -31,7 +31,7 @@ export default function GallerySection() {
         disableGutters
         sx={{
           paddingTop: 1,
-          paddingBottom: 6,
+          paddingBottom: 7,
           flexGrow: 1,
           bgcolor: 'background.paper',
         }}
@@ -51,7 +51,7 @@ export default function GallerySection() {
             style={{ left: 0, top: 0, height: '100%', width: '100%', position: 'absolute' }}
           />
         </Box>
-        <ImageList rowHeight={180} cols={2} gap={8} variant="quilted">
+        <ImageList rowHeight={180} cols={2} gap={8} variant="quilted" sx={{ mt: 1, mb: 0 }}>
           {galleryData.map((item) => (
             <ImageListItem
               component={ButtonBase}
