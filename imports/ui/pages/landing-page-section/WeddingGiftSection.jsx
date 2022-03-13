@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
-import makeStyles from '@mui/styles/makeStyles';
+import { styled } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -15,37 +15,31 @@ import FileCopyOutlinedIcon from '@mui/icons-material/FileCopyOutlined';
 
 import { weddingGiftAccounts } from '../../../lib/variables.js';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    paddingBottom: theme.spacing(6),
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-  },
-  container: {
-    padding: '0 24px',
-  },
-  card: {
-    borderRadius: '8px',
-    minWidth: '256px',
-    textAlign: 'center',
-  },
-  cardHeader: {
-    padding: '12px 0 12px',
-    backgroundColor: theme.palette.background.default,
-  },
-  copyButton: {
-    marginTop: theme.spacing(2),
-  },
+const StyledCard = styled(Card)({
+  minWidth: '256px',
+  textAlign: 'center',
+});
+
+const StyledCardHeader = styled('div')(({ theme }) => ({
+  padding: '12px 0 12px',
+  backgroundColor: theme.palette.background.default,
 }));
 
 export default function WeddingGiftSection() {
-  const classes = useStyles();
-
   const [openSnackbarCopied, setOpenSnackbarCopied] = useState(false);
 
   return (
-    <div className={classes.root}>
-      <Container maxWidth="xs" className={classes.container}>
+    <>
+      <Container
+        maxWidth="xs"
+        sx={{
+          pt: 1,
+          pb: 6,
+          px: 3,
+          flexGrow: 1,
+          bgcolor: 'background.paper',
+        }}
+      >
         <Box width="100%">
           <Typography variant="body1" color="textSecondary" paragraph>
             Saudara/i yang ingin mengirim hadiah ke pernikahan kami, bisa transfer ke rekening di
@@ -54,10 +48,10 @@ export default function WeddingGiftSection() {
         </Box>
         {/* #################### Cards #################### */}
         <Box pt={1} pb={3}>
-          <Card width="100%" className={classes.card}>
-            <div className={classes.cardHeader}>
+          <StyledCard width="100%">
+            <StyledCardHeader>
               <img src="/img/logo/payment/a-logo-payment-bca.svg" alt="BCA" />
-            </div>
+            </StyledCardHeader>
             <Divider />
             <CardContent>
               <Typography variant="subtitle1" gutterBottom>
@@ -71,20 +65,20 @@ export default function WeddingGiftSection() {
                 <Button
                   variant="outlined"
                   color="primary"
-                  className={classes.copyButton}
                   startIcon={<FileCopyOutlinedIcon />}
+                  sx={{ mt: 2 }}
                 >
                   Salin Nomor
                 </Button>
               </CopyToClipboard>
             </CardContent>
-          </Card>
+          </StyledCard>
         </Box>
         <Box>
-          <Card width="100%" className={classes.card}>
-            <div className={classes.cardHeader}>
+          <StyledCard width="100%">
+            <StyledCardHeader>
               <img src="/img/logo/payment/a-logo-payment-ovo.svg" alt="OVO" />
-            </div>
+            </StyledCardHeader>
             <Divider />
             <CardContent>
               <Typography variant="subtitle1" gutterBottom>
@@ -98,14 +92,14 @@ export default function WeddingGiftSection() {
                 <Button
                   variant="outlined"
                   color="primary"
-                  className={classes.copyButton}
                   startIcon={<FileCopyOutlinedIcon />}
+                  sx={{ mt: 2 }}
                 >
                   Salin Nomor
                 </Button>
               </CopyToClipboard>
             </CardContent>
-          </Card>
+          </StyledCard>
         </Box>
       </Container>
       {/* #################### Snackbar #################### */}
@@ -115,12 +109,11 @@ export default function WeddingGiftSection() {
           vertical: 'bottom',
           horizontal: 'center',
         }}
-        className={classes.snackbar}
         open={openSnackbarCopied}
         autoHideDuration={2000}
         onClose={() => setOpenSnackbarCopied(false)}
         message="Nomor berhasil disalin"
       />
-    </div>
+    </>
   );
 }

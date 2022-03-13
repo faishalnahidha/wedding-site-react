@@ -65,7 +65,7 @@ export default function InputFormSection(props) {
         maxWidth="xs"
         sx={{
           pt: 1,
-          pb: 6,
+          pb: 5,
           px: 3,
           flexGrow: 1,
           bgcolor: 'background.paper',
