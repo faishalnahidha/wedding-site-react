@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React, { useState } from 'react';
 
-import makeStyles from '@mui/styles/makeStyles';
+import { styled } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -15,60 +15,34 @@ import MuiAlert from '@mui/material/Alert';
 import Footer from '../components/Footer.jsx';
 import UllemImsLogo from '../components/UllemImsLogo.jsx';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    minHeight: '100vh',
-    position: 'relative',
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-    [theme.breakpoints.down('sm')]: {
-      paddingTop: '5vh',
-      paddingBottom: theme.spacing(9),
-      marginBottom: -theme.spacing(9),
-    },
-    [theme.breakpoints.up('sm')]: {
-      paddingTop: '12vh',
-      paddingBottom: theme.spacing(6),
-      marginBottom: -theme.spacing(6),
-    },
+const RootContainer = styled(Container)(({ theme }) => ({
+  minHeight: '100vh',
+  position: 'relative',
+  flexGrow: 1,
+  backgroundColor: theme.palette.background.paper,
+  [theme.breakpoints.down('sm')]: {
+    paddingTop: '5vh',
+    paddingBottom: theme.spacing(9),
+    marginBottom: -theme.spacing(9),
   },
-  inputForm: {
-    marginBottom: theme.spacing(2),
-  },
-  button: {
-    marginTop: theme.spacing(1),
-  },
-  header: {
-    display: 'block',
-    textAlign: 'center',
-    marginBottom: theme.spacing(4),
-  },
-  footer: {
-    position: 'absolute',
-    bottom: 0,
-    width: '100%',
-  },
-  snackbar: {
-    [theme.breakpoints.down('sm')]: {
-      bottom: 80,
-    },
-  },
-  paper: {
-    padding: '64px 24px',
-    [theme.breakpoints.down('sm')]: {
-      border: 'none',
-      padding: '24px 24px',
-    },
-  },
-  logo: {
-    width: '192px',
-    marginBottom: theme.spacing(2),
+  [theme.breakpoints.up('sm')]: {
+    paddingTop: '12vh',
+    paddingBottom: theme.spacing(6),
+    marginBottom: -theme.spacing(6),
   },
 }));
 
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  padding: '64px 24px',
+  [theme.breakpoints.down('sm')]: {
+    border: 'none',
+    padding: '24px 24px',
+  },
+}));
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -104,21 +78,19 @@ export default function Login() {
     setIsPasswordError(false);
   };
 
-  const classes = useStyles();
-
   return (
-    <div className={classes.root}>
-      <Container maxWidth="xs" disableGutters>
-        <Paper variant="outlined" className={classes.paper}>
-          <div className={classes.header}>
-            <UllemImsLogo className={classes.logo} />
+    <>
+      <RootContainer maxWidth="xs" disableGutters>
+        <StyledPaper variant="outlined">
+          <Box display="block" textAlign="center" mb={4}>
+            <UllemImsLogo style={{ width: '192px', marginBottom: '16px' }} />
             <Typography variant="subtitle1" align="center">
               Invitation Management System
             </Typography>
-          </div>
+          </Box>
 
           {/* #################### Form Group #################### */}
-          <form onSubmit={handleSubmit} className="loginForm">
+          <form onSubmit={handleSubmit}>
             <TextField
               id="username"
               type="text"
@@ -127,8 +99,8 @@ export default function Login() {
               label="Username"
               variant="outlined"
               fullWidth
-              className={classes.inputForm}
               error={isUsernameError}
+              sx={{ mb: 3 }}
             />
 
             <TextField
@@ -140,8 +112,8 @@ export default function Login() {
               variant="outlined"
               autoComplete="current-password"
               fullWidth
-              className={classes.inputForm}
               error={isPasswordError}
+              sx={{ mb: 3 }}
             />
 
             <Button
@@ -152,13 +124,12 @@ export default function Login() {
               disableElevation
               fullWidth
               required
-              className={classes.button}
             >
               Login
             </Button>
           </form>
-        </Paper>
-      </Container>
+        </StyledPaper>
+      </RootContainer>
       <Box position="absolute" bottom={0} width="100%" bgcolor="grey.50">
         <Footer />
       </Box>
@@ -170,15 +141,20 @@ export default function Login() {
           vertical: 'bottom',
           horizontal: 'center',
         }}
-        className={classes.snackbar}
         open={openSnackbarError}
         autoHideDuration={3000}
         onClose={() => setOpenSnackbarError(false)}
+        sx={{
+          bottom: {
+            xs: 96, // in px
+            md: 24,
+          },
+        }}
       >
-        <Alert onClose={() => setOpenSnackbarError(false)} severity="error">
+        <Alert onClose={() => setOpenSnackbarError(false)} severity="error" sx={{ width: '100%' }}>
           {errorMessage}
         </Alert>
       </Snackbar>
-    </div>
+    </>
   );
 }
