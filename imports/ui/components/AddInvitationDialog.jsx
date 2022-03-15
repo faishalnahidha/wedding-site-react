@@ -4,7 +4,6 @@ import { Meteor } from 'meteor/meteor';
 
 import { styled } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
@@ -16,14 +15,46 @@ import Slide from '@mui/material/Slide';
 
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
-const StyledDialog = styled(Dialog)({
+const StyledDialog = styled(Dialog)(({ theme }) => ({
+  [theme.breakpoints.down('sm')]: {
+    marginTop: '56px',
+  },
   '& .MuiDialogContent-root': {
     padding: '16px 24px',
   },
   '& .MuiDialogActions-root': {
     padding: '16px 24px',
   },
-});
+}));
+
+const StyledDialogTitle = (props) => {
+  const { children, onClose, ...other } = props;
+
+  return (
+    <DialogTitle sx={{ m: 0, px: 3, py: 2 }} {...other}>
+      {children}
+      {onClose ? (
+        <IconButton
+          aria-label="close"
+          onClick={onClose}
+          sx={{
+            position: 'absolute',
+            right: 12,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseRoundedIcon />
+        </IconButton>
+      ) : null}
+    </DialogTitle>
+  );
+};
+
+StyledDialogTitle.propTypes = {
+  children: PropTypes.node,
+  onClose: PropTypes.func.isRequired,
+};
 
 const Transition = React.forwardRef((props, ref) => <Slide direction="up" ref={ref} {...props} />);
 
@@ -82,29 +113,11 @@ export default function AddInvitationDialog(props) {
       fullWidth
       fullScreen={isMobile}
       TransitionComponent={Transition}
-      sx={{
-        mt: {
-          xs: 7,
-          sm: 'auto',
-        },
-      }}
     >
-      <DialogTitle>
-        <Typography variant="h6">Tambah Undangan</Typography>
-        <IconButton
-          onClick={handleClose}
-          size="large"
-          sx={{
-            position: 'absolute',
-            right: 8,
-            top: 4,
-            color: 'grey.500',
-          }}
-        >
-          <CloseRoundedIcon />
-        </IconButton>
-      </DialogTitle>
-      <DialogContent dividers>
+      <StyledDialogTitle id="custom-dialog-title" onClose={handleClose}>
+        Tambah Undangan
+      </StyledDialogTitle>
+      <DialogContent>
         <TextField
           id="recipientName"
           type="text"
@@ -117,7 +130,7 @@ export default function AddInvitationDialog(props) {
           required
           autoFocus
           color="primary"
-          sx={{ mb: 3 }}
+          sx={{ mt: 2, mb: 3 }}
           error={isRecipientNameEmpty}
           helperText={isRecipientNameEmpty ? 'Wajib diisi!' : ''}
         />
