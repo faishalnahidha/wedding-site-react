@@ -1,4 +1,4 @@
-import { createTheme } from '@material-ui/core/styles';
+import { createTheme } from '@mui/material/styles';
 
 export const myTheme = createTheme({
   palette: {
@@ -55,15 +55,15 @@ export const myTheme = createTheme({
       textTransform: 'none',
     },
   },
-  overrides: {
+  components: {
     MuiButton: {
-      root: {
-        borderRadius: 50,
+      styleOverrides: {
+        root: { borderRadius: '50px' },
       },
     },
     MuiPaper: {
-      rounded: {
-        borderRadius: '8px',
+      styleOverrides: {
+        rounded: { borderRadius: '8px' },
       },
     },
   },

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { ThemeProvider } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 
 import { myTheme } from './theme'; // import file custom theming
 
@@ -11,13 +11,15 @@ import CMSContainer from './containers/CMSContainer.jsx';
 const App = () => (
   <>
     <CssBaseline>
-      <ThemeProvider theme={myTheme}>
-        <Switch>
-          <Route exact path="/" component={LandingPageContainer} />
-          <Route exact path="/ims" component={CMSContainer} />
-          <Route path="/:id" component={LandingPageContainer} />
-        </Switch>
-      </ThemeProvider>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={myTheme}>
+          <Switch>
+            <Route exact path="/" component={LandingPageContainer} />
+            <Route exact path="/ims" component={CMSContainer} />
+            <Route path="/:id" component={LandingPageContainer} />
+          </Switch>
+        </ThemeProvider>
+      </StyledEngineProvider>
     </CssBaseline>
   </>
 );

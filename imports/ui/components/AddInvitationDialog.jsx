@@ -2,53 +2,66 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 
-import { makeStyles } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Slide from '@material-ui/core/Slide';
+import { styled } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import Slide from '@mui/material/Slide';
 
-import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    [theme.breakpoints.down('xs')]: {
-      marginTop: theme.spacing(7),
-    },
+const StyledDialog = styled(Dialog)(({ theme }) => ({
+  [theme.breakpoints.down('sm')]: {
+    marginTop: '56px',
   },
-  inputForm: {
-    marginBottom: theme.spacing(3),
-  },
-  dialogAction: {
+  '& .MuiDialogContent-root': {
     padding: '16px 24px',
   },
-  mobileButtonGroup: {
-    marginTop: theme.spacing(3),
-  },
-  button: {
-    marginBottom: theme.spacing(2),
-  },
-  closeButton: {
-    position: 'absolute',
-    right: theme.spacing(1),
-    top: theme.spacing(1),
-    color: theme.palette.grey[500],
+  '& .MuiDialogActions-root': {
+    padding: '16px 24px',
   },
 }));
+
+const StyledDialogTitle = (props) => {
+  const { children, onClose, ...other } = props;
+
+  return (
+    <DialogTitle sx={{ m: 0, px: 3, py: 2 }} {...other}>
+      {children}
+      {onClose ? (
+        <IconButton
+          aria-label="close"
+          onClick={onClose}
+          sx={{
+            position: 'absolute',
+            right: 12,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseRoundedIcon />
+        </IconButton>
+      ) : null}
+    </DialogTitle>
+  );
+};
+
+StyledDialogTitle.propTypes = {
+  children: PropTypes.node,
+  onClose: PropTypes.func.isRequired,
+};
 
 const Transition = React.forwardRef((props, ref) => <Slide direction="up" ref={ref} {...props} />);
 
 export default function AddInvitationDialog(props) {
   const { open, handleSnackbarAdd, handleClose } = props;
 
-  const classes = useStyles();
-  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('xs'));
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
   const [recipientId, setRecipientId] = useState('');
   const [recipientName, setRecipientName] = useState('');
@@ -93,21 +106,17 @@ export default function AddInvitationDialog(props) {
   };
 
   return (
-    <Dialog
+    <StyledDialog
       open={open}
       onClose={handleClose}
       aria-labelledby="add-invitation-dialog"
       fullWidth
       fullScreen={isMobile}
       TransitionComponent={Transition}
-      className={classes.root}
     >
-      <DialogTitle disableTypography>
-        <Typography variant="h6">Tambah Undangan</Typography>
-        <IconButton onClick={handleClose} className={classes.closeButton}>
-          <CloseRoundedIcon />
-        </IconButton>
-      </DialogTitle>
+      <StyledDialogTitle id="custom-dialog-title" onClose={handleClose}>
+        Tambah Undangan
+      </StyledDialogTitle>
       <DialogContent>
         <TextField
           id="recipientName"
@@ -121,7 +130,7 @@ export default function AddInvitationDialog(props) {
           required
           autoFocus
           color="primary"
-          className={classes.inputForm}
+          sx={{ mt: 2, mb: 3 }}
           error={isRecipientNameEmpty}
           helperText={isRecipientNameEmpty ? 'Wajib diisi!' : ''}
         />
@@ -140,7 +149,7 @@ export default function AddInvitationDialog(props) {
           helperText={isRecipientIdEmpty ? 'Wajib diisi!' : 'Tidak boleh ada spasi'}
         />
         {isMobile ? (
-          <div className={classes.mobileButtonGroup}>
+          <div style={{ marginTop: '24px' }}>
             <Button
               onClick={handleSubmit}
               color="primary"
@@ -148,7 +157,7 @@ export default function AddInvitationDialog(props) {
               size="large"
               disableElevation
               fullWidth
-              className={classes.button}
+              sx={{ mb: 2 }}
             >
               Tambah
             </Button>
@@ -159,7 +168,7 @@ export default function AddInvitationDialog(props) {
         ) : null}
       </DialogContent>
       {!isMobile ? (
-        <DialogActions className={classes.dialogAction}>
+        <DialogActions>
           <Button onClick={handleClose} color="primary">
             Batal
           </Button>
@@ -168,7 +177,7 @@ export default function AddInvitationDialog(props) {
           </Button>
         </DialogActions>
       ) : null}
-    </Dialog>
+    </StyledDialog>
   );
 }
 

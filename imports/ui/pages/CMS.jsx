@@ -4,43 +4,44 @@ import { Meteor } from 'meteor/meteor';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { ReactTitle } from 'react-meta-tags';
 
-import { makeStyles } from '@material-ui/core/styles';
-import useScrollTrigger from '@material-ui/core/useScrollTrigger';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import Container from '@material-ui/core/Container';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Snackbar from '@material-ui/core/Snackbar';
-import IconButton from '@material-ui/core/IconButton';
-import Link from '@material-ui/core/Link';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import Fab from '@material-ui/core/Fab';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Zoom from '@material-ui/core/Zoom';
-import Tooltip from '@material-ui/core/Tooltip';
-import Paper from '@material-ui/core/Paper';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
-import Avatar from '@material-ui/core/Avatar';
+import { styled } from '@mui/material/styles';
+import useScrollTrigger from '@mui/material/useScrollTrigger';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import Link from '@mui/material/Link';
+import LinearProgress from '@mui/material/LinearProgress';
+import Fab from '@mui/material/Fab';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Zoom from '@mui/material/Zoom';
+import Tooltip from '@mui/material/Tooltip';
+import Paper from '@mui/material/Paper';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListSubheader from '@mui/material/ListSubheader';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import ListItemText from '@mui/material/ListItemText';
+import Avatar from '@mui/material/Avatar';
 
-import MuiAlert from '@material-ui/lab/Alert';
+import MuiAlert from '@mui/material/Alert';
 
-import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
-import WhatsAppIcon from '@material-ui/icons/WhatsApp';
-import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
-import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
-import MoreHorizOutlinedIcon from '@material-ui/icons/MoreHorizOutlined';
-import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
+import FileCopyOutlinedIcon from '@mui/icons-material/FileCopyOutlined';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
+import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
+import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 
 import { domain, whatsappMessage } from '../../lib/variables.js';
 import mapRsvp from '../../lib/mapRsvp.js';
@@ -52,100 +53,26 @@ import Login from './Login.jsx';
 import MobileRecipientDetailDialog from '../components/MobileRecipientDetailDialog.jsx';
 import UllemImsLogo from '../components/UllemImsLogo.jsx';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.background.default,
-  },
-  title: {
-    flexGrow: 1,
-  },
-  table: {
-    padding: 0,
-  },
-  tableToolbar: {
-    paddingLeft: theme.spacing(2),
-    paddingRight: 0,
-  },
-  mainSection: {
-    padding: '16px 8px 48px',
-    [theme.breakpoints.down('xs')]: {
-      minHeight: 'calc(100vh - 56px)',
-      padding: '0 0 56px',
-      backgroundColor: theme.palette.background.paper,
-    },
-  },
-  extendedIcon: {
-    marginRight: '8px',
-  },
-  fabAdd: {
-    position: 'fixed',
-    zIndex: 1200,
-    [theme.breakpoints.down('xs')]: {
-      right: theme.spacing(2),
-      bottom: theme.spacing(2),
-    },
-    [theme.breakpoints.up('sm')]: {
-      bottom: theme.spacing(3),
-      right: theme.spacing(3),
-    },
-    [theme.breakpoints.up('md')]: {
-      bottom: theme.spacing(4),
-      right: theme.spacing(4),
-    },
-    [theme.breakpoints.up('lg')]: {
-      top: theme.spacing(5),
-      left: theme.spacing(2),
-      //margin: 0,
-    },
-    [theme.breakpoints.up('xl')]: {
-      top: theme.spacing(5),
-      left: '15%',
-    },
-  },
-  fabBackToTop: {
-    [theme.breakpoints.down('xs')]: {
-      bottom: theme.spacing(10),
-    },
-    [theme.breakpoints.up('sm')]: {
-      bottom: theme.spacing(11),
-      right: theme.spacing(3),
-    },
-    [theme.breakpoints.up('md')]: {
-      bottom: theme.spacing(12),
-      right: theme.spacing(4),
-    },
-    [theme.breakpoints.up('lg')]: {
-      bottom: theme.spacing(4),
-      right: theme.spacing(4),
-    },
-    [theme.breakpoints.up('xl')]: {
-      bottom: theme.spacing(10),
-      right: theme.spacing(10),
-    },
-  },
-  toolbar: {
-    padding: '0 4px 0 52px',
-  },
-  appbar: {
-    backgroundColor: theme.palette.background.paper,
-    color: theme.palette.text.primary,
-  },
-  snackbar: {
-    [theme.breakpoints.down('xs')]: {
-      bottom: theme.spacing(10),
-    },
-  },
-  paper: {
-    padding: '16px 24px 24px',
-    minHeight: '400px',
-  },
-  logo: {
-    height: '36px',
-    [theme.breakpoints.down('xs')]: {
-      height: '32px',
-    },
+const StyledUllemImsLogo = styled(UllemImsLogo)(({ theme }) => ({
+  flexGrow: 1,
+  height: '36px',
+  [theme.breakpoints.down('sm')]: {
+    height: '32px',
   },
 }));
+
+const StyledContainer = styled(Container)(({ theme }) => ({
+  padding: '16px 8px 48px',
+  [theme.breakpoints.down('sm')]: {
+    minHeight: 'calc(100vh - 56px)',
+    padding: '0 0 56px',
+    backgroundColor: theme.palette.background.paper,
+  },
+}));
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -157,10 +84,6 @@ function ElevationScroll(props) {
   return React.cloneElement(children, {
     elevation: trigger ? 4 : 0,
   });
-}
-
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 export default function CMS(props) {
@@ -240,8 +163,7 @@ export default function CMS(props) {
   };
 
   const { isLoading, user, recipients, recipientsCount } = props;
-  const classes = useStyles();
-  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('xs'));
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
   if (isLoading) {
     return <LinearProgress />;
@@ -253,11 +175,11 @@ export default function CMS(props) {
       {user !== null ? (
         <>
           <ReactTitle title="Ullem Invitation Management System" />
-          <div className={classes.root} id="CMSPage">
+          <Box id="root" bgcolor="grey.50">
             <ElevationScroll {...props}>
-              <AppBar position="sticky" className={classes.appbar}>
-                <Toolbar className={classes.toolbar}>
-                  <UllemImsLogo className={[classes.logo, classes.title].join(' ')} />
+              <AppBar position="sticky" sx={{ bgcolor: 'background.paper', color: 'text.primary' }}>
+                <Toolbar sx={{ p: '0 4px 0 52px' }}>
+                  <StyledUllemImsLogo />
                   <IconButton
                     aria-controls="menu"
                     aria-haspopup="true"
@@ -265,14 +187,14 @@ export default function CMS(props) {
                     size="medium"
                     color="inherit"
                   >
-                    <MoreVertOutlinedIcon fontSize="default" />
+                    <MoreVertOutlinedIcon />
                   </IconButton>
 
                   {/* ########  APP BAR MORE OPTIONS ######## */}
                   <Menu
                     id="toolbar-menu"
                     anchorEl={anchorEl}
-                    getContentAnchorEl={null}
+                    //getContentAnchorEl={null}
                     anchorOrigin={{
                       vertical: 'bottom',
                       horizontal: 'right',
@@ -291,7 +213,7 @@ export default function CMS(props) {
               </AppBar>
             </ElevationScroll>
 
-            <Container maxWidth="md" className={classes.mainSection}>
+            <StyledContainer maxWidth="md">
               {isMobile ? (
                 /* ########################################  LIST START  ######################################## */
                 <List
@@ -322,11 +244,17 @@ export default function CMS(props) {
                 </List>
               ) : (
                 /* ########################################  TABLE START  ######################################## */
-                <Paper variant="outlined" className={classes.paper}>
-                  <TableContainer className={classes.table}>
+                <Paper
+                  variant="outlined"
+                  sx={{
+                    p: '16px 24px 24px',
+                    minHeight: '400px',
+                  }}
+                >
+                  <TableContainer sx={{ p: 0 }}>
                     <Table aria-label="recipient-table">
                       {/* ###############################  TABLE HEADER  ################################### */}
-                      <TableHead className={classes.tableHead}>
+                      <TableHead>
                         <TableRow>
                           <TableCell>
                             <strong>Nama</strong>
@@ -357,20 +285,21 @@ export default function CMS(props) {
                                 <IconButton
                                   href={`https://api.whatsapp.com/send?text=${whatsappMessage}${recipient._id}`}
                                   target="_blank"
+                                  size="large"
                                 >
                                   <WhatsAppIcon fontSize="small" />
                                 </IconButton>
                               </Tooltip>
-                              <Tooltip title="Salin Link">
-                                <CopyToClipboard
-                                  text={`http://${domain}${recipient._id}`}
-                                  onCopy={() => setOpenSnackbarCopied(true)}
-                                >
-                                  <IconButton>
+                              <CopyToClipboard
+                                text={`http://${domain}${recipient._id}`}
+                                onCopy={() => setOpenSnackbarCopied(true)}
+                              >
+                                <Tooltip title="Salin link">
+                                  <IconButton size="large">
                                     <FileCopyOutlinedIcon fontSize="small" />
                                   </IconButton>
-                                </CopyToClipboard>
-                              </Tooltip>
+                                </Tooltip>
+                              </CopyToClipboard>
                               <IconButton
                                 size="medium"
                                 aria-controls="menu"
@@ -387,13 +316,13 @@ export default function CMS(props) {
                   </TableContainer>
                 </Paper>
               )}
-            </Container>
+            </StyledContainer>
 
             {/* ##################################  SELECTED ROW MORE OPTIONS ################################## */}
             <Menu
               id="row-menu"
               anchorEl={selectedRowAnchorEl}
-              getContentAnchorEl={null}
+              // getContentAnchorEl={null}
               anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'left',
@@ -428,15 +357,30 @@ export default function CMS(props) {
             )}
 
             {/* ########################################  FAB  ######################################## */}
-            <BackToTopButton className={classes.fabBackToTop} />
+            <Box
+              sx={{
+                position: 'fixed',
+                bottom: { xs: 80, sm: 88, md: 96, lg: 32, xl: 80 }, // in px
+                right: { xs: 24, md: 32, xl: 80 },
+              }}
+            >
+              <BackToTopButton />
+            </Box>
             <Zoom in timeout={500} style={{ transitionDelay: '500ms' }}>
               <Fab
                 onClick={handleOpenAddInvitationDialog}
                 variant="extended"
                 color="primary"
-                className={classes.fabAdd}
+                sx={{
+                  position: 'fixed',
+                  zIndex: 1200,
+                  bottom: { xs: 16, sm: 24, md: 32, lg: 'auto' },
+                  top: { lg: 96 },
+                  right: { xs: 16, sm: 24, md: 32, lg: 'auto' },
+                  left: { lg: '2%', xl: '16%' },
+                }}
               >
-                <AddOutlinedIcon className={classes.extendedIcon} />
+                <AddOutlinedIcon sx={{ mr: 1 }} />
                 Tambah Undangan
               </Fab>
             </Zoom>
@@ -453,12 +397,16 @@ export default function CMS(props) {
                 vertical: 'bottom',
                 horizontal: 'center',
               }}
-              className={classes.snackbar}
               open={openSnackbarAddSuccess}
               autoHideDuration={3000}
               onClose={() => setOpenSnackbarAddSuccess(false)}
+              sx={{ bottom: { xs: 80, md: 24 } }}
             >
-              <Alert onClose={() => setOpenSnackbarAddSuccess(false)} severity="success">
+              <Alert
+                onClose={() => setOpenSnackbarAddSuccess(false)}
+                severity="success"
+                sx={{ width: '100%' }}
+              >
                 Undangan berhasil ditambahkan!
               </Alert>
             </Snackbar>
@@ -468,11 +416,11 @@ export default function CMS(props) {
                 vertical: 'bottom',
                 horizontal: 'center',
               }}
-              className={classes.snackbar}
               open={openSnackbarCopied}
               autoHideDuration={2000}
               onClose={() => setOpenSnackbarCopied(false)}
               message="Link berhasil disalin"
+              sx={{ bottom: { xs: 80, md: 24 } }}
             />
             <Snackbar
               key="removed"
@@ -480,15 +428,15 @@ export default function CMS(props) {
                 vertical: 'bottom',
                 horizontal: 'center',
               }}
-              className={classes.snackbar}
               open={openSnackbarRemoved}
               autoHideDuration={3000}
               onClose={() => setOpenSnackbarRemoved(false)}
               message={
-                selectedRowRecipient && `Undangan ${selectedRowRecipient.name} telah dihapus!`
+                selectedRowRecipient && `Undangan untuk ${selectedRowRecipient.name} telah dihapus!`
               }
+              sx={{ bottom: { xs: 80, md: 24 } }}
             />
-          </div>
+          </Box>
         </>
       ) : (
         <Login />
@@ -504,4 +452,4 @@ CMS.propTypes = {
   isLoading: PropTypes.bool,
 };
 
-// ######################################################### CMS ver1.1.3 #########################################################
+// ######################################################### CMS ver1.2 #########################################################

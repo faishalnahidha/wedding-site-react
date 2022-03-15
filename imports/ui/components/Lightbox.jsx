@@ -1,33 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { makeStyles } from '@material-ui/core/styles';
-import Dialog from '@material-ui/core/Dialog';
-
-const useStyles = makeStyles({
-  dialog: {
-    maxHeight: '90vh',
-  },
-  image: {
-    display: 'block',
-    width: '100%',
-  },
-});
+import Dialog from '@mui/material/Dialog';
 
 export default function Lightbox(props) {
   const { open, imagePath, imageTitle, handleClose } = props;
-  const classes = useStyles();
 
   return (
     <Dialog
       aria-labelledby="lightbox"
+      fullWidth
       maxWidth="md"
       scroll="body"
       open={open}
       onClose={handleClose}
       BackdropProps={{ style: { backgroundColor: 'rgba(0,0,0,0.67)' } }}
     >
-      <img src={imagePath} alt={imageTitle || 'Photo'} className={classes.image} />
+      <img
+        src={imagePath}
+        alt={imageTitle || 'Photo'}
+        style={{ display: 'block', width: '100%' }}
+      />
     </Dialog>
   );
 }

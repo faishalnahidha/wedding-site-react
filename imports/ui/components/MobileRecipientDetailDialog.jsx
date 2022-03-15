@@ -2,70 +2,77 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Link from '@material-ui/core/Link';
-import Snackbar from '@material-ui/core/Snackbar';
-import Slide from '@material-ui/core/Slide';
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Link from '@mui/material/Link';
+import Snackbar from '@mui/material/Snackbar';
+import Slide from '@mui/material/Slide';
 
-import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
-import WhatsAppIcon from '@material-ui/icons/WhatsApp';
-import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
-
-import green from '@material-ui/core/colors/green';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import FileCopyOutlinedIcon from '@mui/icons-material/FileCopyOutlined';
 
 import { domain, whatsappMessage } from '../../lib/variables.js';
-import mapRsvp from '../../lib/mapRsvp.js';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    marginTop: theme.spacing(7),
+import mapRsvp from '../../lib/mapRsvp.js';
+import { green } from '@mui/material/colors';
+
+const StyledDialog = styled(Dialog)(({ theme }) => ({
+  [theme.breakpoints.down('sm')]: {
+    marginTop: '56px',
   },
-  dialogTitle: {
-    padding: '16px 24px',
-  },
-  dialogContent: {
-    padding: '0 8px',
-  },
-  dialogActions: {
-    display: 'block',
-    padding: '8px 24px',
-  },
-  closeButton: {
-    position: 'absolute',
-    right: theme.spacing(1),
-    top: theme.spacing(1),
-    color: theme.palette.grey[500],
-  },
-  overlineTypography: {
-    lineHeight: '16px',
-    color: theme.palette.text.secondary,
-  },
-  actionButton: {
-    margin: '8px 0',
-  },
-  whatsappButton: {
-    color: '#FFF',
-    backgroundColor: green[500],
-    '&:hover': {
-      backgroundColor: green[300],
-    },
+  '& .MuiDialogContent-root': {
+    padding: '16px 8px',
   },
 }));
+
+const StyledDialogTitle = (props) => {
+  const { children, onClose, ...other } = props;
+
+  return (
+    <DialogTitle sx={{ m: 0, px: 3, py: 2 }} {...other}>
+      {children}
+      {onClose ? (
+        <IconButton
+          aria-label="close"
+          onClick={onClose}
+          sx={{
+            position: 'absolute',
+            right: 12,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseRoundedIcon />
+        </IconButton>
+      ) : null}
+    </DialogTitle>
+  );
+};
+
+StyledDialogTitle.propTypes = {
+  children: PropTypes.node,
+  onClose: PropTypes.func.isRequired,
+};
+
+const OverlineTypography = styled(Typography)({
+  lineHeight: '16px',
+  color: 'text.secondary',
+});
 
 const Transition = React.forwardRef((props, ref) => <Slide direction="up" ref={ref} {...props} />);
 
 export default function MobileRecipientDetailDialog(props) {
   const { open, recipient, handleClose, handleRemoveRecipient } = props;
-  const classes = useStyles();
 
   const link = domain + recipient._id;
   const fullLink = `https://${link}`;
@@ -75,32 +82,24 @@ export default function MobileRecipientDetailDialog(props) {
 
   return (
     <>
-      <Dialog
+      <StyledDialog
         open={open}
         onClose={handleClose}
         aria-labelledby="mobile-recipient-detail-dialog"
         fullWidth
         fullScreen
         TransitionComponent={Transition}
-        className={classes.root}
       >
-        <DialogTitle disableTypography className={classes.dialogTitle}>
-          <Typography variant="h6">{recipient.name}</Typography>
-          <IconButton onClick={handleClose} className={classes.closeButton}>
-            <CloseRoundedIcon />
-          </IconButton>
-        </DialogTitle>
-        <DialogContent className={classes.dialogContent}>
+        <StyledDialogTitle id="custom-dialog-title" onClose={handleClose}>
+          {recipient.name}
+        </StyledDialogTitle>
+        <DialogContent>
           <List>
             <ListItem>
               <ListItemText disableTypography>
-                <Typography
-                  variant="overline"
-                  display="block"
-                  className={classes.overlineTypography}
-                >
+                <OverlineTypography variant="overline" display="block">
                   Link Undangan
-                </Typography>
+                </OverlineTypography>
                 <Link href={fullLink} target="_blank" variant="body1" display="block">
                   {link}
                 </Link>
@@ -108,41 +107,19 @@ export default function MobileRecipientDetailDialog(props) {
             </ListItem>
             <ListItem>
               <ListItemText disableTypography>
-                <Typography
-                  variant="overline"
-                  display="block"
-                  className={classes.overlineTypography}
-                >
+                <OverlineTypography variant="overline" display="block">
                   RSVP
-                </Typography>
+                </OverlineTypography>
                 <Typography variant="body1" display="block">
                   {recipient.rsvp ? mapRsvp(recipient.rsvp) : '-'}
                 </Typography>
               </ListItemText>
             </ListItem>
-            {/* <ListItem>
-              <ListItemText disableTypography>
-                <Typography
-                  variant="overline"
-                  display="block"
-                  className={classes.overlineTypography}
-                >
-                  Dengan Pasangan?
-                </Typography>
-                <Typography variant="body1" display="block">
-                  {recipient.withPartner ? 'Iya' : 'Tidak'}
-                </Typography>
-              </ListItemText>
-            </ListItem> */}
             <ListItem>
               <ListItemText disableTypography>
-                <Typography
-                  variant="overline"
-                  display="block"
-                  className={classes.overlineTypography}
-                >
+                <OverlineTypography variant="overline" display="block">
                   Pesan
-                </Typography>
+                </OverlineTypography>
                 <Typography variant="body1" display="block">
                   {recipient.message || '-'}
                 </Typography>
@@ -150,16 +127,22 @@ export default function MobileRecipientDetailDialog(props) {
             </ListItem>
           </List>
         </DialogContent>
-        <div className={classes.dialogActions}>
+        <Box display="block" px={3} py={1}>
           <Button
             variant="contained"
             size="large"
             startIcon={<WhatsAppIcon />}
-            className={[classes.actionButton, classes.whatsappButton].join(' ')}
             fullWidth
             disableElevation
             href={whatsappLink}
             target="_blank"
+            sx={{
+              my: 1,
+              backgroundColor: green[500],
+              '&:hover': {
+                backgroundColor: green[800],
+              },
+            }}
           >
             Share via WhatsApp
           </Button>
@@ -169,24 +152,24 @@ export default function MobileRecipientDetailDialog(props) {
               size="large"
               color="primary"
               startIcon={<FileCopyOutlinedIcon />}
-              className={classes.actionButton}
               fullWidth
               disableElevation
+              sx={{ my: 1 }}
             >
-              Copy Link
+              Salin link
             </Button>
           </CopyToClipboard>
           <Button
             size="medium"
             color="primary"
-            className={classes.actionButton}
             fullWidth
             onClick={handleRemoveRecipient}
+            sx={{ my: 1 }}
           >
             Hapus
           </Button>
-        </div>
-      </Dialog>
+        </Box>
+      </StyledDialog>
 
       <Snackbar
         key="copied"
@@ -197,7 +180,7 @@ export default function MobileRecipientDetailDialog(props) {
         open={openSnackbarCopied}
         autoHideDuration={2000}
         onClose={() => setOpenSnackbarCopied(false)}
-        message="Link berhasil di-copy"
+        message="Link berhasil disalin"
       />
     </>
   );

@@ -4,7 +4,7 @@ import { RecipientsCollection } from '../imports/db/RecipientsCollection.js';
 import '../imports/api/recipientsMethods.js';
 import '../imports/api/recipientsPublications.js';
 
-const SEED_USERNAME = 'user'; // before is 'meteorite'
+const SEED_USERNAME = 'user';
 const SEED_PASSWORD = 'password';
 
 Meteor.startup(() => {
