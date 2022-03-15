@@ -145,10 +145,7 @@ export default function Login() {
         autoHideDuration={3000}
         onClose={() => setOpenSnackbarError(false)}
         sx={{
-          bottom: {
-            xs: 96, // in px
-            md: 24,
-          },
+          bottom: { xs: 96, md: 24 }, // in px
         }}
       >
         <Alert onClose={() => setOpenSnackbarError(false)} severity="error" sx={{ width: '100%' }}>

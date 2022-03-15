@@ -12,10 +12,7 @@ export default function Footer() {
       maxWidth="sm"
       sx={{
         bgcolor: 'grey.50',
-        paddingY: {
-          xs: 2,
-          sm: 3,
-        },
+        paddingY: { xs: 2, sm: 3 },
       }}
     >
       <Grid container spacing={1}>
@@ -25,11 +22,7 @@ export default function Footer() {
           sm={6}
           lg={12}
           sx={{
-            textAlign: {
-              xs: 'center',
-              sm: 'left',
-              lg: 'center',
-            },
+            textAlign: { xs: 'center', sm: 'left', lg: 'center' },
           }}
         >
           <Typography variant="body1" color="textSecondary">
@@ -52,11 +45,7 @@ export default function Footer() {
           sm={6}
           lg={12}
           sx={{
-            textAlign: {
-              xs: 'center',
-              sm: 'right',
-              lg: 'center',
-            },
+            textAlign: { xs: 'center', sm: 'right', lg: 'center' },
           }}
         >
           <Typography variant="body1" color="textSecondary">
@@ -68,6 +57,5 @@ export default function Footer() {
         </Grid>
       </Grid>
     </Container>
-    // </Box>
   );
 }

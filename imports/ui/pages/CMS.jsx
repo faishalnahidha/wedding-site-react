@@ -294,7 +294,7 @@ export default function CMS(props) {
                                 text={`http://${domain}${recipient._id}`}
                                 onCopy={() => setOpenSnackbarCopied(true)}
                               >
-                                <Tooltip title="Salin Link">
+                                <Tooltip title="Salin link">
                                   <IconButton size="large">
                                     <FileCopyOutlinedIcon fontSize="small" />
                                   </IconButton>
