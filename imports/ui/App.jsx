@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import GlobalStyles from '@mui/material/GlobalStyles';
 
 import { myTheme } from './theme'; // import file custom theming
 
@@ -12,11 +11,6 @@ import CMSContainer from './containers/CMSContainer.jsx';
 const App = () => (
   <>
     <CssBaseline>
-      <GlobalStyles
-        styles={{
-          body: { backgroundColor: '#fafafa' },
-        }}
-      />
       <StyledEngineProvider injectFirst>
         <ThemeProvider theme={myTheme}>
           <Switch>

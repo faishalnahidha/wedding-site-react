@@ -15,20 +15,21 @@ import MuiAlert from '@mui/material/Alert';
 import Footer from '../components/Footer.jsx';
 import UllemImsLogo from '../components/UllemImsLogo.jsx';
 
-const RootContainer = styled(Container)(({ theme }) => ({
+const Root = styled(Box)(({ theme }) => ({
   minHeight: '100vh',
   position: 'relative',
   flexGrow: 1,
-  backgroundColor: theme.palette.background.paper,
   [theme.breakpoints.down('sm')]: {
     paddingTop: '5vh',
     paddingBottom: theme.spacing(9),
     marginBottom: -theme.spacing(9),
+    backgroundColor: theme.palette.background.default,
   },
   [theme.breakpoints.up('sm')]: {
     paddingTop: '12vh',
     paddingBottom: theme.spacing(6),
     marginBottom: -theme.spacing(6),
+    backgroundColor: theme.palette.grey[50],
   },
 }));
 
@@ -80,56 +81,58 @@ export default function Login() {
 
   return (
     <>
-      <RootContainer maxWidth="xs" disableGutters>
-        <StyledPaper variant="outlined">
-          <Box display="block" textAlign="center" mb={4}>
-            <UllemImsLogo style={{ width: '192px', marginBottom: '16px' }} />
-            <Typography variant="subtitle1" align="center">
-              Invitation Management System
-            </Typography>
-          </Box>
+      <Root>
+        <Container maxWidth="xs" disableGutters>
+          <StyledPaper variant="outlined">
+            <Box display="block" textAlign="center" mb={4}>
+              <UllemImsLogo style={{ width: '192px', marginBottom: '16px' }} />
+              <Typography variant="subtitle1" align="center">
+                Invitation Management System
+              </Typography>
+            </Box>
 
-          {/* #################### Form Group #################### */}
-          <form onSubmit={handleSubmit}>
-            <TextField
-              id="username"
-              type="text"
-              value={username}
-              onChange={handleChangeUsername}
-              label="Username"
-              variant="outlined"
-              fullWidth
-              error={isUsernameError}
-              sx={{ mb: 3 }}
-            />
+            {/* #################### Form Group #################### */}
+            <form onSubmit={handleSubmit}>
+              <TextField
+                id="username"
+                type="text"
+                value={username}
+                onChange={handleChangeUsername}
+                label="Username"
+                variant="outlined"
+                fullWidth
+                error={isUsernameError}
+                sx={{ mb: 3 }}
+              />
 
-            <TextField
-              id="password"
-              type="password"
-              value={password}
-              onChange={handleChangePassword}
-              label="Password"
-              variant="outlined"
-              autoComplete="current-password"
-              fullWidth
-              error={isPasswordError}
-              sx={{ mb: 3 }}
-            />
+              <TextField
+                id="password"
+                type="password"
+                value={password}
+                onChange={handleChangePassword}
+                label="Password"
+                variant="outlined"
+                autoComplete="current-password"
+                fullWidth
+                error={isPasswordError}
+                sx={{ mb: 3 }}
+              />
 
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              size="large"
-              disableElevation
-              fullWidth
-              required
-            >
-              Login
-            </Button>
-          </form>
-        </StyledPaper>
-      </RootContainer>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                size="large"
+                disableElevation
+                fullWidth
+                required
+              >
+                Login
+              </Button>
+            </form>
+          </StyledPaper>
+        </Container>
+      </Root>
       <Box position="absolute" bottom={0} width="100%" bgcolor="grey.50">
         <Footer />
       </Box>
