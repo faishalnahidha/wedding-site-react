@@ -4,7 +4,7 @@ import { Meteor } from 'meteor/meteor';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { ReactTitle } from 'react-meta-tags';
 
-import makeStyles from '@mui/styles/makeStyles';
+import { styled } from '@mui/material/styles';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Container from '@mui/material/Container';
@@ -53,100 +53,26 @@ import Login from './Login.jsx';
 import MobileRecipientDetailDialog from '../components/MobileRecipientDetailDialog.jsx';
 import UllemImsLogo from '../components/UllemImsLogo.jsx';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.background.default,
-  },
-  title: {
-    flexGrow: 1,
-  },
-  table: {
-    padding: 0,
-  },
-  tableToolbar: {
-    paddingLeft: theme.spacing(2),
-    paddingRight: 0,
-  },
-  mainSection: {
-    padding: '16px 8px 48px',
-    [theme.breakpoints.down('sm')]: {
-      minHeight: 'calc(100vh - 56px)',
-      padding: '0 0 56px',
-      backgroundColor: theme.palette.background.paper,
-    },
-  },
-  extendedIcon: {
-    marginRight: '8px',
-  },
-  fabAdd: {
-    position: 'fixed',
-    zIndex: 1200,
-    [theme.breakpoints.down('sm')]: {
-      right: theme.spacing(2),
-      bottom: theme.spacing(2),
-    },
-    [theme.breakpoints.up('sm')]: {
-      bottom: theme.spacing(3),
-      right: theme.spacing(3),
-    },
-    [theme.breakpoints.up('md')]: {
-      bottom: theme.spacing(4),
-      right: theme.spacing(4),
-    },
-    [theme.breakpoints.up('lg')]: {
-      top: theme.spacing(5),
-      left: theme.spacing(2),
-      //margin: 0,
-    },
-    [theme.breakpoints.up('xl')]: {
-      top: theme.spacing(5),
-      left: '15%',
-    },
-  },
-  fabBackToTop: {
-    [theme.breakpoints.down('sm')]: {
-      bottom: theme.spacing(10),
-    },
-    [theme.breakpoints.up('sm')]: {
-      bottom: theme.spacing(11),
-      right: theme.spacing(3),
-    },
-    [theme.breakpoints.up('md')]: {
-      bottom: theme.spacing(12),
-      right: theme.spacing(4),
-    },
-    [theme.breakpoints.up('lg')]: {
-      bottom: theme.spacing(4),
-      right: theme.spacing(4),
-    },
-    [theme.breakpoints.up('xl')]: {
-      bottom: theme.spacing(10),
-      right: theme.spacing(10),
-    },
-  },
-  toolbar: {
-    padding: '0 4px 0 52px',
-  },
-  appbar: {
-    backgroundColor: theme.palette.background.paper,
-    color: theme.palette.text.primary,
-  },
-  snackbar: {
-    [theme.breakpoints.down('sm')]: {
-      bottom: theme.spacing(10),
-    },
-  },
-  paper: {
-    padding: '16px 24px 24px',
-    minHeight: '400px',
-  },
-  logo: {
-    height: '36px',
-    [theme.breakpoints.down('sm')]: {
-      height: '32px',
-    },
+const StyledUllemImsLogo = styled(UllemImsLogo)(({ theme }) => ({
+  flexGrow: 1,
+  height: '36px',
+  [theme.breakpoints.down('sm')]: {
+    height: '32px',
   },
 }));
+
+const StyledContainer = styled(Container)(({ theme }) => ({
+  padding: '16px 8px 48px',
+  [theme.breakpoints.down('sm')]: {
+    minHeight: 'calc(100vh - 56px)',
+    padding: '0 0 56px',
+    backgroundColor: theme.palette.background.paper,
+  },
+}));
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -158,10 +84,6 @@ function ElevationScroll(props) {
   return React.cloneElement(children, {
     elevation: trigger ? 4 : 0,
   });
-}
-
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 export default function CMS(props) {
@@ -241,7 +163,6 @@ export default function CMS(props) {
   };
 
   const { isLoading, user, recipients, recipientsCount } = props;
-  const classes = useStyles();
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
   if (isLoading) {
@@ -254,11 +175,11 @@ export default function CMS(props) {
       {user !== null ? (
         <>
           <ReactTitle title="Ullem Invitation Management System" />
-          <div className={classes.root} id="CMSPage">
+          <Box id="root" bgcolor="grey.50">
             <ElevationScroll {...props}>
-              <AppBar position="sticky" className={classes.appbar}>
-                <Toolbar className={classes.toolbar}>
-                  <UllemImsLogo className={[classes.logo, classes.title].join(' ')} />
+              <AppBar position="sticky" sx={{ bgcolor: 'background.paper', color: 'text.primary' }}>
+                <Toolbar sx={{ p: '0 4px 0 52px' }}>
+                  <StyledUllemImsLogo />
                   <IconButton
                     aria-controls="menu"
                     aria-haspopup="true"
@@ -273,7 +194,7 @@ export default function CMS(props) {
                   <Menu
                     id="toolbar-menu"
                     anchorEl={anchorEl}
-                    getContentAnchorEl={null}
+                    //getContentAnchorEl={null}
                     anchorOrigin={{
                       vertical: 'bottom',
                       horizontal: 'right',
@@ -292,7 +213,7 @@ export default function CMS(props) {
               </AppBar>
             </ElevationScroll>
 
-            <Container maxWidth="md" className={classes.mainSection}>
+            <StyledContainer maxWidth="md">
               {isMobile ? (
                 /* ########################################  LIST START  ######################################## */
                 <List
@@ -323,11 +244,17 @@ export default function CMS(props) {
                 </List>
               ) : (
                 /* ########################################  TABLE START  ######################################## */
-                <Paper variant="outlined" className={classes.paper}>
-                  <TableContainer className={classes.table}>
+                <Paper
+                  variant="outlined"
+                  sx={{
+                    p: '16px 24px 24px',
+                    minHeight: '400px',
+                  }}
+                >
+                  <TableContainer sx={{ p: 0 }}>
                     <Table aria-label="recipient-table">
                       {/* ###############################  TABLE HEADER  ################################### */}
-                      <TableHead className={classes.tableHead}>
+                      <TableHead>
                         <TableRow>
                           <TableCell>
                             <strong>Nama</strong>
@@ -363,16 +290,16 @@ export default function CMS(props) {
                                   <WhatsAppIcon fontSize="small" />
                                 </IconButton>
                               </Tooltip>
-                              <Tooltip title="Salin Link">
-                                <CopyToClipboard
-                                  text={`http://${domain}${recipient._id}`}
-                                  onCopy={() => setOpenSnackbarCopied(true)}
-                                >
+                              <CopyToClipboard
+                                text={`http://${domain}${recipient._id}`}
+                                onCopy={() => setOpenSnackbarCopied(true)}
+                              >
+                                <Tooltip title="Salin Link">
                                   <IconButton size="large">
                                     <FileCopyOutlinedIcon fontSize="small" />
                                   </IconButton>
-                                </CopyToClipboard>
-                              </Tooltip>
+                                </Tooltip>
+                              </CopyToClipboard>
                               <IconButton
                                 size="medium"
                                 aria-controls="menu"
@@ -389,13 +316,13 @@ export default function CMS(props) {
                   </TableContainer>
                 </Paper>
               )}
-            </Container>
+            </StyledContainer>
 
             {/* ##################################  SELECTED ROW MORE OPTIONS ################################## */}
             <Menu
               id="row-menu"
               anchorEl={selectedRowAnchorEl}
-              getContentAnchorEl={null}
+              // getContentAnchorEl={null}
               anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'left',
@@ -433,18 +360,8 @@ export default function CMS(props) {
             <Box
               sx={{
                 position: 'fixed',
-                bottom: {
-                  xs: 80, // in px
-                  sm: 88,
-                  md: 96,
-                  lg: 32,
-                  xl: 80,
-                },
-                right: {
-                  xs: 24,
-                  md: 32,
-                  xl: 80,
-                },
+                bottom: { xs: 80, sm: 88, md: 96, lg: 32, xl: 80 }, // in px
+                right: { xs: 24, md: 32, xl: 80 },
               }}
             >
               <BackToTopButton />
@@ -454,9 +371,16 @@ export default function CMS(props) {
                 onClick={handleOpenAddInvitationDialog}
                 variant="extended"
                 color="primary"
-                className={classes.fabAdd}
+                sx={{
+                  position: 'fixed',
+                  zIndex: 1200,
+                  bottom: { xs: 16, sm: 24, md: 32, lg: 'auto' },
+                  top: { lg: 96 },
+                  right: { xs: 16, sm: 24, md: 32, lg: 'auto' },
+                  left: { lg: '2%', xl: '16%' },
+                }}
               >
-                <AddOutlinedIcon className={classes.extendedIcon} />
+                <AddOutlinedIcon sx={{ mr: 1 }} />
                 Tambah Undangan
               </Fab>
             </Zoom>
@@ -473,12 +397,16 @@ export default function CMS(props) {
                 vertical: 'bottom',
                 horizontal: 'center',
               }}
-              className={classes.snackbar}
               open={openSnackbarAddSuccess}
               autoHideDuration={3000}
               onClose={() => setOpenSnackbarAddSuccess(false)}
+              sx={{ bottom: { xs: 80, md: 24 } }}
             >
-              <Alert onClose={() => setOpenSnackbarAddSuccess(false)} severity="success">
+              <Alert
+                onClose={() => setOpenSnackbarAddSuccess(false)}
+                severity="success"
+                sx={{ width: '100%' }}
+              >
                 Undangan berhasil ditambahkan!
               </Alert>
             </Snackbar>
@@ -488,11 +416,11 @@ export default function CMS(props) {
                 vertical: 'bottom',
                 horizontal: 'center',
               }}
-              className={classes.snackbar}
               open={openSnackbarCopied}
               autoHideDuration={2000}
               onClose={() => setOpenSnackbarCopied(false)}
               message="Link berhasil disalin"
+              sx={{ bottom: { xs: 80, md: 24 } }}
             />
             <Snackbar
               key="removed"
@@ -500,15 +428,15 @@ export default function CMS(props) {
                 vertical: 'bottom',
                 horizontal: 'center',
               }}
-              className={classes.snackbar}
               open={openSnackbarRemoved}
               autoHideDuration={3000}
               onClose={() => setOpenSnackbarRemoved(false)}
               message={
-                selectedRowRecipient && `Undangan ${selectedRowRecipient.name} telah dihapus!`
+                selectedRowRecipient && `Undangan untuk ${selectedRowRecipient.name} telah dihapus!`
               }
+              sx={{ bottom: { xs: 80, md: 24 } }}
             />
-          </div>
+          </Box>
         </>
       ) : (
         <Login />
@@ -524,4 +452,4 @@ CMS.propTypes = {
   isLoading: PropTypes.bool,
 };
 
-// ######################################################### CMS ver1.1.3 #########################################################
+// ######################################################### CMS ver1.2 #########################################################
