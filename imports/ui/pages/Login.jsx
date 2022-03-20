@@ -132,10 +132,10 @@ export default function Login() {
             </form>
           </StyledPaper>
         </Container>
+        <Box position="absolute" bottom={0} width="100%" bgcolor="grey.50">
+          <Footer />
+        </Box>
       </Root>
-      <Box position="absolute" bottom={0} width="100%" bgcolor="grey.50">
-        <Footer />
-      </Box>
 
       {/* #################### Snackbar #################### */}
       <Snackbar
