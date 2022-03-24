@@ -7,6 +7,8 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import Link from '@mui/material/Link';
 
 export default function Footer() {
+  const year = new Date().getFullYear();
+
   return (
     <Container
       maxWidth="sm"
@@ -49,7 +51,7 @@ export default function Footer() {
           }}
         >
           <Typography variant="body1" color="textSecondary">
-            &copy; 2021{' '}
+            &copy; {year}{' '}
             <Link href="https://ullem.com" target="_blank">
               Ullem Undangan Online
             </Link>
