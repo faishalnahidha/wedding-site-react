@@ -68,7 +68,7 @@ export default function WeddingGiftSection() {
                   startIcon={<FileCopyOutlinedIcon />}
                   sx={{ mt: 2 }}
                 >
-                  Salin Nomor
+                  Salin nomor
                 </Button>
               </CopyToClipboard>
             </CardContent>
@@ -95,7 +95,7 @@ export default function WeddingGiftSection() {
                   startIcon={<FileCopyOutlinedIcon />}
                   sx={{ mt: 2 }}
                 >
-                  Salin Nomor
+                  Salin nomor
                 </Button>
               </CopyToClipboard>
             </CardContent>
