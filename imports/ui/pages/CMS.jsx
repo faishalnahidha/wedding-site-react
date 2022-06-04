@@ -417,7 +417,7 @@ export default function CMS(props) {
             }}
           >
             <AddOutlinedIcon sx={{ mr: 1 }} />
-            Tambah Undangan
+            Tambah undangan
           </Fab>
         </Zoom>
         <AddInvitationDialog

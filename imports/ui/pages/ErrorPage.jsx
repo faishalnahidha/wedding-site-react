@@ -25,7 +25,7 @@ export default function ErrorPage() {
         </Box>
         <Box mt={3} textAlign="center">
           <Button variant="contained" disableElevation color="primary" size="large" href="/">
-            Ke Halaman Utama
+            Ke halaman utama
           </Button>
         </Box>
       </Container>

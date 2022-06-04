@@ -121,7 +121,7 @@ export default function IntroSection(props) {
                   fullWidth
                   onClick={scrollToContentSection}
                 >
-                  Lihat Undangan
+                  Lihat undangan
                 </Button>
               </Zoom>
             </Box>
@@ -135,7 +135,7 @@ export default function IntroSection(props) {
                 fullWidth
                 onClick={scrollToLocationSection}
               >
-                Lihat Lokasi
+                Lihat lokasi
               </Button>
             </Zoom>
           </Box>

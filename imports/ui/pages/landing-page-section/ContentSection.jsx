@@ -136,7 +136,7 @@ export default function ContentSection() {
                 <br />
                 {akad.locationMore}.&nbsp;
                 <Link href={akad.locationUrl} target="_blank" color="primary">
-                  Lihat Peta
+                  Lihat peta
                 </Link>
               </Typography>
             </CardContent>
@@ -184,7 +184,7 @@ export default function ContentSection() {
                   color="primary"
                   disableElevation
                 >
-                  Lihat Live Streaming
+                  Lihat live streaming
                 </Button>
               </Box>
             </CardContent>
