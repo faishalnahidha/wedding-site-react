@@ -27,7 +27,7 @@
     "react-div-100vh": "^0.6.0",
     "react-dom": "^18.1.0",
     "react-lottie": "^1.2.3",
-    "react-material-ui-carousel": "^2.3.10-mui5",
+    "react-material-ui-carousel": "^3.4.2",
     "react-meta-tags": "^1.0.1",
     "react-router-dom": "^5.3.3"
   },
