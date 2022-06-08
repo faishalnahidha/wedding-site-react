@@ -10,8 +10,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Hidden from '@mui/material/Hidden';
 
-import Lottie from 'react-lottie';
-import animationData from '../../components/lottie-files/scroll-down.json';
+import { useLottie } from 'lottie-react';
+import scrollDownAnimation from '../../components/lottie-files/scroll-down.json';
 
 const Root = styled(Div100vh)(({ theme }) => ({
   padding: 0,
@@ -41,16 +41,24 @@ const MainIllustration = styled('img')(({ theme }) => ({
   },
 }));
 
-export default function IntroSection(props) {
-  const { recipientName, scrollToContentSection, scrollToLocationSection } = props;
-  const lottieDefaultOptions = {
+const LottieScrollDown = () => {
+  const options = {
+    animationData: scrollDownAnimation,
     loop: true,
     autoplay: true,
-    animationData,
-    rendererSettings: {
-      preserveAspectRatio: 'xMidYMid slice',
-    },
   };
+
+  const style = {
+    width: 48,
+  };
+
+  const { View } = useLottie(options, style);
+
+  return View;
+};
+
+export default function IntroSection(props) {
+  const { recipientName, scrollToContentSection, scrollToLocationSection } = props;
 
   return (
     <Root>
@@ -113,7 +121,7 @@ export default function IntroSection(props) {
                   fullWidth
                   onClick={scrollToContentSection}
                 >
-                  Lihat Undangan
+                  Lihat undangan
                 </Button>
               </Zoom>
             </Box>
@@ -127,7 +135,7 @@ export default function IntroSection(props) {
                 fullWidth
                 onClick={scrollToLocationSection}
               >
-                Lihat Lokasi
+                Lihat lokasi
               </Button>
             </Zoom>
           </Box>
@@ -136,7 +144,7 @@ export default function IntroSection(props) {
       <Hidden lgUp>
         <Box position="absolute" bottom={1} left="calc(50% - 48px/2)" zIndex={2}>
           <Fade delay={2300}>
-            <Lottie options={lottieDefaultOptions} height={48} width={48} />
+            <LottieScrollDown />
           </Fade>
         </Box>
       </Hidden>

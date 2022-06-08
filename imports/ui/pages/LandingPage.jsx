@@ -1,5 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Meteor } from 'meteor/meteor';
+import { useTracker } from 'meteor/react-meteor-data';
+
+import { RecipientsCollection } from '../../db/RecipientsCollection.js';
 
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -17,7 +21,38 @@ import ErrorPage from './ErrorPage.jsx';
 import BackToTopButton from '../components/BackToTopButton.jsx';
 import Footer from '../components/Footer.jsx';
 
-export default function LandingPage(props) {
+/* ------- create custom hook, this function replaces LandingPage Container --------- */
+const useRecipient = (id) =>
+  useTracker(() => {
+    /* ------- handle access from root dns --------- */
+    if (id === undefined) {
+      const recipient = {
+        _id: '0',
+        name: '(＾ω＾)',
+      };
+      const recipientExists = true;
+      return {
+        recipient,
+        recipientExists,
+      };
+    }
+
+    const recipientId = id.toLowerCase();
+    const handler = Meteor.subscribe('recipients.one', recipientId);
+
+    const isLoading = !handler.ready();
+    const recipient = RecipientsCollection.findOne({ _id: recipientId });
+    const recipientExists = !isLoading && recipient !== undefined && recipient !== null;
+
+    return {
+      isLoading,
+      recipient,
+      recipientExists,
+    };
+  }, [id]);
+
+export default function LandingPage({ match }) {
+  /* ------- ref definition --------- */
   const contentSectionRef = React.createRef();
   const locationSectionRef = React.createRef();
 
@@ -39,7 +74,9 @@ export default function LandingPage(props) {
     }
   };
 
-  const { isLoading, recipient, recipientExists } = props;
+  /* ------- call custom hook --------- */
+  const { id } = match.params;
+  const { isLoading, recipient, recipientExists } = useRecipient(id);
 
   if (isLoading) {
     return <LinearProgress />;
