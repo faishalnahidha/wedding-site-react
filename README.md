@@ -2,7 +2,7 @@
 
 **Ullem** is a digital wedding invitation service with a modern look designed by professional UI/UX designers. Each guest gets a personal, responsive, easy-to-share invitation experience—no paper, no hassle.
 
-Live: [mawarkumbang.ullem.com](https://mawarkumbang.ullem.com) · Service info: [ullem.com](https://ullem.com)
+Live: [mawarkumbang.ullem.com](https://mawarkumbang.ullem.com/lisa-mayer) · Service info: [ullem.com](https://ullem.com)
 
 ## About this project
 
@@ -29,7 +29,7 @@ Current version: **1.2.1**.
 
 **Ullem** adalah layanan undangan pernikahan online dengan tampilan modern yang dirancang oleh UI/UX Designer profesional. Setiap undangan terasa personal, responsif, dan mudah dibagikan—tanpa kertas, tanpa ribet.
 
-Live: [mawarkumbang.ullem.com](https://mawarkumbang.ullem.com) · Info layanan: [ullem.com](https://ullem.com)
+Live: [mawarkumbang.ullem.com](https://mawarkumbang.ullem.com/lisa-mayer) · Info layanan: [ullem.com](https://ullem.com)
 
 ## Tentang proyek ini
 
@@ -42,10 +42,10 @@ Stack: **Meteor 2.6** · **React 17** · **Material UI 5** · **MongoDB**
 | Fitur                     | Deskripsi                                                                          |
 | ------------------------- | ---------------------------------------------------------------------------------- |
 | Undangan eksklusif        | Satu undangan untuk satu tamu—nama tamu tampil personal di halaman undangan.       |
-| Link URL sederhana\*      | Link yang dikirim tidak rumit dan mudah diingat (`domain.tamu`).                   |
+| Link URL sederhana        | Link yang dikirim tidak rumit dan mudah diingat (`domain.com/guest-id`).                   |
 | Kirim undangan anti ribet | Sebar undangan dengan sekali klik via WhatsApp dari dashboard.                     |
 | Dashboard kelola tamu     | Kelola daftar tamu dengan antarmuka yang user-friendly (tambah, salin link, RSVP). |
 
 ## Pengembangan
 
-Versi saat ini: **1.2.1**.
+Versi sekarang: **1.2.1**.
